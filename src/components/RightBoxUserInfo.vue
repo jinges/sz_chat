@@ -133,6 +133,9 @@ export default {
   components: {},
   methods: {
     editor() {
+			if(this.editState) {
+				
+			}
       this.editState = !this.editState;
       // this.$axios.post('other/momentList', {
       // 	targetWxid: this.$store.state.currentPengyouquan,

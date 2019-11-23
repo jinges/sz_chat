@@ -10,6 +10,7 @@
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="addFriend">添加好友</el-dropdown-item>
                 <el-dropdown-item command="createGroup">创建群组</el-dropdown-item>
+                <el-dropdown-item command="groupMessage">群发消息</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
 
@@ -22,6 +23,10 @@
             destroy-on-close>
             <CreateGroup ref="createGroup" @submit="submitCreateGroup"/>
         </el-dialog>
+        <el-dialog width="1000px" left title="群发消息" :visible="showgroupMessage" :before-close="closegroupMessage"
+            destroy-on-close>
+            <group-Message></group-Message>
+        </el-dialog>
 
     </div>
 </template>
@@ -29,6 +34,7 @@
 <script>
     import AddFriend from './AddFriend.vue'
     import CreateGroup from './CreateGroup.vue'
+    import groupMessage from './groupMessage.vue'
 
     export default {
         props: ['searchType'],
@@ -37,15 +43,22 @@
                 createGroupAck: false,
                 searchText: '',
                 showAddFriend: false,
-                showCreateGroup: false
+                showCreateGroup: false,
+                showgroupMessage:false
             }
         },
         methods: {
+            //关闭群发消息弹框
+            closegroupMessage(){
+                this.showgroupMessage = false;
+            },
             clickMenu: function(c) {
                 if (c == 'addFriend') {
                     this.showAddFriend = true;
                 } else if (c == 'createGroup') {
                     this.showCreateGroup = true;
+                }else if (c == 'groupMessage') {
+                    this.showgroupMessage = true;
                 }
             },
             closeAddFriend() {
@@ -81,7 +94,8 @@
         },
         components: {
             AddFriend,
-            CreateGroup
+            CreateGroup,
+            groupMessage
         }
     }
 </script>

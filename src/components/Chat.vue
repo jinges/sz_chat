@@ -38,7 +38,7 @@
 			<vue-scroll ref="vs">
 				<div id="nomore" v-if="nomore">没有更多消息了</div>
 				<div id="loadmore" v-else @click="loadmore">点击加载更多</div>
-				<Message v-for="item in history" v-bind="item" />
+				<Message v-for="(item, index) in history" v-bind="item" :key="index"/>
 			</vue-scroll>
 		</div>
 		<div class="footer">
