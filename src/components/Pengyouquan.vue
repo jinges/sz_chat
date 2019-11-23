@@ -11,7 +11,7 @@
 					<span class="el-icon-loading"></span>朋友圈加载中
 				</div>
 				<div class="empty" v-if="!loading&&list.length==0">暂无朋友圈动态</div>
-				<Blog ref="showBlog" v-else v-for="blog in list" v-bind="blog" @loadData="loadData"></Blog>
+				<Blog ref="showBlog" v-else v-for="(blog, index) in list" :key="index" v-bind="blog" @loadData="loadData"></Blog>
 			</vue-scroll>
 		</div>
 		<transition name="el-fade-in-linear">

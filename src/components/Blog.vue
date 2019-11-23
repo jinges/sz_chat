@@ -10,7 +10,7 @@
 			</div>
 			<!--图片-->
 			<div v-if="momentType==2" class="images">
-				<Pic v-for="img in fileList" :src="img" @click="showImg(img)" />
+				<Pic v-for="(img,index) in fileList" :key="index" :src="img" @click="showImg(img)" />
 			</div>
 			<div class="footer">
 				<div class="time">
@@ -41,7 +41,7 @@
 				{{likePeople}}
 			</div>
 			<div class="commentPeople" v-if="showComment">
-				<div class="commentItem" v-for="item in commentList">
+				<div class="commentItem" v-for="(item,index) in commentList"  :key="index">
 					<img :src="item.face" class="commentFace">
 					<span class="commentName">{{item.name}}:</span>
 					<div class="commentContent">{{item.content}}</div>

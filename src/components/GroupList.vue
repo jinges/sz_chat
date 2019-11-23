@@ -47,13 +47,13 @@
 				);
 			},
 			membersVal: function() {
-				return this.groupMembers.filter(t => t.targetId != util.getMyWxId()).map(t => {
+				return this.groupMembers ? this.groupMembers.filter(t => t.targetId != util.getMyWxId()).map(t => {
 					return {
 						key: t.targetId,
 						label: t.nickName,
 						face: t.face
 					}
-				});
+				}):[];
 			}
 		},
 		methods: {

@@ -17,7 +17,10 @@
         </svg>
         <!-- 选项卡 -->
 		<div class="header-tab">
-			<div class="header-tab-item" v-for="(item,index) in tabData" @click="tabClick($event, index)" :class="{select:index===nowIndex}">
+			<div class="header-tab-item" v-for="(item,index) in tabData" 
+				:key="index" 
+				@click="tabClick($event, index)" 
+				:class="{select:index===nowIndex}">
 				<svg>
 					<use :xlink:href="'#'+item.svg"/>
 				</svg>

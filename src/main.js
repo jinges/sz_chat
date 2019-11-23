@@ -37,8 +37,6 @@ function validateToken() {
     return true;
 }
 
-//axios全局配置
-Vue.prototype.$axios = axios
 axios.defaults.timeout = 5000
 if (process.env.VUE_APP_MODE == 'development') {
     axios.defaults.baseURL = '/api/'
@@ -49,6 +47,7 @@ var ajaxElVm = null;
 var ajaxTimeout = null;
 //输入拦截
 axios.interceptors.request.use(function(config) {
+    debugger;
     //登录页不校验token
     if (['/getToken', '/deviceAndWeChat'].indexOf(config.url) > -1) {
         return config;
@@ -58,7 +57,12 @@ axios.interceptors.request.use(function(config) {
         return Promise.reject('登录校验未通过');
 
     config.headers.common['Authorization'] = 'Bearer:' + util.getToken();
-
+    if(config.url.includes('other')) {
+        config.url = config.url.replace(/\/?other/,'');
+        axios.defaults.baseURL = config.baseURL = '/other/';
+    } else {    
+        axios.defaults.baseURL = '/api/'
+    }
     if (ajaxElVm) {
         ajaxElVm.close();
         clearTimeout(ajaxTimeout)
@@ -98,6 +102,8 @@ axios.interceptors.response.use(function(response) {
     console.error(response)
     return Promise.reject(response)
 });
+//axios全局配置
+Vue.prototype.$axios = axios
 
 new Vue({
     store,
