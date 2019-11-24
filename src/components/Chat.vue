@@ -38,7 +38,7 @@
 			<vue-scroll ref="vs">
 				<div id="nomore" v-if="nomore">没有更多消息了</div>
 				<div id="loadmore" v-else @click="loadmore">点击加载更多</div>
-				<Message v-for="(item, index) in history" v-bind="item" :key="index"/>
+				<Message v-for="item in history" v-bind="item" />
 			</vue-scroll>
 		</div>
 		<div class="footer">
@@ -48,9 +48,34 @@
 					<Emotions @emotionBlur="closeEmotions" v-show="showEmotion" @selected="selectEmotion" id="emotions" />
 				</transition>
 				<el-upload :disabled="uploadLoading" :action="uploadAction" name="files" :on-success="fileUploadSucc"
-				 :show-file-list="false" :before-upload="fileUploadBefore">
+				 :show-file-list="false" :before-upload="fileUploadBefore" v-if="false">
 					<font-awesome-icon icon="folder"></font-awesome-icon>
 				</el-upload>
+				<template>
+					<font-awesome-icon @click.stop="isShowMaterial=!isShowMaterial" icon="folder"></font-awesome-icon>
+					<el-dialog width="700px" :visible="isShowMaterial" :before-close="closeMaterial" id="materialDialog">
+						<span slot="title">
+							<el-tabs v-model="materialActiveName">
+							    <el-tab-pane label="文章链接" name="articles">
+									<Articles :type=1 />
+								</el-tab-pane>
+							    <el-tab-pane label="图片" name="pictures">
+									<Pictures :type=2 />
+								</el-tab-pane>
+							    <el-tab-pane label="文本" name="texts">
+									<Articles :type=3 />
+								</el-tab-pane>
+							    <el-tab-pane label="视频" name="videos">
+									<Pictures :type=4 />
+								</el-tab-pane>
+							    <el-tab-pane label="H5海报" name="poster">
+									<Pictures :type=5 />
+								</el-tab-pane>
+							</el-tabs>
+						</span>
+						<el-button type="primary" size="small">发送</el-button>
+					</el-dialog>
+				</template>
 				<template v-if="uploadLoading">
 					<i class="el-icon-loading"></i><span style="font-size: 12px;color: #A09D9D;">上传中</span>
 				</template>
@@ -78,6 +103,8 @@
 	import Emotions from '@/components/Emotions.vue';
 	import GroupMember from '@/components/GroupMember.vue';
 	import AtMember from 'vue-at/dist/vue-at-textarea';
+	import Articles from '@/components/Articles.vue';
+	import Pictures from '@/components/Pictures.vue';
 
 	export default {
 		props: ['targetId', "targetFace", "targetName", "myFace", "isGroup"],
@@ -103,9 +130,11 @@
 				msgScrollId: null, //消息分页ES scrollId
 
 				showGroupMember: false,
-				
 				isAddMember: false, //是否是邀请成员，否则为false
-				selectAtUserId: [] //需要@的群成员
+				selectAtUserId: [], //需要@的群成员
+				
+				isShowMaterial: false, //是否显示素材库
+				materialActiveName: 'articles'
 			}
 		},
 		computed: {
@@ -129,7 +158,9 @@
 			Message,
 			Emotions,
 			GroupMember,
-			AtMember
+			AtMember,
+			Articles,
+			Pictures
 		},
 		methods: {
 			//保存群名称
@@ -570,6 +601,10 @@
 				}).then(data => {
 					this.sendingMap[data] = true;
 				}).catch(() => {})
+			},
+			// 关闭素材库
+			closeMaterial: function() {
+				this.isShowMaterial = false;
 			}
 		},
 		watch: {
@@ -601,7 +636,7 @@
 	}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	.chat {
 		display: flex;
 		height: 100%;
@@ -816,5 +851,33 @@
 			}
 		}
 
+	}
+	
+	#materialDialog {
+		.el-dialog__header {
+			padding: 0px 10px;
+			
+			.el-tabs__header {
+				margin: 0 0 10px;
+			}
+			
+			.el-tabs__nav-wrap::after {
+				background-color: #f9f9f9;
+			}
+			
+			.el-dialog__headerbtn {
+				top: 7px;
+				font-size: 23px;
+				z-index: 999999;
+			}
+		}
+		
+		.el-dialog__body {
+			padding: 0;
+			text-align: center;
+			border-top: 1px solid #E9E9E9;
+			margin: 15px;
+			padding: 10px;
+		}
 	}
 </style>
