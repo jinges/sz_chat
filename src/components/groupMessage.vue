@@ -108,7 +108,8 @@ export default {
           fileType = "";
           filePath = "";
         }
-        let params = thsi.msgContent(fileType, filePath);
+
+        let params = this.msgContent(fileType, filePath);
         this.sendGroupMsg(0, params)
         
       }
@@ -119,14 +120,16 @@ export default {
         let targetWxid = freads[i].targetWxid;
         let len = freads.length;
         params.targetWxid = targetWxid;
+        var a = ++i;
         this.$axios
             .post("/sendText", params)
             .then(data => {})
             .finally(()=>{
-                if(i< len) {
+                        console.log(a,len);
+                if(a < len) {
                     let t = Math.ceil(Math.random() * 1+1.5);
                     setTimeout(() => {
-                        $this.sendGroupMsg(i++, params);
+                        $this.sendGroupMsg(a, params);
                     }, t * 1000);
                 }
             })
