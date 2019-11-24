@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="min-height:342px" v-loading="loading">
        <div class="search">
             <el-input placeholder="请输入内容" v-model="searchTxt" class="input-with-select">
                 <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
@@ -10,6 +10,7 @@
                 <el-radio v-model="contentIndex" :label="index">&nbsp;</el-radio>
             </li>
             <el-pagination
+            v-if="pageFlag"
                 background
                 layout="prev, pager, next"
                 :total="totalPage"
@@ -30,17 +31,38 @@ export default{
     },
     data(){
         return{
+            loading:true,
+            pageFlag:false,
             searchTxt:'',
             contentIndex:null,
             currentPage:1,
-            totalPage:100,
-            dataArr:[{title:'宝马车优惠降价通知'},{title:'宝马车优惠降价通知'},{title:'宝马车优惠降价通知'},{title:'宝马车优惠降价通知'},{title:'宝马车优惠降价通知'}]
+            totalPage:null,
+            dataArr:[]
         }
     },
     methods:{
         //搜索
         search(){
-
+            this.getcontent()
+        },
+         //查找内容库
+        getcontent(){
+            this.loading = true
+            this.$axios.post('/content/searchPage', {"contentTypeName": this.searchTxt,"page": this.currentPage,"rows": 5,"type": this.type })
+                .then(data => {
+                    this.loading = false
+                    this.dataArr = data.data
+                    this.totalPage = data.totalPage
+                    if(data.totalPage<5){
+                        this.pageFlag =  false;
+                    }else{
+                        this.pageFlag =  true;
+                    }
+                    //查标签下面的好友
+                })
+                .catch(() => {
+                    this.loading = false
+                });
         },
         Reset(){
             this.currentPage = 1;
@@ -52,8 +74,11 @@ export default{
             this.contentIndex = index
         },
         currentChange(item){
-            
+            this.currentPage = item;
         }
+    },
+    mounted(){
+       this.getcontent()
     },
     watch:{
         contentIndex:function(item){

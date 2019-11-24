@@ -1,9 +1,11 @@
 <template>
 <div style="top:50%;">
-    <group-left></group-left>
-    <group-right @retunContent="retunRightContent"></group-right>
+    <group-left @returnSelectTag="returnSelectTag" :groupType="groupType" ref="groupLeft" ></group-left>
+    <group-right @retunContent="retunRightContent" @returnSendText="returnSendText"></group-right>
     <div class="clear"></div>
-    <el-button type="primary" :loading="false" @click="sendTo" :disabled="true">发送</el-button>
+    <div style="padding:10px;">
+        <el-button type="primary" :loading="sendToLoad" @click="sendTo" :disabled="sendToFlag">发送</el-button>
+    </div>
 </div>
 </template>
 
@@ -13,9 +15,22 @@ import groupRight from './groupRight.vue'
 export default{
     data(){
         return{
+            sendToFlag:true,
             RightContentType:'' , //右边选中的dataType
-            RightContentSelectData:[] , //右边选中的Selectdata
+            RightContentSelectData:{} , //右边选中的Selectdata
+            LeftSelectTagData:{},
+            SendText:'',
+            sendToLoad:false
         }
+    },
+    props:{
+        groupType:{
+            type:String,
+            default:''
+        }
+    },
+    mounted(){
+
     },
     components: {
         groupLeft,
@@ -26,8 +41,38 @@ export default{
             this.RightContentType = type;
             this.RightContentSelectData = item;
         },
+        returnSelectTag(item){
+            this.LeftSelectTagData = item
+        },
+        returnSendText(SendText){
+            this.SendText = SendText;
+        },
         sendTo(){
-            console.log(this.RightContentType,this.RightContentSelectData)
+            //设置sendToLoad为true避免多次点击
+
+            console.log(this.RightContentType,this.RightContentSelectData,this.LeftSelectTagData)
+            //这是发布朋友圈的 多了 this.$refs.groupLeft.openFlag 是否公开的值
+            if(this.groupType == 'groupFriend'){
+                console.log(this.$refs.groupLeft.openFlag)
+            }else{
+                 //这是群发消息
+            }
+        }
+    },
+    watch:{
+        RightContentSelectData:function(item){
+            if(item || this.SendText){
+                this.sendToFlag = false
+            }else{
+                this.sendToFlag = true
+            }
+        },
+        SendText:function(item){
+            if(this.RightContentSelectData.title || item){
+                this.sendToFlag = false
+            }else{
+                this.sendToFlag = true
+            }
         }
     }
 }

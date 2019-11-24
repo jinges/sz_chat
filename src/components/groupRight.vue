@@ -3,21 +3,21 @@
       <div class="title">
             选择内容
     </div>
-    <el-tabs tab-position="top" @tab-click='tabclick' :stretch="true">
+    <el-tabs tab-position="top" @tab-click='tabclick' :stretch="true"  v-model="tabValue">
         <el-tab-pane label="文章链接">
-           <content-text ref="Article" :type='1' @returndata="returndata"></content-text>
+           <content-text ref="Article" v-show="tabValue ==0" :type='1' @returndata="returndata"></content-text>
         </el-tab-pane>
         <el-tab-pane label="图片">
-           <content-img ref="Img" :type='2' @returndata="returndata"></content-img>
+           <content-img ref="Img" v-show="tabValue == 1" :type='2' @returndata="returndata"></content-img>
         </el-tab-pane>
         <el-tab-pane label="文本">
-           <content-text ref="Txt" :type='3' @returndata="returndata"></content-text>
+           <content-text ref="Txt" v-show="tabValue == 2" :type='3' @returndata="returndata"></content-text>
         </el-tab-pane>
         <el-tab-pane label="视频">
-           <content-img ref="Video" :type='4' @returndata="returndata"></content-img>
+           <content-img ref="Video" v-show="tabValue == 3" :type='4' @returndata="returndata"></content-img>
         </el-tab-pane>
         <el-tab-pane label="H5海报">
-           <content-img  ref="Html" :type='5' @returndata="returndata"></content-img>
+           <content-img  ref="Html" v-show="tabValue == 4" :type='5' @returndata="returndata"></content-img>
         </el-tab-pane>
     </el-tabs>
     <div class="title" style="margin-top:10px">
@@ -66,6 +66,7 @@
 		},
         data(){
             return{
+                tabValue:'0',
                 imgFlag:null,
                 isGroup:false,
                 showEmotion: false, //是否展示表情选择
@@ -74,7 +75,12 @@
             
         },
         created(){
-            this.getcontent()
+
+        },
+        watch:{
+            sendText:function(item){
+                this.$emit('returnSendText',this.sendText)
+            }
         },
         methods:{
             //type:1 2 3 4 5
@@ -84,21 +90,19 @@
             },
             //tab切换
             tabclick(index){
-                this.$refs.Article.Reset()
-                this.$refs.Img.Reset()
-                this.$refs.Txt.Reset()
-                this.$refs.Video.Reset()
-                this.$refs.Html.Reset()
+                if(this.tabValue == '0'){
+                    this.$refs.Article.Reset()
+                }else if(this.tabValue == '1'){
+                    this.$refs.Img.Reset()
+                }else if(this.tabValue == '2'){
+                    this.$refs.Txt.Reset()
+                }else if(this.tabValue == '3'){
+                    this.$refs.Video.Reset()
+                }else if(this.tabValue == '4'){
+                    this.$refs.Html.Reset()
+                }
             },
-            //查找内容库
-            getcontent(){
-                this.$axios.post('/searchContentPage', {"contentTypeName": "","page": 0,"rows": 0,"type": "1" })
-                    .then(data => {
-                        // this.tagArr = data
-                        //查标签下面的好友
-                    })
-                    .catch(() => {});
-            },
+           
 			//添加@
 			filterMatch: function(name, chunk, at) {
 				return name.toLowerCase().indexOf(chunk.toLowerCase()) > -1

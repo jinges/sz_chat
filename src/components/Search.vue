@@ -11,6 +11,7 @@
                 <el-dropdown-item command="addFriend">添加好友</el-dropdown-item>
                 <el-dropdown-item command="createGroup">创建群组</el-dropdown-item>
                 <el-dropdown-item command="groupMessage">群发消息</el-dropdown-item>
+                <el-dropdown-item command="groupFriend">发送朋友圈</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
 
@@ -24,9 +25,12 @@
             <CreateGroup ref="createGroup" @submit="submitCreateGroup"/>
         </el-dialog>
         <el-dialog width="1000px" left title="群发消息" :visible="showgroupMessage" :before-close="closegroupMessage"
-            class="groupMessage"
-            destroy-on-close>
-            <group-Message></group-Message>
+            class="groupMessage">
+            <group-Message groupType="groupMessage"></group-Message>
+        </el-dialog>
+         <el-dialog width="1000px" left title="发送朋友圈信息" :visible="showgroupFriend" :before-close="closegroupFriend"
+            class="groupMessage">
+            <group-Message groupType="groupFriend"></group-Message>
         </el-dialog>
 
     </div>
@@ -45,7 +49,8 @@
                 searchText: '',
                 showAddFriend: false,
                 showCreateGroup: false,
-                showgroupMessage:false
+                showgroupMessage:false,
+                showgroupFriend:false
             }
         },
         methods: {
@@ -60,6 +65,8 @@
                     this.showCreateGroup = true;
                 }else if (c == 'groupMessage') {
                     this.showgroupMessage = true;
+                }else if (c == 'groupFriend') {
+                    this.showgroupFriend = true;
                 }
             },
             closeAddFriend() {
@@ -70,6 +77,9 @@
             },
             submitCreateGroup: function(result) {
                 this.showCreateGroup = false;
+            },
+            closegroupFriend(){
+                this.showgroupFriend = false;
             },
             onWsMsg: function(json) {
                 this.$refs['addFriend']&&this.$refs['addFriend'].onWsMsg(json);
