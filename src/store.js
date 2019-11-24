@@ -20,6 +20,8 @@ export default new Vuex.Store({
 		// lastTime: item.updateTime,
 		// targetId: item.targetId
 		//quanpin
+		groupList:[],//群组列表
+		newFriends:[],
 		sessions: [], //会话
 		sessionsKeyword: '', //搜索我的会话关键字
 		currentSession: '', //当前聊天的targetId
@@ -37,15 +39,15 @@ export default new Vuex.Store({
 				});
 			}
 
-			function getGroups() {
-				return Vue.prototype.$axios.post('/queryGroups', {
-					myWxid: util.getMyWxId(),
-					size: 5000
-				});
-			}
+			// function getGroups() {
+			// 	return Vue.prototype.$axios.post('/queryGroups', {
+			// 		myWxid: util.getMyWxId(),
+			// 		size: 5000
+			// 	});
+			// }
 
-			Vue.prototype.$axios.all([getAddressBook(), getGroups()])
-				.then(Vue.prototype.$axios.spread(function(addressBookData, groupChatData) {
+			Vue.prototype.$axios.all([getAddressBook()])
+				.then(Vue.prototype.$axios.spread(function(addressBookData) {
 					var arr = addressBookData.data.map(item => {
 						return {
 							face: item.addressBook.headPic || require('@/assets/wechat.png'),
@@ -54,19 +56,61 @@ export default new Vuex.Store({
 							detail: item
 						}
 					});
-					arr = arr.concat(groupChatData.data.map(item => {
-						return {
-							face: require('@/assets/wechat.png'),
-							name: item.groupName,
-							wxid: item.groupId,
-							detail: item,
-							isGroup: true
-						}
-					}));
 					state.friends = arr;
+
+					// var arr2 = groupChatData.data.map(item => {
+					// 	return {
+					// 		img: require('@/assets/wechat.png'),
+					// 		name: item.groupName,
+					// 		groupId: item.groupId,
+					// 		isGroup: true,
+					// 		detail: item
+					// 	}
+					// });
+					// state.groupList = arr2;
+
 				}))
 				.catch(() => {});
 		},
+		initNewFriends(state){
+			Vue.prototype.$axios.post('/queryAddFriendReq', {
+					wxid: util.getMyWxId(),
+				})
+				.then(data => {
+					state.newFriends = data.data.map(function(item) {
+						return {
+							face: item.smallheadimgurl,
+							name: item.fromnickname,
+							content: item.content,
+							wxid: item.wxid,
+							ticket: item.ticket,
+							scene: item.scene,
+							encryptusername: item.encryptusername,
+							detail: item
+						}
+					});
+				})
+				.catch(() => {});
+		},
+		initGroupList(state){
+			Vue.prototype.$axios.post('/queryGroups', {
+					myWxid: util.getMyWxId(),
+					size: 5000
+				})
+				.then(data => {
+					state.groupList = data.data.map(function(item) {
+						return {
+							img: require('@/assets/wechat.png'),
+							name: item.groupName,
+							groupId: item.groupId,
+							isGroup: true,
+							detail: item
+						}
+					});
+				})
+				.catch(() => {});
+		},
+
 		modifyFriend: (state, friend) => {
 			for (var i = 0; i < state.friends.length; i++) {
 				if (state.friends[i].wxid == friend.wxid) {
