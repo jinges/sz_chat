@@ -47,7 +47,6 @@ var ajaxElVm = null;
 var ajaxTimeout = null;
 //输入拦截
 axios.interceptors.request.use(function(config) {
-    debugger;
     //登录页不校验token
     if (['/getToken', '/deviceAndWeChat'].indexOf(config.url) > -1) {
         return config;
@@ -57,12 +56,12 @@ axios.interceptors.request.use(function(config) {
         return Promise.reject('登录校验未通过');
 
     config.headers.common['Authorization'] = 'Bearer:' + util.getToken();
-    if(config.url.includes('other')) {
-        config.url = config.url.replace(/\/?other/,'');
-        axios.defaults.baseURL = config.baseURL = '/other/';
-    } else {    
-        axios.defaults.baseURL = '/api/'
-    }
+    // if(config.url.includes('other')) {
+    //     config.url = config.url.replace(/\/?other/,'');
+    //     axios.defaults.baseURL = config.baseURL = '/other/';
+    // } else {    
+    //     axios.defaults.baseURL = '/api/'
+    // }
     if (ajaxElVm) {
         ajaxElVm.close();
         clearTimeout(ajaxTimeout)

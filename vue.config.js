@@ -8,15 +8,14 @@ if(process.env.VUE_APP_MODE=='development'){
                 '^/other': ''
             }
         },
-            '/api': {
-                target:process.env.VUE_APP_SERVER_URL,
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': ''
-                }
+        '/api': {
+            target:process.env.VUE_APP_SERVER_URL,
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api': ''
             }
-
         }
+    }
 }
 module.exports = {
     devServer: {

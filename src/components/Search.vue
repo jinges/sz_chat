@@ -24,6 +24,7 @@
             <CreateGroup ref="createGroup" @submit="submitCreateGroup"/>
         </el-dialog>
         <el-dialog width="1000px" left title="群发消息" :visible="showgroupMessage" :before-close="closegroupMessage"
+            class="groupMessage"
             destroy-on-close>
             <group-Message></group-Message>
         </el-dialog>

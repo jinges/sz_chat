@@ -46,8 +46,8 @@ import util from '@/util/util.js'
             },
             gettabs(){
                 //查询tags
-                this.$axios.post('/label/queryMyLabel', {
-                        wxid: 'wxid_4ch5cdhvs13y22',tenantId:1
+                this.$axios.post('/queryMyLabel', {
+                        wxid: util.getMyWxId(),tenantId:1
                     })
                     .then(data => {
                         // this.tagArr = data
@@ -57,8 +57,8 @@ import util from '@/util/util.js'
                     .catch(() => {});
             },
             getfriendList(labelName){
-                   this.$axios.post('/myAddressBook/queryMyAddressBookByLabels', {
-                        myWxid: 'wxid_4ch5cdhvs13y22',tenantId:1,labels:[labelName]
+                   this.$axios.post('/queryMyAddressBookByLabels', {
+                        myWxid: util.getMyWxId(),tenantId:1,labels:[labelName]
                     })
                     .then(data => {
                         this.friendList = data;
