@@ -2,6 +2,9 @@
 <div class="groupLeft">
     <div class="title">
             选择用户标签
+            <span style="float: right;">
+                <el-checkbox v-model="openFlag" v-if="groupType == 'groupFriend'">公开</el-checkbox>
+            </span>
     </div>
      <div class="tag">
         <ul>
@@ -13,7 +16,8 @@
             用户列表
             <span>{{friendListLength}}</span>
     </div> 
-    <div class="friendList">
+    <div class="friendList" 
+    v-loading="loading">
         <li v-for="(item,index) in friendList" :key="index">
             <img class="headImg" :src="item.addressBook.headPic" alt="">
             <span>
@@ -29,42 +33,68 @@ import util from '@/util/util.js'
     export default{
         data(){
             return{
+                openFlag:false,
+                loading:true,
                 currIndex:0,
                 tagArr:[
-                    {labelName:'小姐姐'},
-                    {labelName:'你好'}
+                  
                 ],
                 friendList:[],
-                friendListLength:''
+                friendListLength:'',
+                selectTag:{}
             }
             
+        },
+        props:{
+            groupType:{
+                type:String,
+                default:''
+            }
         },
         methods:{
             tagSwitch(index,name){
                 this.currIndex  = index
                 this.getfriendList(name)
+                this.selectTag = this.tagArr[index];
             },
             gettabs(){
                 //查询tags
                 this.$axios.post('/queryMyLabel', {
-                        wxid: util.getMyWxId(),tenantId:1
+                        myWxid: util.getMyWxId(),tenantId:1
                     })
                     .then(data => {
                         // this.tagArr = data
                         //查标签下面的好友
-                        this.getfriendList('小姐姐')
+                        if(data && data.length>0){
+                            this.tagArr = data
+                            this.selectTag = data[0];
+                            this.getfriendList(data[0].labelName)
+                        }else{
+                            this.loading = false;                       
+                            this.tagArr = []
+
+                        }
                     })
                     .catch(() => {});
             },
             getfriendList(labelName){
+                    this.loading = true;
                    this.$axios.post('/queryMyAddressBookByLabels', {
                         myWxid: util.getMyWxId(),tenantId:1,labels:[labelName]
                     })
                     .then(data => {
                         this.friendList = data;
                         this.friendListLength = data.length;
+                        this.loading = false;
                     })
-                    .catch(() => {});
+                    .catch(() => {
+                        this.loading = false;
+                    });
+            }
+        },
+        watch:{
+            selectTag:function(item){
+                this.$emit('returnSelectTag',item)
             }
         },
         created(){
