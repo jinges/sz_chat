@@ -1,6 +1,6 @@
 <template>
 <div style="top:50%;">
-    <group-left @returnSelectTag="returnSelectTag" :groupType="groupType" ref="groupLeft" ></group-left>
+    <group-left @returnSelectTag="returnSelectTag" :groupType="groupType" ref="groupLeft" @returnFriendList="returnFriendList"></group-left>
     <group-right @retunContent="retunRightContent" @returnSendText="returnSendText"></group-right>
     <div class="clear"></div>
     <div style="padding:10px;">
@@ -12,6 +12,7 @@
 <script>
 import groupLeft from './groupLeft.vue'
 import groupRight from './groupRight.vue'
+import util from '@/util/util.js'
 export default{
     data(){
         return{
@@ -20,7 +21,8 @@ export default{
             RightContentSelectData:{} , //右边选中的Selectdata
             LeftSelectTagData:{},
             SendText:'',
-            sendToLoad:false
+            sendToLoad:false,
+            friendList:[]
         }
     },
     props:{
@@ -41,6 +43,9 @@ export default{
             this.RightContentType = type;
             this.RightContentSelectData = item;
         },
+        returnFriendList(item){
+            this.friendList = item
+        },
         returnSelectTag(item){
             this.LeftSelectTagData = item
         },
@@ -48,14 +53,81 @@ export default{
             this.SendText = SendText;
         },
         sendTo(){
+            let tagStr = '';
+            for(let i=0;i<this.LeftSelectTagData.length;i++){
+                if(i == this.LeftSelectTagData.length-1){
+                    tagStr = tagStr +this.LeftSelectTagData[i].labelID
+                }else{
+                    tagStr = tagStr +this.LeftSelectTagData[i].labelID +','
+                }
+            }
             //设置sendToLoad为true避免多次点击
-
-            console.log(this.RightContentType,this.RightContentSelectData,this.LeftSelectTagData)
             //这是发布朋友圈的 多了 this.$refs.groupLeft.openFlag 是否公开的值
             if(this.groupType == 'groupFriend'){
-                console.log(this.$refs.groupLeft.openFlag)
+                this.$axios.post('/postMoment', 
+                    {
+                        "filePath": this.RightContentType != 1 ? this.RightContentSelectData.url : '',
+                        "imei": util.getImei(),
+                        "label": tagStr,
+                        "momentTitle":  this.RightContentType == 1 ? this.RightContentSelectData.title :this.SendText,
+                        "momentType":this.RightContentType,
+                        "myWxid": util.getMyWxId(),
+                        "publicMode": 2
+                    }
+                )
+                .then(data => {
+                    
+                })
+                .catch(() => {
+                    
+                });
             }else{
                  //这是群发消息
+                 //单个循环调用
+                 let fileType = '';
+                 let filePath = ''
+                 if(this.RightContentType == 2 || this.RightContentType == 5){
+                    fileType = 'IMAGE'
+                    filePath  = this.RightContentType.url
+                 }else if(this.RightContentType == 4){
+                    fileType = 'VIDEO'
+                    filePath  = this.RightContentType.url
+                 }else{
+                    fileType = ''
+                    filePath = ''
+                 }
+                for(let i=0;i<this.friendList.length;i++){
+                 let body = {}
+                 if(this.RightContentType == 2 || this.RightContentType == 5 || this.RightContentType == 4){
+                    body =    {
+                            "imei": util.getImei(),
+                            'createTime':new Date().getTime(),
+                            "fileType":fileType,
+                            "fileName":"",
+                            'filePath':filePath,
+                            'fileId':'',
+                            'targetWxid':this.friendList[0].targetWxid,
+                            "myWxid": util.getMyWxId()
+                        }
+                 }else{
+                      body =    {
+                        'createTime':new Date().getTime(),
+                        "imei": util.getImei(),
+                        "myWxid": util.getMyWxId(),
+                        "sendContent":this.RightContentSelectData.title,
+                        'targetWxid':this.friendList[0].targetWxid,
+                    }
+                 }
+                    this.$axios.post('/sendText', 
+                        body
+                    )
+                    .then(data => {
+                        
+                    })
+                    .catch(() => {
+                        
+                    });
+                }
             }
         }
     },
@@ -68,7 +140,7 @@ export default{
             }
         },
         SendText:function(item){
-            if(this.RightContentSelectData.title || item){
+            if(this.RightContentSelectData && this.RightContentSelectData.title || item){
                 this.sendToFlag = false
             }else{
                 this.sendToFlag = true
