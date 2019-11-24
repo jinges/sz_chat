@@ -5,12 +5,13 @@
         <div class="user_info_title">{{item.title}}</div>
         <div class="user_info_wrap">
           <div class="user_info_wrap_li" v-for="(item,uindex) in item.content" :key="uindex">
-            <span class="user_info_wrap_sub">{{item.sub}}</span>
+            <span class="user_info_wrap_sub">{{item.fieldLabel}}</span>
             <span
+              :id="'fieldId'+item.fieldId"
               class="user_info_wrap_text"
               :class="{'editor': (editState && index == 1)}"
               :contenteditable="(editState && index == 1)"
-            >{{item.text}}</span>
+            >{{item.recordValue}}</span>
           </div>
         </div>
       </div>
@@ -52,42 +53,27 @@ export default {
           title: "微信资料",
           content: [
             {
-              sub: "备注",
-              text: "有意向客户有意向客户有意向客户有意向客户有意向客户"
+              fieldLabel: "备注",
+              recordValue: "有意向客户有意向客户有意向客户有意向客户有意向客户"
             },
             {
-              sub: "地区",
-              text: "广东 深圳"
+              fieldLabel: "地区",
+              recordValue: "广东 深圳"
             },
             {
-              sub: "微信号",
-              text: "A1234566"
+              fieldLabel: "微信号",
+              recordValue: "A1234566"
             },
             {
-              sub: "来源",
-              text: "通过手机号添加"
+              fieldLabel: "来源",
+              recordValue: "通过手机号添加"
             }
           ]
         },
         {
           title: "客户档案",
           content: [
-            {
-              sub: "真实姓名",
-              text: "张三"
-            },
-            {
-              sub: "性别",
-              text: "男"
-            },
-            {
-              sub: "偏好",
-              text: "高端车型"
-            },
-            {
-              sub: "学历",
-              text: "本科"
-            }
+           
           ]
         }
       ],
@@ -126,7 +112,10 @@ export default {
           tagName: "高端客户",
           tagId: "456789"
         },
-			]
+      ],
+      imei:'',
+      wxid:'',
+      add:''
     };
   },
   watch: {},
@@ -134,17 +123,23 @@ export default {
   methods: {
     editor() {
 			if(this.editState) {
-				console.log(this.userInfoData)
+        for(let i=0;i<this.userInfoData[1].content.length;i++){
+            let str = 'fieldId'+this.userInfoData[1].content[i].fieldId;
+            this.userInfoData[1].content[i].recordValue = document.getElementById(str).innerText
+        }
 			}
       this.editState = !this.editState;
-      // this.$axios.post('other/momentList', {
-      // 	targetWxid: this.$store.state.currentPengyouquan,
-      // 	imei: util.getImei(),
-      // 	myWxid: util.getMyWxId()
-      // })
-      // .then(() => {
-      // 	debugger;
-      // })
+      if(!this.editState){
+        let obj = {}
+        obj.add = this.add;
+        obj.imei = this.imei;
+        obj.wxid = this.wxid;
+        obj.fieldRecordList = this.userInfoData[1].content;
+        this.$axios.post('/saveCustomer', obj)
+        .then(() => {
+          this.getdata(this.wxid)
+        })
+      }
     },
     getTags() {},
     saveUserInf() {},
@@ -155,9 +150,30 @@ export default {
 		checkTag(index){
       var tag = this.allTags.splice(index, 1);
 			this.tagData = [...this.tagData, ...tag];
-		}
+    },
+    getdata(id){
+        this.$axios.post('/getCustomerFieldRecords',{
+              "imei": util.getImei(),
+              "wxid": id
+            })
+          .then(data => {
+              for(let i=0;i<this.userInfoData[1].content.length;i++){
+                  let str = 'fieldId'+this.userInfoData[1].content[i].fieldId;
+                  document.getElementById(str).innerText = ''
+                  this.userInfoData[1].content[i].recordValue = document.getElementById(str).innerText
+              }
+              this.userInfoData[1].content = data.fieldRecordList;
+              this.imei = data.imei;
+              this.wxid = data.wxid;
+              this.add = data.add;
+          })
+          .catch(() => {
+
+          });
+    }
   },
   created() {
+    // this.getdata();
     // this.loadData();
   }
 };
@@ -191,7 +207,7 @@ export default {
       .user_info_wrap_li {
         position: relative;
         padding: 0.2em;
-
+        min-height: 20px;
         .user_info_wrap_sub {
           color: #aaa;
           width: 4em;
