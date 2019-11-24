@@ -54,6 +54,16 @@ export default{
         },
         sendTo(){
             let tagStr = '';
+            let momentType = '';
+            if(this.RightContentType == 1 ){
+                momentType = 4
+            }else if(this.RightContentType == 2 || this.RightContentType == 5){
+                momentType = 2
+            }else if(this.RightContentType ==3 ){
+                momentType = 1
+            }else if(this.RightContentType == 4){
+                momentType = 3
+            }
             for(let i=0;i<this.LeftSelectTagData.length;i++){
                 if(i == this.LeftSelectTagData.length-1){
                     tagStr = tagStr +this.LeftSelectTagData[i].labelID
@@ -66,11 +76,11 @@ export default{
             if(this.groupType == 'groupFriend'){
                 this.$axios.post('/postMoment', 
                     {
-                        "filePath": this.RightContentType != 1 ? this.RightContentSelectData.url : '',
+                        "filePath": this.RightContentType != 3 ? this.RightContentSelectData.url : '',
                         "imei": util.getImei(),
                         "label": tagStr,
-                        "momentTitle":  this.RightContentType == 1 ? this.RightContentSelectData.title :this.SendText,
-                        "momentType":this.RightContentType,
+                        "momentTitle":  this.RightContentType == 3 ? this.RightContentSelectData.title :this.SendText,
+                        "momentType":momentType,
                         "myWxid": util.getMyWxId(),
                         "publicMode": 2
                     }
@@ -110,19 +120,16 @@ export default{
                             "myWxid": util.getMyWxId()
                         }
                  }else{
-                      body =    {
-                        'createTime':new Date().getTime(),
-                        "imei": util.getImei(),
-                        "myWxid": util.getMyWxId(),
-                        "sendContent":this.RightContentSelectData.title,
-                        'targetWxid':this.friendList[0].targetWxid,
+                        body =    {
+                            'createTime':new Date().getTime(),
+                            "imei": util.getImei(),
+                            "myWxid": util.getMyWxId(),
+                            "sendContent":this.RightContentSelectData.title,
+                            'targetWxid':this.friendList[0].targetWxid,
+                        }
                     }
-                 }
-                    this.$axios.post('/sendText', 
-                        body
-                    )
+                    this.$axios.post('/sendText', body)
                     .then(data => {
-                        
                     })
                     .catch(() => {
                         
