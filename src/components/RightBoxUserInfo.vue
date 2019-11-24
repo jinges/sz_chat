@@ -134,7 +134,7 @@ export default {
   methods: {
     editor() {
 			if(this.editState) {
-				
+				console.log(this.userInfoData)
 			}
       this.editState = !this.editState;
       // this.$axios.post('other/momentList', {
@@ -150,7 +150,6 @@ export default {
     saveUserInf() {},
     removeTag(index) {
 			var tag = this.tagData.splice(index, 1);
-			debugger;
 			this.allTags = [...this.allTags, ...tag];
 		},
 		checkTag(index){
