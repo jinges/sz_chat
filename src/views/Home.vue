@@ -4,14 +4,14 @@
 			<div id="navbar">
 				<Nav @selectNav="selectNav" :face="selfData.headPic" />
 			</div>
-			<div id="subNav">
+			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
 				<transition-group name="slide" tag="div" id="subBox">
 					<Sessions ref="sessions" key="sessions" v-show="currentSubNav=='Sessions'" @selectSession="startChat" />
 					<AddressBook ref="addressBook" key="addressBook" v-show="currentSubNav=='AddressBook'" @selectFriend="selectFriend" />
 				</transition-group>
 			</div>
-			<div id="content">
+			<div id="content" v-show="!isShowAddFriends">
 				<transition name="slide">
 					<Chat ref="chat" v-show="currentContent=='Chat'" v-bind="targetInfo" :myFace="selfData.headPic" />
 				</transition>
@@ -22,10 +22,17 @@
 					<GroupList ref="GroupList" :opt="GroupListlOpt" :myAddressBook="myAddressBook" v-show="currentContent=='GroupList'"></GroupList>
 				</transition>
 			</div>
+			
+			<div v-show="isShowAddFriends" style="width: 100%;">
+				<AddFriends ref="addFriends" id="addFriends" v-show="true"></AddFriends>
+			</div>
 		</div>
 		<transition name="el-zoom-in-center">
 			<!-- <Pengyouquan ref="pengYouQuan" id="pengyouquan" v-show="$store.state.pengyouquanVisible"></Pengyouquan> -->
-			<RightBox ref="RightBox" id="RightBox" v-show="true"></RightBox>
+			<RightBox ref="RightBox" id="RightBox" v-show="!isShowAddFriends"></RightBox>
+		</transition>
+		<transition name="el-zoom-in-center">
+			<AddFriendsProgress ref="addFriendsProgress" id="addFriendsProgress" v-show="isShowAddFriends"></AddFriendsProgress>
 		</transition>
 	</div>
 </template>
@@ -40,6 +47,8 @@
 	import RightBox from '@/components/RightBox.vue'
 	import GroupList from '@/components/GroupList.vue'
 	import Detail from '@/components/Detail.vue'
+	import AddFriends from '@/components/AddFriends.vue'
+	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
 
 	export default {
@@ -59,7 +68,9 @@
 				detailOpt: {
 					disableMsg: false
 				},
-				myAddressBook: {}
+				myAddressBook: {},
+				
+				isShowAddFriends: false
 			}
 		},
 		name: 'home',
@@ -72,16 +83,21 @@
 			Pengyouquan,
 			RightBox,
 			GroupList,
-			Detail
+			Detail,
+			AddFriends,
+			AddFriendsProgress
 		},
 		methods: {
 			selectNav: function(t) {
+				this.isShowAddFriends = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
 					this.currentContent = 'Detail';
 				} else if (t == 'pengyouquan') {
                     this.$store.commit('updatePengyouquanVisible',!this.$store.state.pengyouquanVisible);
+				} else if (t == 'AddFriends') {
+                    this.isShowAddFriends = true;
 				} else {
 					this.currentSubNav = t;
 				}
@@ -199,6 +215,10 @@
 			#content {
 				flex-grow: 3;
 			}
+			
+			#addFriend {
+				
+			}
 		}
 
 		@media screen and (max-width: 1310px) {
@@ -213,7 +233,7 @@
 			border-radius: 0px 6px 6px 0px;
 		}
 
-		#RightBox {
+		#RightBox, #addFriendsProgress {
 			width: 310px;
 			height: 700px;
 			max-height:95%;
