@@ -33,7 +33,7 @@
 				<RightBoxUserImg></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==1">
-				<RightBoxUserInfo></RightBoxUserInfo>
+				<RightBoxUserInfo  ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==2">
 				<Pengyouquan></Pengyouquan>

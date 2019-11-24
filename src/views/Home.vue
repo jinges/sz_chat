@@ -120,6 +120,9 @@
 			startChat: function(target) {
 				this.targetInfo = target;
 				this.currentContent = 'Chat'
+				//请求档案库
+				this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
+				// target.targetId
 			}
 		},
 		mounted: function() {

@@ -108,7 +108,7 @@ export default {
           fileType = "";
           filePath = "";
         }
-        let params = thsi.msgContent(fileType, filePath);
+        let params = this.msgContent(fileType, filePath);
         this.sendGroupMsg(0, params)
         
       }
