@@ -90,6 +90,7 @@
                     if (this.bufferData[messageId]) {
                         this.$message.success('创建群成功');
                         delete this.bufferData[messageId];
+                        // this.$store.commit('initFriends');
                         this.$emit('submit');
                     }
                 }
