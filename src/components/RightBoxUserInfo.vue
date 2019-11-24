@@ -216,6 +216,7 @@ export default {
           margin-right: 0.5em;
           display: block;
           padding: 0.1em;
+          min-height: 1.4em;
           &.editor {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.14);
