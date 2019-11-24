@@ -103,6 +103,7 @@
 				msgScrollId: null, //消息分页ES scrollId
 
 				showGroupMember: false,
+				
 				isAddMember: false, //是否是邀请成员，否则为false
 				selectAtUserId: [] //需要@的群成员
 			}
