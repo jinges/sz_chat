@@ -2,13 +2,13 @@
 <div class="groupLeft">
     <div class="title">
             选择用户标签
-            <span style="float: right;">
+            <!-- <span style="float: right;">
                 <el-checkbox v-model="openFlag" v-if="groupType == 'groupFriend'">公开</el-checkbox>
-            </span>
+            </span> -->
     </div>
      <div class="tag">
         <ul>
-            <li :class="currIndex == index ? 'active' : ''" v-for="(item,index) in tagArr" :key="index"  @click="tagSwitch(index,item.labelName)">{{item.labelName}}</li>
+            <li :class="currIndex.indexOf(index)!=-1 ? 'active' : ''" v-for="(item,index) in tagArr" :key="index"  @click="tagSwitch(index,item.labelName)">{{item.labelName}}</li>
             <div class="clear"></div>
         </ul>
     </div> 
@@ -35,13 +35,14 @@ import util from '@/util/util.js'
             return{
                 openFlag:false,
                 loading:true,
-                currIndex:0,
+                currIndex:[],
                 tagArr:[
                   
                 ],
                 friendList:[],
                 friendListLength:'',
-                selectTag:{}
+                selectTag:[],
+                nameArr:[]
             }
             
         },
@@ -52,35 +53,44 @@ import util from '@/util/util.js'
             }
         },
         methods:{
+            unique(ary,str) {
+                if (ary.indexOf(str)==-1) {
+                    ary.push(str);
+                }else{
+                    ary.splice(ary.indexOf(str), 1)
+                }
+                return ary;
+            },
             tagSwitch(index,name){
-                this.currIndex  = index
-                this.getfriendList(name)
-                this.selectTag = this.tagArr[index];
+                // this.currIndex.push(index)
+                this.currIndex = this.unique(this.currIndex,index)
+                this.getfriendList(this.unique(this.nameArr,name))
+                // this.selectTag.push(this.tagArr[index]);
             },
             gettabs(){
                 //查询tags
-                this.$axios.get('/queryMyLabel', {
-                        wxid: util.getMyWxId(),tenantId:1
+                this.$axios.post('/queryMyLabel', {
+                        myWxid: util.getMyWxId(),tenantId:1
                     })
                     .then(data => {
                         // this.tagArr = data
                         //查标签下面的好友
                         if(data && data.length>0){
                             this.tagArr = data
-                            this.selectTag = data[0];
-                            this.getfriendList(data[0].labelName)
+                            this.selectTag = [];
+                            // this.nameArr.push(data[0].labelName)
+                            this.getfriendList([])
                         }else{
                             this.loading = false;                       
                             this.tagArr = []
 
                         }
-                    })
-                    .catch(() => {});
+                    }).catch(() => {});
             },
             getfriendList(labelName){
                     this.loading = true;
                    this.$axios.post('/queryMyAddressBookByLabels', {
-                        myWxid: util.getMyWxId(),tenantId:1,labels:[labelName]
+                        myWxid: util.getMyWxId(),tenantId:1,labels:labelName
                     })
                     .then(data => {
                         this.friendList = data;
@@ -93,8 +103,19 @@ import util from '@/util/util.js'
             }
         },
         watch:{
-            selectTag:function(item){
-                this.$emit('returnSelectTag',item)
+            currIndex:function(item){
+                if(item.length>0){
+                    let arr = [];
+                    for(let i=0;i<item.length;i++){
+                        arr.push(this.tagArr[item[i]])
+                    }
+                    this.$emit('returnSelectTag',arr)
+                }else{
+                    this.$emit('returnSelectTag',[])
+                }
+            },
+            friendList:function(item){
+                this.$emit('returnFriendList',this.friendList)
             }
         },
         created(){
