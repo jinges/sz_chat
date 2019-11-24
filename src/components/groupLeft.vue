@@ -46,7 +46,7 @@ import util from '@/util/util.js'
             },
             gettabs(){
                 //查询tags
-                this.$axios.post('/queryMyLabel', {
+                this.$axios.get('/queryMyLabel', {
                         wxid: util.getMyWxId(),tenantId:1
                     })
                     .then(data => {

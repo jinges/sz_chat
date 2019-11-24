@@ -106,63 +106,7 @@ export default {
     },
     //发送消息
     send() {
-      if (!this.sendText.trim()) {
-        this.$message.error("发送消息不能为空");
-        return;
-      }
-      this.sendLoading = true;
-      var now = new Date();
-      var url = "sendText";
-      var objId = "targetWxid";
-      if (this.isGroup) {
-        url = "sendGroupText";
-        objId = "groupId";
-      }
-      var param = {
-        createTime: now.getTime(),
-        imei: util.getImei(),
-        myWxid: util.getMyWxId(),
-        sendContent: this.sendText,
-        [objId]: this.targetId
-      };
-      if (this.selectAtUserId.length && this.isGroup) {
-        url = "sendGroupForText";
-        param = {
-          createTime: now.getTime(),
-          imei: util.getImei(),
-          myWxid: util.getMyWxId(),
-          sendContent: this.sendText,
-          groupId: this.targetId,
-          userId: this.selectAtUserId.toString()
-        };
-      }
-
-      this.$axios
-        .post(url, param)
-        .then(data => {
-          this.sendLoading = false;
-          this.sendingMap[data] = true;
-          this.history.push({
-            type: "receiver",
-            media: "text",
-            face: this.myFace,
-            content: this.sendText,
-            time: now.toLocaleString(),
-            sending: true,
-            sendingId: data
-          });
-          this.sendText = "";
-
-          //滚动到底部
-          this.$refs["vs"].scrollBy(
-            {
-              dy: 1000
-            },
-            500,
-            "easeInQuad"
-          );
-        })
-        .catch(() => {});
+      
     }
   }
 };
@@ -171,11 +115,9 @@ export default {
 <style scoped lang="scss">
 .send-area {
   border-top: 1px solid #ddd;
-  position: absolute;
-  left: 60px;
   bottom: 0px;
   height: 180px;
-  width: calc(100% - 60px);
+  width: 100%;
   .tips {
     text-align: right;
     padding: 0px 15px;
