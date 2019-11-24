@@ -1,7 +1,7 @@
 <template>
-    <div class="emotions">
+    <div class="emotions" ref="emojibox">
         <div class="list">
-            <img v-for="e in list" :src="e.img" @click="selected(e)" />
+            <img v-for="(e, index) in list" :src="e.img" @click="selected(e)" :key="index"/>
         </div>
     </div>
 </template>
