@@ -1,30 +1,4 @@
 <template>
-<<<<<<< HEAD
-	<div class="user_info">
-		<div class="user_info_item" v-for="(item,index) in userInfoData">
-			<div class="user_info_title">
-				{{item.title}}
-			</div>
-			<div class="user_info_wrap">
-				<div class="user_info_wrap_li" v-for="(item,index) in item.content">
-					<span class="user_info_wrap_sub">{{item.sub}}</span>
-					<span class="user_info_wrap_text">{{item.text}}</span>
-				</div>
-
-			</div>
-		</div>
-
-		<div class="user_info_item">
-			<div class="user_info_title">
-				标签
-			</div>
-			<div class="user_info_wrap">
-				<span class="user_info_wrap_tag" v-for="(item,index) in tagData" :key="item.index">{{item.tagName}}</span>
-			</div>
-		</div>
-
-	</div>
-=======
   <div class="user_content">
     <div class="user_info">
       <div class="user_info_item" v-for="(item,index) in userInfoData" :key="index">
@@ -62,116 +36,11 @@
       <el-button type="primary" @click="editor()" size="mini">{{editState?'保存':'修改'}}</el-button>
     </div>
   </div>
->>>>>>> dev
 </template>
 
 <script>
 	import util from '@/util/util.js'
 
-<<<<<<< HEAD
-	export default {
-		name: 'RightBoxUserInfo',
-		data() {
-			return {
-				title: '',
-				loading: false,
-				userInfoData: [
-					{
-						title:"微信资料",
-						content:[{
-							sub:"备注",
-							text:"有意向客户有意向客户有意向客户有意向客户有意向客户"
-						},{
-							sub:"地区",
-							text:"广东 深圳"
-						},{
-							sub:"微信号",
-							text:"A1234566"
-						},{
-							sub:"来源",
-							text:"通过手机号添加"
-						}]
-					},{
-						title:"客户档案",
-						content:[{
-							sub:"真实姓名",
-							text:"张三"
-						},{
-							sub:"性别",
-							text:"男"
-						},{
-							sub:"偏好",
-							text:"高端车型"
-						},{
-							sub:"学历",
-							text:"本科"
-						}]
-					}
-				],
-				tagData:[
-					{
-						tagName:"意向客户",
-						tagId:"123456"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户高端客户高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户高端",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					},
-					{
-						tagName:"高端客户",
-						tagId:"456789"
-					}
-				]
-			}
-		},
-		watch: {
-		},
-		components: {
-		},
-		methods: {
-			
-		},
-		created() {
-			// this.loadData();
-		}
-	}
-=======
 export default {
   name: "RightBoxUserInfo",
   data() {
@@ -308,7 +177,6 @@ export default {
     // this.loadData();
   }
 };
->>>>>>> dev
 </script>
 
 <style lang="scss" scoped>
@@ -335,20 +203,6 @@ export default {
 				padding: 12px 0;
 				min-height: 80px;
 
-<<<<<<< HEAD
-				.user_info_wrap_li{
-					position: relative;
-					padding: .2em;
-
-					.user_info_wrap_sub{
-						color: #aaa;
-						width: 4em;
-						position: absolute;
-						left: 1em;
-						text-align: justify;
-        				text-align-last: justify;
-					}
-=======
       .user_info_wrap_li {
         position: relative;
         padding: 0.2em;
@@ -360,7 +214,6 @@ export default {
           text-align: justify;
           text-align-last: justify;
         }
->>>>>>> dev
 
 					.user_info_wrap_text{
 						margin-left: 6.5em;
