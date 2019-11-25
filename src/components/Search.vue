@@ -26,11 +26,11 @@
         </el-dialog>
         <el-dialog width="1000px" left title="群发消息" :visible="showgroupMessage" :before-close="closegroupMessage"
             class="groupMessage">
-            <group-Message groupType="groupMessage"></group-Message>
+            <group-Message groupType="groupMessage" @succ="groupMessageSucc"></group-Message>
         </el-dialog>
          <el-dialog width="1000px" left title="发送朋友圈信息" :visible="showgroupFriend" :before-close="closegroupFriend"
             class="groupMessage">
-            <group-Message groupType="groupFriend"></group-Message>
+            <group-Message groupType="groupFriend" @succ="groupFriendSucc"></group-Message>
         </el-dialog>
 
     </div>
@@ -54,6 +54,12 @@
             }
         },
         methods: {
+            groupMessageSucc(){
+                this.showgroupMessage = false;
+            },
+            groupFriendSucc(){
+                this.showgroupFriend = false;
+            },
             //关闭群发消息弹框
             closegroupMessage(){
                 this.showgroupMessage = false;
