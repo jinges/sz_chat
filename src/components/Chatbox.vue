@@ -62,7 +62,7 @@ export default {
       IMG.src = emotion.img;
       IMG.setAttribute("width", 16);
       IMG.setAttribute("height", 16);
-      IMG.setAttribute("title", "[" + emotion.code + "]");
+      IMG.setAttribute("title",emotion.code);
 
       IMG.onload = () => {
         this.rangCoordinate.insertNode(IMG);
