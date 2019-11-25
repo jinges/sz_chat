@@ -20,47 +20,13 @@
            <content-img  ref="Html" v-show="tabValue == 4" :type='5' @returndata="returndata"></content-img>
         </el-tab-pane>
     </el-tabs>
-    <div class="title" style="margin-top:10px">
-        自定义文案
-    </div>
-	<div>
-        
-		<div class="footer">
-			<div class="toolbar">
-				<font-awesome-icon @click.stop="showEmotion=!showEmotion" icon="smile"></font-awesome-icon>
-				<transition name="slide">
-					<Emotions @emotionBlur="closeEmotions" v-show="showEmotion" @selected="selectEmotion" id="emotions" />
-				</transition>
-			</div>
-			<AtMember :members="isGroup?groupMembers:[]" name-key="nickName" v-model="sendText" :filterMatch="filterMatch" :deleteMatch="deleteMatch" >
-				<!-- custom: with avatars -->
-				<template slot="item" scope="s">
-					<img :src="s.item.face" style="width: 20px;margin-right: 20px;">
-					<span v-text="s.item.nickName"></span>
-				</template>
-               <el-input
-                type="textarea"
-                resize="none"
-                placeholder=""
-                :rows="3"
-                v-model="sendText">
-                </el-input>
-                    <!-- <el-button type="primary" :loading="false" @click="send">发送</el-button> -->
-				<!-- <textarea class="editor" v-model="sendText" ></textarea> -->
-			</AtMember>
-		</div>
-    </div>
 </div>
 </template>
 <script>
-	import Emotions from '@/components/Emotions.vue';
 	import contentText from '@/components/contentText.vue';
-	import contentImg from '@/components/contentImg.vue';
-	import AtMember from 'vue-at/dist/vue-at-textarea';
+    import contentImg from '@/components/contentImg.vue';
  export default{	
      components: {
-            Emotions,
-            AtMember,
             contentText,
             contentImg
 		},
@@ -83,6 +49,9 @@
             }
         },
         methods:{
+            getMsg(item){
+                debugger;
+            },
             //type:1 2 3 4 5
             //item 选中的数据
             returndata(type,item){
