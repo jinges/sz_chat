@@ -1,6 +1,15 @@
 <template>
     <div class="nav">
-        <img :src="face" id="face" @click="settings" />
+        <el-dropdown trigger="click" @command="switchUser" placement="left">
+            <img :src="face" id="face" />
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :key="index" v-for="(item,index) in userdata" :command="item.myWxid">
+                    <img :src="item.headPic"  style="width:30px;height:30px;vertical-align:middle;"/>
+                    <span style="padding-left: 10px;position: relative;margin-top: -10%;">{{item.nickName}}</span>
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+    
         <font-awesome-icon :icon="[activeIndex==0?'fas':'far','comment']" @click="nav('Sessions',0)" :class="{active:activeIndex==0}">
         </font-awesome-icon>
         <font-awesome-icon :icon="[activeIndex==1?'fas':'far','user']" @click="nav('AddressBook',1)" :class="{active:activeIndex==1}">
@@ -21,10 +30,26 @@
         props: ['face'],
         data() {
             return {
-                activeIndex: 0
+                activeIndex: 0,
+                userdata:[]
             }
         },
+        mounted(){
+            this.Alluser()
+        },
         methods: {
+            Alluser(){
+                 this.$axios.post("/deviceAndWeChatList", {})
+                    .then(data => {
+                        this.userdata = data;
+                    })
+                    .catch(() => {
+                    
+                    });
+            },
+            switchUser(c){
+                console.log(c)
+            },
             nav: function(action, index) {
                 if (index != -1) {
                     this.activeIndex = index;
