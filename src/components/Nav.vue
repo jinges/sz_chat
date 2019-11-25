@@ -16,7 +16,9 @@
         </font-awesome-icon>
         <font-awesome-icon :icon="['fab','chrome']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
         </font-awesome-icon>
-        <font-awesome-icon :icon="[activeIndex==3?'fas':'far','user']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}">
+        <font-awesome-icon :icon="chromecast" />
+        <font-awesome-icon :icon="['fab','coffee']"></font-awesome-icon>
+        <font-awesome-icon :icon="[activeIndex==3?'fas':'far','users']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}">
         </font-awesome-icon>
         <font-awesome-icon icon="sign-out-alt" @click="logout" style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
         <font-awesome-icon icon="cog" @click="settings" style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
