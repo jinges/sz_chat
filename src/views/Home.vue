@@ -4,14 +4,14 @@
 			<div id="navbar">
 				<Nav @selectNav="selectNav" :face="selfData.headPic" />
 			</div>
-			<div id="subNav" v-show="!isShowAddFriends">
+			<div id="subNav">
 				<Search ref="search" :searchType="currentSubNav" />
 				<transition-group name="slide" tag="div" id="subBox">
 					<Sessions ref="sessions" key="sessions" v-show="currentSubNav=='Sessions'" @selectSession="startChat" />
-					<AddressBook ref="addressBook" key="addressBook" v-show="currentSubNav=='AddressBook'" @selectFriend="selectFriend" />
+					<AddressBook ref="addressBook" key="addressBook" v-show="currentSubNav=='AddressBook'" @selectFriend="selectFriend" @selectAddressBookTops="selectAddressBookTops"/>
 				</transition-group>
 			</div>
-			<div id="content" v-show="!isShowAddFriends">
+			<div id="content">
 				<transition name="slide">
 					<Chat ref="chat" v-show="currentContent=='Chat'" v-bind="targetInfo" :myFace="selfData.headPic" />
 				</transition>
@@ -19,20 +19,15 @@
 					<Detail ref="detail" v-bind="detailData" :opt="detailOpt" :myAddressBook="myAddressBook" v-show="currentContent=='Detail'" @startChat="startChat"></Detail>
 				</transition>
 				<transition name="slide">
-					<GroupList ref="GroupList" :opt="GroupListlOpt" :myAddressBook="myAddressBook" v-show="currentContent=='GroupList'"></GroupList>
+					<GroupList ref="GroupList" v-show="currentContent=='GroupList'" @selectFriend="selectFriend"></GroupList>
 				</transition>
-			</div>
-			
-			<div v-show="isShowAddFriends" style="width: 100%;">
-				<AddFriends ref="addFriends" id="addFriends" v-show="true"></AddFriends>
+				<transition name="slide">
+					<NewFriend ref="newFriend" v-show="currentContent=='NewFriend'"></NewFriend>
+				</transition>
 			</div>
 		</div>
 		<transition name="el-zoom-in-center">
-			<!-- <Pengyouquan ref="pengYouQuan" id="pengyouquan" v-show="$store.state.pengyouquanVisible"></Pengyouquan> -->
-			<RightBox ref="RightBox" id="RightBox" v-show="!isShowAddFriends"></RightBox>
-		</transition>
-		<transition name="el-zoom-in-center">
-			<AddFriendsProgress ref="addFriendsProgress" id="addFriendsProgress" v-show="isShowAddFriends"></AddFriendsProgress>
+			<RightBox ref="RightBox" id="RightBox" v-show="true"></RightBox>
 		</transition>
 	</div>
 </template>
@@ -46,9 +41,8 @@
 	import Pengyouquan from '@/components/Pengyouquan.vue'
 	import RightBox from '@/components/RightBox.vue'
 	import GroupList from '@/components/GroupList.vue'
+	import NewFriend from '@/components/NewFriend.vue'
 	import Detail from '@/components/Detail.vue'
-	import AddFriends from '@/components/AddFriends.vue'
-	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
 
 	export default {
@@ -57,7 +51,7 @@
 				//聊天对象,id face name
 				targetInfo: {},
 				currentSubNav: 'Sessions',
-				currentContent: 'GroupList',
+				currentContent: '',
 				//个人信息
 				selfData: {},
 				//要展示的微信详情
@@ -68,9 +62,7 @@
 				detailOpt: {
 					disableMsg: false
 				},
-				myAddressBook: {},
-				
-				isShowAddFriends: false
+				myAddressBook: {}
 			}
 		},
 		name: 'home',
@@ -83,21 +75,17 @@
 			Pengyouquan,
 			RightBox,
 			GroupList,
-			Detail,
-			AddFriends,
-			AddFriendsProgress
+			NewFriend,
+			Detail
 		},
 		methods: {
 			selectNav: function(t) {
-				this.isShowAddFriends = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
 					this.currentContent = 'Detail';
 				} else if (t == 'pengyouquan') {
                     this.$store.commit('updatePengyouquanVisible',!this.$store.state.pengyouquanVisible);
-				} else if (t == 'AddFriends') {
-                    this.isShowAddFriends = true;
 				} else {
 					this.currentSubNav = t;
 				}
@@ -107,14 +95,26 @@
 					this.targetInfo = {
 						isGroup: true,
 						targetId: detail.groupId,
-						targetName: detail.groupName
+						targetName: detail.name
 					};
 					this.currentContent = 'Chat'
+
 				} else {
 					this.detailOpt.disableMsg = false;
 					this.myAddressBook = detail;
 					this.detailData = detail.addressBook;
 					this.currentContent = 'Detail';
+				}
+			},
+			selectAddressBookTops: function(type, detail){
+				 if(type == "isGroupList"){
+					this.currentContent = 'GroupList';
+					this.$store.commit('initGroupList');
+
+				} else if(type == 'isNewFriend'){
+					this.currentContent = 'NewFriend';
+					this.$store.commit('initNewFriends');
+
 				}
 			},
 			startChat: function(target) {
@@ -147,7 +147,7 @@
 			websocket.onmessage = (event) => {
 				var json = JSON.parse(event.data);
 				//分发到各个组件
-				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail'].forEach(t => {
+				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend'].forEach(t => {
 					if (this.$refs[t] && this.$refs[t].onWsMsg) {
 						this.$refs[t].onWsMsg(json);
 					}
@@ -215,10 +215,6 @@
 			#content {
 				flex-grow: 3;
 			}
-			
-			#addFriend {
-				
-			}
 		}
 
 		@media screen and (max-width: 1310px) {
@@ -233,7 +229,7 @@
 			border-radius: 0px 6px 6px 0px;
 		}
 
-		#RightBox, #addFriendsProgress {
+		#RightBox {
 			width: 310px;
 			height: 700px;
 			max-height:95%;
