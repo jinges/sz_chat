@@ -30,7 +30,7 @@
 		<!-- 选项卡内容 -->
 		<div class="right-box-container">
 			<div class="right-box-item" v-show="nowIndex==0">
-				<RightBoxUserImg></RightBoxUserImg>
+				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==1">
 				<RightBoxUserInfo :myAddressBook="myAddressBook" ref="RightBoxUserInfo"></RightBoxUserInfo>
@@ -39,7 +39,7 @@
 				<Pengyouquan></Pengyouquan>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==3">
-				<RightBoxTalking></RightBoxTalking>
+				<RightBoxTalking ref="RightBoxTalking"></RightBoxTalking>
 			</div>
 		</div>
 	</div>
@@ -82,7 +82,7 @@
 			Pengyouquan,
 			RightBoxTalking
 		},
-		mounted(){
+		mounted(){ 
 
 		},
 		methods: {
