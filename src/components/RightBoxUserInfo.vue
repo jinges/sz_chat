@@ -160,7 +160,7 @@ export default {
               for(let i=0;i<this.userInfoData[1].content.length;i++){
                   let str = 'fieldId'+this.userInfoData[1].content[i].fieldId;
                   document.getElementById(str).innerText = ''
-                  this.userInfoData[1].content[i].recordValue = document.getElementById(str).innerText
+                  document.getElementById(str).innerText = this.userInfoData[1].content[i].recordValue 
               }
               this.userInfoData[1].content = data.fieldRecordList;
               this.imei = data.imei;
