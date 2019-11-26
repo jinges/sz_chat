@@ -124,6 +124,8 @@
 			startChat: function(target) {
 				/* target.targetId */
 				this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
+				this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
+				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(target.targetId)
 				this.targetInfo = target;
 				this.currentContent = 'Chat'
 			}
