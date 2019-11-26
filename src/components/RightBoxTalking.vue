@@ -31,7 +31,7 @@
 					wxid:this.userid 
 				}).then(data => {
 					this.orderId = data.orderId;
-					this.getkeyword()
+					//this.getkeyword()
 				}).catch(() => {});
 			},
 			getkeyword(){
@@ -43,7 +43,17 @@
 					}).catch(() => {});
 			},
 			search(){
+				if(!this.searchTxt){
+				this.$message({
+					showClose: true,
+					message: '请输入你要搜索的关键词',
+					type: 'error'
+				});
+					return false
+				}else{
+					
 				this.getkeyword();
+				}
 			}
 		},
 		created() {
