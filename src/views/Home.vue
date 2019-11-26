@@ -2,7 +2,7 @@
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
 			<div id="navbar">
-				<Nav @selectNav="selectNav" :face="selfData.headPic" />
+				<Nav @selectNav="selectNav" :face="selfData.headPic" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -88,6 +88,10 @@
 			AddFriendsProgress
 		},
 		methods: {
+			//切换用户刷新页面
+			switchUser(){
+				location.reload();
+			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
 				if (t == 'Settings') {

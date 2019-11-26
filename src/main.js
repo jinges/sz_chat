@@ -49,7 +49,7 @@ var ajaxTimeout = null;
 //输入拦截
 axios.interceptors.request.use(function(config) {
     //登录页不校验token
-    if (['/getToken', '/deviceAndWeChat'].indexOf(config.url) > -1) {
+    if (['/getToken', '/deviceAndWeChatList'].indexOf(config.url) > -1) {
         return config;
     }
 

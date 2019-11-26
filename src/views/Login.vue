@@ -24,7 +24,7 @@
         <transition name="slide">
             <div id="wxSel" v-if="showWxItem">
                 <div class="selectTitle">请选择要登录的微信</div>
-                <div v-for="wx in wxList" class="wxItem" @click="login(wx)">
+                <div v-for="(wx,index) in wxList" class="wxItem" :key="index" @click="login(wx)">
                     <img :src="wx.face" class="face" />
                     <div class="detail">
                         <div class="name">昵称：{{wx.name}}</div>
@@ -81,27 +81,39 @@
                                 this.btnLoading = true;
                                 this.$axios
                                     .post(
-                                        "/deviceAndWeChat", {}, {
+                                        "/deviceAndWeChatList", {}, {
                                             headers: {
                                                 Authorization: "Bearer:" + data.token
                                             }
                                         }
                                     )
                                     .then(d => {
-                                        if (!d.imei || !d.myWxid) {
+                                        if (!d || d.length == 0) {
                                             this.$message.error("当前没有在线的设备与微信");
                                             this.btnText = "立即登录";
                                             this.btnLoading = false;
                                             return;
                                         }
-                                        this.wxList.push({
-                                            face: d.headPic,
-                                            name:d.nickName,
-                                            imei: d.imei,
-                                            wxid: d.myWxid,
-                                            token: data.token,
-                                            exTime: data.expireTime
-                                        });
+                                        for(let i=0;i<d.length;i++){
+                                            this.wxList.push({
+                                                face: d[i].headPic,
+                                                name:d[i].nickName,
+                                                imei: d[i].imei,
+                                                wxid: d[i].myWxid,
+                                                token: data.token,
+                                                exTime: data.expireTime
+                                            });
+                                        }
+		                                localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wxList));
+                                        // this.wxList = d
+                                        // this.wxList.push({
+                                        //     face: d.headPic,
+                                        //     name:d.nickName,
+                                        //     imei: d.imei,
+                                        //     wxid: d.myWxid,
+                                        //     token: data.token,
+                                        //     exTime: data.expireTime
+                                        // });
                                         this.showWxItem = !this.showWxItem;
                                     })
                                     .catch(e => {});
