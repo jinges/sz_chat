@@ -29,7 +29,7 @@
 		</div>
 		<transition name="el-zoom-in-center">
 			<!-- <Pengyouquan ref="pengYouQuan" id="pengyouquan" v-show="$store.state.pengyouquanVisible"></Pengyouquan> -->
-			<RightBox ref="RightBox" id="RightBox" v-show="!isShowAddFriends"></RightBox>
+			<RightBox ref="RightBox" id="RightBox" :myAddressBook='myAddressBook' v-show="!isShowAddFriends && showMore && showUser"></RightBox>
 		</transition>
 		<transition name="el-zoom-in-center">
 			<AddFriendsProgress ref="addFriendsProgress" id="addFriendsProgress" v-show="isShowAddFriends"></AddFriendsProgress>
@@ -70,7 +70,9 @@
 				},
 				myAddressBook: {},
 				
-				isShowAddFriends: false
+				isShowAddFriends: false,
+				showMore: false,
+				showUser: false
 			}
 		},
 		name: 'home',
@@ -94,6 +96,8 @@
 			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
+				this.showUser = false;
+					this.showMore = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
@@ -103,10 +107,14 @@
 				} else if (t == 'AddFriends') {
                     this.isShowAddFriends = true;
 				} else {
+					if(t == 'AddressBook'){
+						this.showUser = true;
+					} 
 					this.currentSubNav = t;
 				}
 			},
 			selectFriend: function(isGroup, detail) {
+					this.showMore = false;
 				if (isGroup) {
 					this.targetInfo = {
 						isGroup: true,
@@ -119,6 +127,7 @@
 					this.myAddressBook = detail;
 					this.detailData = detail.addressBook;
 					this.currentContent = 'Detail';
+					this.showMore = true;
 				}
 			},
 			startChat: function(target) {

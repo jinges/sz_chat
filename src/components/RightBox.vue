@@ -33,7 +33,7 @@
 				<RightBoxUserImg></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==1">
-				<RightBoxUserInfo  ref="RightBoxUserInfo"></RightBoxUserInfo>
+				<RightBoxUserInfo :myAddressBook="myAddressBook" ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==2">
 				<Pengyouquan></Pengyouquan>
@@ -54,6 +54,7 @@
 
 	export default {
 		name: 'RightBox',
+		props:['myAddressBook'],
 		data() {
 			return {
 				title: '',

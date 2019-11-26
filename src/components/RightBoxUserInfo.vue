@@ -1,16 +1,37 @@
 <template>
   <div class="user_content">
     <div class="user_info">
-      <div class="user_info_item" v-for="(item,index) in userInfoData" :key="index">
-        <div class="user_info_title">{{item.title}}</div>
+      <div class="user_info_item">
+        <div class="user_info_title">微信资料</div>
         <div class="user_info_wrap">
-          <div class="user_info_wrap_li" v-for="(item,uindex) in item.content" :key="uindex">
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">备注</span>
+            <span class="user_info_wrap_text">{{myAddressBook.remark}}</span>
+          </div>
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">地区</span>
+            <span class="user_info_wrap_text">{{myAddressBook.addressBook.region}}</span>
+          </div>
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">微信号</span>
+            <span class="user_info_wrap_text">{{myAddressBook.targetWxid}}</span>
+          </div>
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">来源</span>
+            <span class="user_info_wrap_text">{{myAddressBook.addFrom}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="user_info_item">
+        <div class="user_info_title">客户档案</div>
+        <div class="user_info_wrap">
+          <div class="user_info_wrap_li" v-for="(item,index) in userInfoData" :key="index">
             <span class="user_info_wrap_sub">{{item.fieldLabel}}</span>
             <span
               :id="'fieldId'+item.fieldId"
-              class="user_info_wrap_text"
-              :class="{'editor': (editState && index == 1)}"
-              :contenteditable="(editState && index == 1)"
+              class="user_info_wrap_text userEdit"
+              :class="{'editor': editState}"
+              :contenteditable="editState"
             >{{item.recordValue}}</span>
           </div>
         </div>
@@ -20,7 +41,7 @@
         <div class="user_info_wrap">
           <p class="tag_tip" v-show="editState">已添加</p>
           <span class="user_info_wrap_tag" v-for="(item,index) in tagData" :key="index">
-            {{item.tagName}}
+            {{item.labelName}}
             <em class="del el-icon-close" @click="removeTag(index)" v-show="editState"></em>
           </span>
           <div v-show="editState">
@@ -32,6 +53,7 @@
         </div>
       </div>
     </div>
+    {{editState}}{{flag}}12344
     <div class="user_bottom">
       <el-button type="primary" @click="editor()" size="mini">{{editState?'保存':'修改'}}</el-button>
     </div>
@@ -43,106 +65,100 @@
 
 export default {
   name: "RightBoxUserInfo",
+  props: ['myAddressBook'],
   data() {
     return {
       title: "",
       loading: false,
       editState: false,
-      userInfoData: [
-        {
-          title: "微信资料",
-          content: [
-            {
-              fieldLabel: "备注",
-              recordValue: "有意向客户有意向客户有意向客户有意向客户有意向客户"
-            },
-            {
-              fieldLabel: "地区",
-              recordValue: "广东 深圳"
-            },
-            {
-              fieldLabel: "微信号",
-              recordValue: "A1234566"
-            },
-            {
-              fieldLabel: "来源",
-              recordValue: "通过手机号添加"
-            }
-          ]
-        },
-        {
-          title: "客户档案",
-          content: [
-           
-          ]
-        }
-      ],
-      tagData: [
-        {
-          tagName: "意向客户",
-          tagId: "123456"
-        },
-        {
-          tagName: "高端客户",
-          tagId: "456789"
-        },
-        {
-          tagName: "高端客户",
-          tagId: "456789"
-        },
-        {
-          tagName: "高端客户",
-          tagId: "456789"
-        },
-        {
-          tagName: "高端客户高端客户高端客户",
-          tagId: "456789"
-        }
-			],
-			allTags:[
-        {
-          tagName: "意向客户",
-          tagId: "123456"
-        },
-        {
-          tagName: "高端客户",
-          tagId: "456789"
-        },
-        {
-          tagName: "高端客户",
-          tagId: "456789"
-        },
-      ],
-      imei:'',
-      wxid:'',
-      add:''
+      userInfoData: [],
+      tagData: [],
+      allTags:[],
+      flag:1,
+      imei:util.getImei(),
+      targetWxid: myAddressBook.targetWxid,
+      add:'',
+      myWxid: util.getMyWxId()
     };
   },
-  watch: {},
+  watch: {
+    myAddressBook(newObj){
+      debugger;
+      this.getLoadData(newObj);
+    }
+  },
   components: {},
   methods: {
+    getLoadData(obj){
+      this.imei = util.getImei();
+      this.targetWxid = obj.targetWxid;
+      this.myWxid = util.getMyWxId();
+      this.editState = false;
+      this.allTags = [];
+      this.getdata();
+      this.getTags({
+            "tenantId": this.imei,
+						 myWxid: util.getMyWxId()
+          });
+    },
     editor() {
-			if(this.editState) {
-        for(let i=0;i<this.userInfoData[1].content.length;i++){
-            let str = 'fieldId'+this.userInfoData[1].content[i].fieldId;
-            this.userInfoData[1].content[i].recordValue = document.getElementById(str).innerText
-        }
-			}
+      debugger;
       this.editState = !this.editState;
-      if(!this.editState){
-        let obj = {}
-        obj.add = this.add;
-        obj.imei = this.imei;
-        obj.wxid = this.wxid;
-        obj.fieldRecordList = this.userInfoData[1].content;
-        this.$axios.post('/saveCustomer', obj)
-        .then(() => {
-          this.getdata(this.wxid)
-        })
+      this.flag+=1;
+      Vue.set(editState, true);
+      if(!!this.editState){
+      this.getTags({
+            "tenantId": this.imei
+          });
+      } else {
+        this.saveTag();
+        this.saveUserInf();
       }
     },
-    getTags() {},
-    saveUserInf() {},
+    getTags(params) {
+      this.$axios.post('/queryMyLabel', params)
+        .then(data => {
+          if(params.myWxid) {
+            this.tagData = data;
+          } else {
+            this.allTags = data;
+          }
+        })
+
+    },
+    saveTag(){
+      let tags = [];
+      this.tagData.map(item=>{
+        tags.push(item.labelName);
+      })
+      this.$axios.post('/setTag',{
+             myWxid: this.getMyWxId,
+             targetWxid: this.targetWxid,
+             Tag: tags,
+             imei: this.imei,
+          })
+        .then(data => {
+          debugger;
+        })
+    },
+    saveUserInf() {
+      debugger;
+      let fieldRecordList = _this.userInfoData;
+      let _this = this;
+      let tags = document.querySelectorAll('.userEdit');
+      tags.forEach((v,k)=>{
+        fieldRecordList[k]['recordValue'] = v.innerHTML;
+        })
+      this.$axios.post('/saveCustomer',{
+             add: 1,
+             wxid: this.targetWxid,
+             fieldRecordList: fieldRecordList,
+             imei: this.imei,
+          })
+        .then(data => {
+          debugger;
+        })
+    },
     removeTag(index) {
 			var tag = this.tagData.splice(index, 1);
 			this.allTags = [...this.allTags, ...tag];
@@ -151,28 +167,21 @@ export default {
       var tag = this.allTags.splice(index, 1);
 			this.tagData = [...this.tagData, ...tag];
     },
-    getdata(id){
+    getdata(){
         this.$axios.post('/getCustomerFieldRecords',{
               "imei": util.getImei(),
-              "wxid": id
+              "wxid": this.targetWxid
             })
           .then(data => {
-              for(let i=0;i<this.userInfoData[1].content.length;i++){
-                  let str = 'fieldId'+this.userInfoData[1].content[i].fieldId;
-                  document.getElementById(str).innerText = ''
-                  document.getElementById(str).innerText = this.userInfoData[1].content[i].recordValue 
-              }
-              this.userInfoData[1].content = data.fieldRecordList;
-              this.imei = data.imei;
-              this.wxid = data.wxid;
-              this.add = data.add;
+              this.userInfoData = data.fieldRecordList;
           })
-          .catch(() => {
-
-          });
     }
   },
+  mounted() {
+  },
   created() {
+    this.getLoadData(this.myAddressBook);
+    // this.getUserInf();
     // this.getdata();
     // this.loadData();
   }
