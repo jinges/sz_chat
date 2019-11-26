@@ -12,7 +12,8 @@
 				<div class="title" @click="showAddFriendDialog()"><i class="el-icon-plus"></i>添加</div>
 				<div class="type-list">
 					<div class="type-item on" show-type="">全部</div>
-					<div class="type-item" show-type="需好友验证">等待中</div>
+					<div class="type-item" show-type="等待添加">等待中</div>
+					<div class="type-item" show-type="需好友验证">需好友验证</div>
 					<div class="type-item" show-type="添加成功">已添加</div>
 					<div class="type-item" show-type="对方已拒绝">被拒绝</div>
 					<div class="type-item" show-type="未回应">未回应</div>
@@ -36,7 +37,8 @@
 							<div class="phone">{{item.wxid}}</div>
 							<div class="addTimes">{{item.createdAt}}</div>
 							<div class="status">
-								<div style="color: rgb(122, 171, 94);" v-if="item.status=='需好友验证'">等待添加</div>
+								<div style="color: rgb(122, 171, 94);" v-if="item.status=='等待添加'">等待添加</div>
+								<div style="color: rgb(122, 171, 94);" v-if="item.status=='需好友验证'">需好友验证</div>
 								<div style="color: #C0C4CC;" v-if="item.status=='添加成功'">添加成功</div>
 								<div style="color: rgb(218, 0, 18);" v-if="item.status=='对方已拒绝'">对方已拒绝</div>
 								<div style="color: rgb(179, 120, 78);" v-if="item.status=='未回应'">未回应</div>
@@ -45,7 +47,7 @@
 							</div>
 							<div class="icon" style="font-size: 180%;">
 								<i class="el-icon-success" v-if="item.status=='添加成功' || item.status=='好友已经存在'"></i>
-								<i class="el-icon-warning" v-if="item.status=='需好友验证' || item.status=='未回应'"></i>
+								<i class="el-icon-warning" v-if="item.status=='需好友验证' || item.status=='未回应' || item.status=='等待添加'"></i>
 								<i class="el-icon-error" v-if="item.status=='对方已拒绝' || item.status=='查找失败'"></i>
 							</div>
 						</div>
@@ -78,11 +80,14 @@
 							<el-upload
 							  class="upload-demo"
 							  ref="upload"
-							  action="/importAddfriendExcel"
+							  action="/api/importAddfriendExcel"
 							  :on-preview="handlePreview"
 							  :on-remove="handleRemove"
 							  :file-list="fileList"
-							  :auto-upload="false">
+							  :auto-upload="false"
+							  :data="{imei: imei}"
+							  :headers="batchAddHeaders">
+							  <el-input type="hidden" name="imei" value="1"></el-input>
 							  <el-input slot="trigger" placeholder="请选择名单文件" readonly="readonly" suffix-icon="el-icon-folder"></el-input>
 							  <!-- <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
 							  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
@@ -97,11 +102,11 @@
 					</el-form>
 				</el-tab-pane>
 				<el-tab-pane label="指定添加" name="appointAdd">
-					<el-form ref="appointAddForm" :model="appointAddFormData" hide-required-asterisk status-icon style="padding: 0 20px;">
-						<el-form-item label="添加指定的微信好友(该好友将优化被添加)">
+					<el-form ref="appointAddForm" :rules="appointAddRules" :model="appointAddFormData" hide-required-asterisk status-icon style="padding: 0 20px;">
+						<el-form-item label="添加指定的微信好友(该好友将优化被添加)" prop="wxid">
 							<el-input v-model="appointAddFormData.wxid" placeholder="请输入对方手机号码"></el-input>
 						</el-form-item>
-						<el-form-item label="打招呼消息" prop="sendWord">
+						<el-form-item label="打招呼消息" prop="msg">
 							<el-input v-model="appointAddFormData.msg" placeholder="您好!"></el-input>
 						</el-form-item>
 						<el-form-item style="text-align: center;">
@@ -153,6 +158,7 @@
 	export default {
 		data() {
 			return {
+				imei: util.getImei(),
 				showType: '',
 				isShowAddFriendDialog: false,
 				isShowExportAddFriendDialog: false,
@@ -173,6 +179,22 @@
 					sendWord: '你好，我是' + JSON.parse(util.getMyWxInfo()).nickName,
 					wxid: '',
 					msg: ''
+				},
+				appointAddRules: {
+				    wxid: [{
+				        required: true,
+				        message: "微信号不能为空",
+				        trigger: "blur"
+				    }],
+				    msg: [{
+				        required: true,
+				        message: "打招呼不能为空",
+				        trigger: "blur"
+				    }]
+				},
+				batchAddHeaders: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: 'Bearer:' + util.getToken()
 				}
 			}
 		},
@@ -205,7 +227,10 @@
 							break;
 							case '等待添加':
 								this.addFriendsWaitCount ++;
-							break;
+								break;
+							case '需好友验证':
+								this.addFriendsWaitVerificationCount ++;
+								break;
 						}
 					}
 					this.addFriendsInfo = data;
@@ -215,6 +240,14 @@
 			// 弹出添加好友页面
 			showAddFriendDialog: function() {
 				this.isShowAddFriendDialog = true;
+				this.addType = 'batchAdd';
+				this.appointAddFormData = {
+					imei: util.getImei(),
+					myWxid: util.getMyWxId(),
+					sendWord: '你好，我是' + JSON.parse(util.getMyWxInfo()).nickName,
+					wxid: '',
+					msg: ''
+				}
 			},
 			// 关闭添加好友页面
 			closeAddFriendDialog: function() {
@@ -246,6 +279,8 @@
 			// 导入Excel批量添加
 			onSubmitBatchAdd: function() {
 				this.$refs.upload.submit();
+				this.closeAddFriendDialog();
+				this.getAddFriendInfo();
 			}
 		},
 		mounted: function() {
@@ -450,5 +485,9 @@
 	
 	.el-upload {
 		width: 100%;
+	}
+	
+	.el-form-item__content {
+		line-height: 0;
 	}
 </style>

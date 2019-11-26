@@ -11,6 +11,10 @@
 				<div class="value">{{addFriendsWaitCount}}</div>
 			</div>
 			<div class="progress-info">
+				<div class="name">需好友验证</div>
+				<div class="value">{{addFriendsWaitVerificationCount}}</div>
+			</div>
+			<div class="progress-info">
 				<div class="name">添加成功</div>
 				<div class="value">{{addFriendsSuccessCount}}</div>
 			</div>
@@ -42,6 +46,7 @@
 			return {
 				addFriendsAllCount: 0,
 				addFriendsWaitCount: 0,
+				addFriendsWaitVerificationCount: 0,
 				addFriendsSuccessCount: 0,
 				addFriendsRefuseCount: 0,
 				addFriendsUnansweredCount: 0,
@@ -73,8 +78,11 @@
 						case '好友已经存在':
 							this.addFriendsRepeatCount++;
 							break;
-						case '需好友验证':
+						case '等待添加':
 							this.addFriendsWaitCount ++;
+							break;
+						case '需好友验证':
+							this.addFriendsWaitVerificationCount ++;
 							break;
 					}
 				}
