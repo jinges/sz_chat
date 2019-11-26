@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar">
+  <div class="toolbar" style="border-bottom: 1px solid #e9e2e2">
     <div class="send-area">
       <div class="icons" :style="options.toolbar || {}">
         <font-awesome-icon @click.stop="showEmotion=!showEmotion" icon="smile"></font-awesome-icon>
@@ -22,7 +22,7 @@
         :style="{color: options.color, background: options.background}"
       ></div>
       <div class="tips">
-        <el-button type="success" @click="send()" :style="options.btn || {}" size="mini">发送</el-button>
+        <!-- <el-button type="success" @click="send()" :style="options.btn || {}" size="mini">发送</el-button> -->
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
       IMG.src = emotion.img;
       IMG.setAttribute("width", 16);
       IMG.setAttribute("height", 16);
-      IMG.setAttribute("title", "[" + emotion.code + "]");
+      IMG.setAttribute("title",emotion.code);
 
       IMG.onload = () => {
         this.rangCoordinate.insertNode(IMG);
@@ -122,7 +122,7 @@ export default {
 <style scoped lang="scss">
 .send-area {
   bottom: 0px;
-  height: 180px;
+  height: 99px;
   width: 100%;
   .tips {
     text-align: right;
@@ -132,8 +132,8 @@ export default {
   }
   .icons {
     padding: 0px 10px;
-    height: 30px;
-    line-height: 30px;
+    height: 20px;
+    line-height: 20px;
     position: relative;
     background: #fff;
     color: #000;
@@ -159,7 +159,7 @@ export default {
     }
   }
   .myarea {
-    height: 108px;
+    height: 70px;
     padding: 5px 15px;
     color: #fff;
     background: 'rgba(0,0,0,.4)';

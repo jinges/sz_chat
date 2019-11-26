@@ -111,7 +111,7 @@ export default{
         min-height: 123px;
     }
     .content-img li img{
-        width: 120x;
+        width: 120px;
         height: 95px;
     }
     .content-img li div{
