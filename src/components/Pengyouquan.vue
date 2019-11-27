@@ -67,7 +67,7 @@
 				}
 			},
 			loadData() {
-				this.list = [];
+				let $this = this;
 				this.loading = true;
 				if (this.$store.state.currentPengyouquan) {
 					this.$axios.post('/momentListByWxid', {
@@ -75,14 +75,18 @@
 							imei: util.getImei(),
 							myWxid: util.getMyWxId()
 						})
-						.then(() => {})
+						.then((data) => {
+							
+						})
 						.catch(() => {});
 				} else {
 					this.$axios.post('/momentList', {
 							imei: util.getImei(),
 							myWxid: util.getMyWxId()
 						})
-						.then(() => {})
+						.then((data) => {
+
+						})
 						.catch(() => {});
 				}
 			}

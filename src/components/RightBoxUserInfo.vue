@@ -177,7 +177,7 @@ export default {
   mounted() {
   },
   created() {
-    this.getLoadData(this.myAddressBook);
+    // this.getLoadData(this.myAddressBook);
     // this.getUserInf();
     // this.getdata();
     // this.loadData();
