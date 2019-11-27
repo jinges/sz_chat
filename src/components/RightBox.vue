@@ -54,7 +54,7 @@
 
 	export default {
 		name: 'RightBox',
-		props:['myAddressBook'],
+		props:['myAddressBook', 'nowIndex'],
 		data() {
 			return {
 				title: '',
@@ -72,8 +72,7 @@
 				},{
 					name:"沟通话术",
 					svg:'svgTalking'
-				}],
-				nowIndex:1
+				}]
 			}
 		},
 		components: {

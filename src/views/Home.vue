@@ -32,7 +32,7 @@
 		</div>
 		<transition name="el-zoom-in-center">
 			<!-- <Pengyouquan ref="pengYouQuan" id="pengyouquan" v-show="$store.state.pengyouquanVisible"></Pengyouquan> -->
-			<RightBox ref="RightBox" id="RightBox" :myAddressBook='myAddressBook' v-show="!isShowAddFriends && showMore && showUser"></RightBox>
+			<RightBox ref="RightBox" id="RightBox" :nowIndex='nowIndex' :myAddressBook='myAddressBook' v-show="!isShowAddFriends && showMore && showUser"></RightBox>
 		</transition>
 		<transition name="el-zoom-in-center">
 			<AddFriendsProgress ref="addFriendsProgress" id="addFriendsProgress" v-show="isShowAddFriends"></AddFriendsProgress>
@@ -76,7 +76,8 @@
 				
 				isShowAddFriends: false,
 				showMore: false,
-				showUser: false
+				showUser: true,
+				nowIndex:1
 			}
 		},
 		name: 'home',
@@ -112,13 +113,13 @@
 				} else if (t == 'AddFriends') {
                     this.isShowAddFriends = true;
 				} else {
-					// if(t == 'AddressBook'){
-					// 	this.showUser = true;
-					// } 
+					this.showUser = true;
 					this.currentSubNav = t;
 				}
 			},
 			selectFriend: function(isGroup, detail) {
+				this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(detail.targetWxid,'')
+				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(detail.targetWxid)
 					this.showMore = false;
 				if (isGroup) {
 					this.targetInfo = {
@@ -137,6 +138,7 @@
 				this.$store.commit('updatePengyouquanVisible', true);
 				this.$store.commit('setCurrentPengyouquan', detail.addrBookId);
 				}
+				this.nowIndex = 1;
 			},
 			selectAddressBookTops: function(type, detail){
 				 if(type == "isGroupList"){
@@ -150,16 +152,18 @@
 				}
 			},
 			startChat: function(target) {
+					this.showMore = true;
 				/* target.targetId */
 				// this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
 				this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
 				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(target.targetId)
 				this.targetInfo = target;
-				this.currentContent = 'Chat'
+				this.currentContent = 'Chat';
+				this.nowIndex = 3;
 			},
 			listenMsg(msg){
-				let targetId = this.targetInfo.targetId
-				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(targetId,msg)
+				debugger;
+				this.$refs.RightBox.$refs.RightBoxTalking.getkeyword(msg)
 			}
 		},
 		mounted: function() {
