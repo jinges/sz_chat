@@ -64,12 +64,12 @@
 
 export default {
   name: "RightBoxUserInfo",
-  props: ['myAddressBook'],
+  props: ['myAddressBook', 'editState'],
   data() {
     return {
       title: "",
       loading: false,
-      editState: false,
+      editState: editState,
       userInfoData: [],
       tagData: [],
       allTags:[],
@@ -83,6 +83,9 @@ export default {
   watch: {
     myAddressBook(newObj){
       this.getLoadData(newObj);
+    },
+    editState(state){
+      this.editState = state;
     }
   },
   components: {},
@@ -91,7 +94,6 @@ export default {
       this.imei = util.getImei();
       this.targetWxid = obj.targetWxid;
       this.myWxid = util.getMyWxId();
-      this.editState = false;
       this.allTags = [];
       this.getdata();
       this.getTags({
@@ -120,7 +122,6 @@ export default {
             $this.allTags = data;
           }
         })
-
     },
     saveTag(){
       let tags = [];

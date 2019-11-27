@@ -33,7 +33,7 @@
 				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==1">
-				<RightBoxUserInfo :myAddressBook="myAddressBook" ref="RightBoxUserInfo"></RightBoxUserInfo>
+				<RightBoxUserInfo :myAddressBook="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==2">
 				<Pengyouquan></Pengyouquan>
