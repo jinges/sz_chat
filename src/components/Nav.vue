@@ -3,13 +3,12 @@
         <el-dropdown trigger="click" @command="switchUser" placement="left">
             <img :src="face" id="face" />
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item :key="index" v-for="(item,index) in userdata" :command="item.myWxid">
-                    <img :src="item.headPic"  style="width:30px;height:30px;vertical-align:middle;"/>
-                    <span style="padding-left: 10px;position: relative;margin-top: -10%;">{{item.nickName}}</span>
+                <el-dropdown-item :key="index" v-for="(item,index) in userdata" :command="composeValue(item)">
+                    <img :src="item.face"  style="width:30px;height:30px;vertical-align:middle;"/>
+                    <span style="padding-left: 10px;position: relative;margin-top: -10%;">{{item.name}}</span>
                 </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-    
         <font-awesome-icon :icon="[activeIndex==0?'fas':'far','comment']" @click="nav('Sessions',0)" :class="{active:activeIndex==0}">
         </font-awesome-icon>
         <font-awesome-icon :icon="[activeIndex==1?'fas':'far','user']" @click="nav('AddressBook',1)" :class="{active:activeIndex==1}">
@@ -21,7 +20,8 @@
         <font-awesome-icon :icon="[activeIndex==3?'fas':'far','user']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}">
         </font-awesome-icon>
         <font-awesome-icon icon="sign-out-alt" @click="logout" style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
-        <font-awesome-icon icon="cog" @click="settings" style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
+         <font-awesome-icon icon="cog"  @click="settings" style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
+       
     </div>
 </template>
 
@@ -40,17 +40,32 @@
             this.Alluser()
         },
         methods: {
+            composeValue(item){
+                return item
+            },
             Alluser(){
-                 this.$axios.post("/deviceAndWeChatList", {})
+                /*  this.$axios.post("/deviceAndWeChatList", {})
                     .then(data => {
                         this.userdata = data;
                     })
                     .catch(() => {
                     
-                    });
+                    }); */
+                this.userdata = JSON.parse(localStorage.getItem('__WBS__H5__GLOBAL__WXLIST', this.wxList));
             },
-            switchUser(c){
-                console.log(c)
+            switchUser(wx){
+                // if(wx.wxid != util.getMyWxId()){
+                    util.removeToken();
+                    util.removeExTime();
+                    util.removeImei();
+                    util.removeMyWxId();
+                    util.setToken(wx.token);
+                    util.setExTime(wx.exTime);
+                    util.setImei(wx.imei);
+                    util.setMyWxId(wx.wxid);
+                    this.$emit('switchUser') 
+                // }
+                //切换用户   
             },
             nav: function(action, index) {
                 if (index != -1) {

@@ -30,16 +30,16 @@
 		<!-- 选项卡内容 -->
 		<div class="right-box-container">
 			<div class="right-box-item" v-show="nowIndex==0">
-				<RightBoxUserImg></RightBoxUserImg>
+				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==1">
-				<RightBoxUserInfo  ref="RightBoxUserInfo"></RightBoxUserInfo>
+				<RightBoxUserInfo :myAddressBook="myAddressBook" ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==2">
 				<Pengyouquan></Pengyouquan>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==3">
-				<RightBoxTalking></RightBoxTalking>
+				<RightBoxTalking ref="RightBoxTalking"></RightBoxTalking>
 			</div>
 		</div>
 	</div>
@@ -54,6 +54,7 @@
 
 	export default {
 		name: 'RightBox',
+		props:['myAddressBook'],
 		data() {
 			return {
 				title: '',
@@ -81,7 +82,7 @@
 			Pengyouquan,
 			RightBoxTalking
 		},
-		mounted(){
+		mounted(){ 
 
 		},
 		methods: {

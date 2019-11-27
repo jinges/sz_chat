@@ -2,7 +2,7 @@
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
 			<div id="navbar">
-				<Nav @selectNav="selectNav" :face="selfData.headPic" />
+				<Nav @selectNav="selectNav" :face="selfData.headPic" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -27,7 +27,11 @@
 			</div>
 		</div>
 		<transition name="el-zoom-in-center">
-			<RightBox ref="RightBox" id="RightBox" v-show="true"></RightBox>
+			<!-- <Pengyouquan ref="pengYouQuan" id="pengyouquan" v-show="$store.state.pengyouquanVisible"></Pengyouquan> -->
+			<RightBox ref="RightBox" id="RightBox" :myAddressBook='myAddressBook' v-show="!isShowAddFriends && showMore && showUser"></RightBox>
+		</transition>
+		<transition name="el-zoom-in-center">
+			<AddFriendsProgress ref="addFriendsProgress" id="addFriendsProgress" v-show="isShowAddFriends"></AddFriendsProgress>
 		</transition>
 	</div>
 </template>
@@ -62,7 +66,11 @@
 				detailOpt: {
 					disableMsg: false
 				},
-				myAddressBook: {}
+				myAddressBook: {},
+				
+				isShowAddFriends: false,
+				showMore: false,
+				showUser: false
 			}
 		},
 		name: 'home',
@@ -79,7 +87,14 @@
 			Detail
 		},
 		methods: {
+			//切换用户刷新页面
+			switchUser(){
+				location.reload();
+			},
 			selectNav: function(t) {
+				this.isShowAddFriends = false;
+				this.showUser = false;
+					this.showMore = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
@@ -87,10 +102,14 @@
 				} else if (t == 'pengyouquan') {
                     this.$store.commit('updatePengyouquanVisible',!this.$store.state.pengyouquanVisible);
 				} else {
+					if(t == 'AddressBook'){
+						this.showUser = true;
+					} 
 					this.currentSubNav = t;
 				}
 			},
 			selectFriend: function(isGroup, detail) {
+					this.showMore = false;
 				if (isGroup) {
 					this.targetInfo = {
 						isGroup: true,
@@ -104,6 +123,7 @@
 					this.myAddressBook = detail;
 					this.detailData = detail.addressBook;
 					this.currentContent = 'Detail';
+					this.showMore = true;
 				}
 			},
 			selectAddressBookTops: function(type, detail){
@@ -120,6 +140,8 @@
 			startChat: function(target) {
 				/* target.targetId */
 				this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
+				this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
+				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(target.targetId)
 				this.targetInfo = target;
 				this.currentContent = 'Chat'
 			}
