@@ -4,14 +4,14 @@
 			<div id="navbar">
 				<Nav @selectNav="selectNav" :face="selfData.headPic" @switchUser="switchUser"/>
 			</div>
-			<div id="subNav">
+			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
 				<transition-group name="slide" tag="div" id="subBox">
 					<Sessions ref="sessions" key="sessions" v-show="currentSubNav=='Sessions'" @selectSession="startChat" />
 					<AddressBook ref="addressBook" key="addressBook" v-show="currentSubNav=='AddressBook'" @selectFriend="selectFriend" @selectAddressBookTops="selectAddressBookTops"/>
 				</transition-group>
 			</div>
-			<div id="content">
+			<div id="content" v-show="!isShowAddFriends">
 				<transition name="slide">
 					<Chat ref="chat" v-show="currentContent=='Chat'" v-bind="targetInfo" :myFace="selfData.headPic" />
 				</transition>
@@ -24,6 +24,10 @@
 				<transition name="slide">
 					<NewFriend ref="newFriend" v-show="currentContent=='NewFriend'"></NewFriend>
 				</transition>
+			</div>
+			
+			<div v-show="isShowAddFriends" style="width: 100%;">
+				<AddFriends ref="addFriends" id="addFriends" v-show="true"></AddFriends>
 			</div>
 		</div>
 		<transition name="el-zoom-in-center">
@@ -47,6 +51,8 @@
 	import GroupList from '@/components/GroupList.vue'
 	import NewFriend from '@/components/NewFriend.vue'
 	import Detail from '@/components/Detail.vue'
+	import AddFriends from '@/components/AddFriends.vue'
+	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
 
 	export default {
@@ -84,7 +90,9 @@
 			RightBox,
 			GroupList,
 			NewFriend,
-			Detail
+			Detail,
+			AddFriends,
+			AddFriendsProgress
 		},
 		methods: {
 			//切换用户刷新页面
@@ -101,6 +109,8 @@
 					this.currentContent = 'Detail';
 				} else if (t == 'pengyouquan') {
                     this.$store.commit('updatePengyouquanVisible',!this.$store.state.pengyouquanVisible);
+				} else if (t == 'AddFriends') {
+                    this.isShowAddFriends = true;
 				} else {
 					if(t == 'AddressBook'){
 						this.showUser = true;
@@ -253,7 +263,7 @@
 			border-radius: 0px 6px 6px 0px;
 		}
 
-		#RightBox {
+		#RightBox, #addFriendsProgress {
 			width: 310px;
 			height: 700px;
 			max-height:95%;
