@@ -193,7 +193,6 @@
 				    }]
 				},
 				batchAddHeaders: {
-					'Content-Type': 'multipart/form-data',
 					Authorization: 'Bearer:' + util.getToken()
 				}
 			}
