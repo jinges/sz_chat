@@ -119,6 +119,8 @@
 				}
 			},
 			selectFriend: function(isGroup, detail) {
+				this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(detail.targetWxid,'')
+				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(detail.targetWxid,'')
 					this.showMore = false;
 				if (isGroup) {
 					this.targetInfo = {

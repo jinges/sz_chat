@@ -1,11 +1,29 @@
 <template>
-		<div>
+		<div class="rightboxtalking">
 			<div class="search">
 				<el-input placeholder="请输入内容" v-model="searchTxt" class="input-with-select">
 					<el-button slot="append" icon="el-icon-search" @click="search"></el-button>
 				</el-input>
 			</div>
-			<iframe :src="detailUrl" height="100%" width="100%" name="user-img" frameborder="0"></iframe>
+			<ul class="searchList">
+				<li v-for="(item,index) in arrList" :key="index"  @click="eject(item)">
+					{{item.title}}
+					<span>{{item.subTitle}}</span>
+				</li>
+				
+			</ul>
+
+			<el-dialog
+				title=""
+				:visible.sync="dialogVisible"
+				:before-close="handleClose">
+					<iframe :src="detailUrl" height="100%" width="100%" name="user-img" frameborder="0"
+						style=" height: 600px;overflow: auto;"></iframe>
+				<span slot="footer" class="dialog-footer">
+					<!-- <el-button @click="dialogVisible = false">关闭</el-button> -->
+				</span>
+			</el-dialog>
+			<!-- <iframe :src="detailUrl" height="100%" width="100%" name="user-img" frameborder="0"></iframe> -->
 		</div>
 </template>
 
@@ -14,6 +32,8 @@
 		name: 'RightBoxTalking',
 		data() {
 			return {
+				dialogVisible:false,
+				arrList:[],
 				searchTxt:'',
 				userid:'',
 				orderId:'',
@@ -25,8 +45,21 @@
 		components: {
 		},
 		methods: {
-			searchKeyword(id){
+			handleClose(){
+				this.dialogVisible = false
+			},
+			//发送
+			/* send(){
+				console.log('双击')
+			}, */
+			/* 弹框 */
+			eject(item){
+				this.detailUrl = item.detailUrl;
+				this.dialogVisible = true
+			},
+			searchKeyword(id,searchTxt){
 				this.userid = id;
+				this.searchTxt = searchTxt;
 				this.$axios.post('/getCustomerProfile', {
 					wxid:this.userid 
 				}).then(data => {
@@ -39,7 +72,8 @@
 						"orderId": this.orderId,
 						"sentence": this.searchTxt
 					}).then(data => {
-						this.detailUrl = data.detailUrl
+						this.arrList = data
+						console.log(data)
 					}).catch(() => {});
 			},
 			search(){
@@ -51,8 +85,7 @@
 				});
 					return false
 				}else{
-					
-				this.getkeyword();
+					this.getkeyword();
 				}
 			}
 		},
@@ -61,7 +94,30 @@
 		}
 	}
 </script>
-
+<style lang="scss">
+.rightboxtalking{
+	.el-dialog{
+		height: 667px;
+    	width: 337px;
+	}
+}
+</style>
 <style lang="scss" scoped>
-	
+		.searchList{
+			margin: 0;
+			list-style-type:none;
+			padding-left: 0px;
+			font-size: 14px;
+			li{
+				cursor: pointer;
+				background: #fff;
+				color: #606266;
+				padding:10px;
+				border-bottom: 1px solid #606266;
+				span{
+					display: block;
+					font-size: 12px;
+				}
+			}
+		}
 </style>
