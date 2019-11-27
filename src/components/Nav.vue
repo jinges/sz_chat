@@ -9,18 +9,23 @@
                 </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-        <font-awesome-icon :icon="[activeIndex==0?'fas':'far','comment']" @click="nav('Sessions',0)" :class="{active:activeIndex==0}">
+        <font-awesome-icon :icon="[activeIndex==0?'fas':'far','comment']" @click="nav('Sessions',0)" :class="{active:activeIndex==0}" title="会话">
         </font-awesome-icon>
-        <font-awesome-icon :icon="[activeIndex==1?'fas':'far','user']" @click="nav('AddressBook',1)" :class="{active:activeIndex==1}">
+
+        <font-awesome-icon :icon="[activeIndex==1?'fas':'far','address-book']" @click="nav('AddressBook',1)" :class="{active:activeIndex==1}" title="通讯录">
         </font-awesome-icon>
-        <font-awesome-icon :icon="['fab','chrome']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
+
+        <!-- <font-awesome-icon :icon="['fab','bandcamp']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
+        </font-awesome-icon> -->
+
+        <font-awesome-icon :icon="[activeIndex==3?'fas':'far','plus-square']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}" title="批量添加好友">
         </font-awesome-icon>
-        <font-awesome-icon :icon="chromecast" />
-        <font-awesome-icon :icon="['fab','coffee']"></font-awesome-icon>
-        <font-awesome-icon :icon="[activeIndex==3?'fas':'far','user']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}">
+
+        <font-awesome-icon icon="sign-out-alt" @click="logout" style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;" title="退出系统">
         </font-awesome-icon>
-        <font-awesome-icon icon="sign-out-alt" @click="logout" style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
-         <font-awesome-icon icon="cog"  @click="settings" style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"></font-awesome-icon>
+
+         <font-awesome-icon icon="cog"  @click="settings" style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;" title="设置">
+         </font-awesome-icon>
        
     </div>
 </template>
@@ -109,7 +114,7 @@
             height: 40px;
             margin-top: 15px;
             border-radius: 3px;
-            margin-bottom: 20px;
+            /*margin-bottom: 20px;*/
             cursor: pointer;
         }
 
