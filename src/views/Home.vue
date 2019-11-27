@@ -134,6 +134,8 @@
 					this.detailData = detail.addressBook;
 					this.currentContent = 'Detail';
 					this.showMore = true;
+				this.$store.commit('updatePengyouquanVisible', true);
+				this.$store.commit('setCurrentPengyouquan', detail.addrBookId);
 				}
 			},
 			selectAddressBookTops: function(type, detail){
@@ -181,7 +183,7 @@
 			websocket.onmessage = (event) => {
 				var json = JSON.parse(event.data);
 				//分发到各个组件
-				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend'].forEach(t => {
+				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend', 'RightBox'].forEach(t => {
 					if (this.$refs[t] && this.$refs[t].onWsMsg) {
 						this.$refs[t].onWsMsg(json);
 					}

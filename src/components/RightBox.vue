@@ -36,7 +36,7 @@
 				<RightBoxUserInfo :myAddressBook="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==2">
-				<Pengyouquan></Pengyouquan>
+				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==3">
 				<RightBoxTalking ref="RightBoxTalking"></RightBoxTalking>
@@ -91,6 +91,10 @@
 				this.activeItem = index || 0
 				this.nowIndex = index
 				console.log("切换到 "+ this.tabData[index].name)
+			},
+			onWsMsg(json) {
+				console.log('传数据都朋友圈');
+				this.$refs['pengYouQuan'].onWsMsg(json);
 			}
 		},
 		created() {
