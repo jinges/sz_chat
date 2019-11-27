@@ -391,6 +391,7 @@
 					if (messageContent.targetWxid == this.targetId && !this.isGroup) {
 						//文本通知
 						if (json.commandName == 'CLIENTNOTIFY_TEXT') {
+							this.postMsgToHome(messageContent.sendContent);
 							this.history.push({
 								type: 'sender',
 								media: 'text',
@@ -509,6 +510,9 @@
 							'easeInQuad');
 					}
 				}
+			},
+			postMsgToHome(msg){
+				this.$emit('listenMsg', msg);
 			},
 			//上传图片前
 			fileUploadBefore() {

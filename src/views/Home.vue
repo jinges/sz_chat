@@ -13,7 +13,7 @@
 			</div>
 			<div id="content" v-show="!isShowAddFriends">
 				<transition name="slide">
-					<Chat ref="chat" v-show="currentContent=='Chat'" v-bind="targetInfo" :myFace="selfData.headPic" />
+					<Chat ref="chat" v-show="currentContent=='Chat'" @listenMsg="listenMsg" v-bind="targetInfo" :myFace="selfData.headPic" />
 				</transition>
 				<transition name="slide">
 					<Detail ref="detail" v-bind="detailData" :opt="detailOpt" :myAddressBook="myAddressBook" v-show="currentContent=='Detail'" @startChat="startChat"></Detail>
@@ -112,9 +112,9 @@
 				} else if (t == 'AddFriends') {
                     this.isShowAddFriends = true;
 				} else {
-					if(t == 'AddressBook'){
-						this.showUser = true;
-					} 
+					// if(t == 'AddressBook'){
+					// 	this.showUser = true;
+					// } 
 					this.currentSubNav = t;
 				}
 			},
@@ -156,6 +156,10 @@
 				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(target.targetId)
 				this.targetInfo = target;
 				this.currentContent = 'Chat'
+			},
+			listenMsg(msg){
+				let targetId = this.targetInfo.targetId
+				this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(targetId,msg)
 			}
 		},
 		mounted: function() {

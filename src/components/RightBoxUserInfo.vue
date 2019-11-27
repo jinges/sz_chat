@@ -128,8 +128,9 @@ export default {
       this.tagData.map(item=>{
         tags.push(item.labelName);
       })
+      debugger;
       this.$axios.post('/setTag',{
-             myWxid: this.getMyWxId,
+             myWxid: this.myWxid,
              targetWxid: this.targetWxid,
              Tag: tags,
              imei: this.imei,
