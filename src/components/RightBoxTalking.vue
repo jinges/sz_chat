@@ -84,7 +84,7 @@
 				});
 					return false
 				}else{
-					this.getkeyword();
+					this.getkeyword(this.searchTxt);
 				}
 			}
 		},
