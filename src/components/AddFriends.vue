@@ -15,15 +15,15 @@
 					<div class="type-item" show-type="等待添加">等待中</div>
 					<div class="type-item" show-type="需好友验证">需好友验证</div>
 					<div class="type-item" show-type="添加成功">已添加</div>
-					<div class="type-item" show-type="对方已拒绝">被拒绝</div>
+					<!-- <div class="type-item" show-type="对方已拒绝">被拒绝</div> -->
 					<div class="type-item" show-type="未回应">未回应</div>
 					<div class="type-item" show-type="查找失败">未找到</div>
-					<div class="type-item" show-type="好友已经存在">好友已存在</div>
+					<!-- <div class="type-item" show-type="好友已经存在">好友已存在</div> -->
 				</div>
 			</div>
 			<div class="addFriends-list">
 				<div class="title" @click="showExportAddFriendDialog()"><i class="el-icon-download"></i>导出</div>
-				<div class="friends-list" style="overflow: auto; height: 580px;">
+				<div class="friends-list" style="overflow: auto; height: 500px;">
 					<div class="friend session" v-for="(item, index) in addFriendsInfo.data" :key="index" :status="item.status">
 						<img class="face" :src="item.head || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574619131613&di=c49cacabc26880863b136fe8bc61c967&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F69ad7a731f43d4b8729f1a2fbe65c43801ca0f033250-EV1vMf_fw658'" />
 						<div class="content">
@@ -40,10 +40,10 @@
 								<div style="color: rgb(122, 171, 94);" v-if="item.status=='等待添加'">等待添加</div>
 								<div style="color: rgb(122, 171, 94);" v-if="item.status=='需好友验证'">需好友验证</div>
 								<div style="color: #C0C4CC;" v-if="item.status=='添加成功'">添加成功</div>
-								<div style="color: rgb(218, 0, 18);" v-if="item.status=='对方已拒绝'">对方已拒绝</div>
+								<!-- <div style="color: rgb(218, 0, 18);" v-if="item.status=='对方已拒绝'">对方已拒绝</div> -->
 								<div style="color: rgb(179, 120, 78);" v-if="item.status=='未回应'">未回应</div>
 								<div style="color: rgb(218, 0, 18);" v-if="item.status=='查找失败'">查找失败</div>
-								<div style="color: #C0C4CC;" v-if="item.status=='好友已经存在'">好友已经存在</div>
+								<!-- <div style="color: #C0C4CC;" v-if="item.status=='好友已经存在'">好友已经存在</div> -->
 							</div>
 							<div class="icon" style="font-size: 180%;">
 								<i class="el-icon-success" v-if="item.status=='添加成功' || item.status=='好友已经存在'"></i>
@@ -53,6 +53,7 @@
 						</div>
 					</div>
 				</div>
+				<el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="addFriendsInfo.totalRecords" @current-change="currentChange"></el-pagination>
 			</div>
 		</div>
 
@@ -118,7 +119,7 @@
 					<div style="padding: 0 20px;">
 						<div>选择需要重新尝试添加的用户</div>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">被拒绝(20)</el-checkbox>
+						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">需要好友验证(20)</el-checkbox>
 						<div style="margin: 15px 0;"></div>
 						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未回复(20)</el-checkbox>
 						<div style="margin: 15px 0;"></div>
@@ -139,9 +140,9 @@
 				<div style="margin: 15px 0;"></div>
 				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">等待中(20)</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">被拒绝(20)</el-checkbox>
+				<!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">被拒绝(20)</el-checkbox> -->
 				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未回应(20)</el-checkbox>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未找到(20)</el-checkbox>
+				<!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未找到(20)</el-checkbox> -->
 				<div style="margin: 15px 0;"></div>
 				<div style="text-align: center; margin: 20px;">
 					<el-button size="small" type="primary" @click="onSubmit">导出</el-button>
@@ -194,16 +195,18 @@
 				},
 				batchAddHeaders: {
 					Authorization: 'Bearer:' + util.getToken()
-				}
+				},
+				pageSize: 10
 			}
 		},
 		methods: {
 			// 获取添加好友列表
-			getAddFriendInfo: function() {
-				console.log('=====获取添加好友列表开始=====');
+			getAddFriendInfo: function(pageIndex) {
 				this.$axios.post('/queryAddfriendByPage', {
 					imei: util.getImei(),
-					my_wxid: util.getMyWxId()
+					my_wxid: util.getMyWxId(),
+					page: pageIndex,
+					rows: this.pageSize
 				}).then(data => {
 					this.addFriendsAllCount = data.data.length;
 					for (var i = 0; i < data.data.length; i++) {
@@ -234,7 +237,6 @@
 					}
 					this.addFriendsInfo = data;
 				}).catch(() => {});
-				console.log('=====获取添加好友列表结束=====');
 			},
 			// 弹出添加好友页面
 			showAddFriendDialog: function() {
@@ -267,7 +269,7 @@
 						this.$axios.post("/addSingleAddfrien", this.appointAddFormData)
 							.then((data) => {
 								this.closeAddFriendDialog();
-								this.getAddFriendInfo();
+								this.getAddFriendInfo(1);
 							})
 							.catch(() => {});
 					} else {
@@ -279,12 +281,15 @@
 			onSubmitBatchAdd: function() {
 				this.$refs.upload.submit();
 				this.closeAddFriendDialog();
-				this.getAddFriendInfo();
+				this.getAddFriendInfo(1);
+			},
+			currentChange:function(currentPage){
+			    this.getAddFriendInfo(currentPage);
 			}
 		},
 		mounted: function() {
 			let that = this;
-			that.getAddFriendInfo();
+			that.getAddFriendInfo(1);
 
 			$(".type-list .type-item").click(function(e) {
 				$(".type-list .type-item").removeClass('on');
