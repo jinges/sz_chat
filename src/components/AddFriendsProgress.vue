@@ -55,13 +55,14 @@
 			}
 		},
 		mounted() {
+			this.statusGroupAddfriend();
 			this.$axios.post('/queryAddfriendByPage', {
 				imei: util.getImei(),
 				my_wxid: util.getMyWxId()
 			}).then(data => {
-				this.addFriendsAllCount = data.data.length;
 				for (var i = 0; i < data.data.length; i++) {
 					data.data[i].createdAt = data.data[i].createdAt.replace('T', ' ');
+					/**
 					switch (data.data[i].status) {
 						case '添加成功':
 							this.addFriendsSuccessCount++;
@@ -85,12 +86,46 @@
 							this.addFriendsWaitVerificationCount ++;
 							break;
 					}
+					*/
 				}
 				this.addFriendsInfo = data;
 			}).catch(() => {});
 		},
 		methods: {
-
+			// 添加好友的统计
+			statusGroupAddfriend: function() {
+				var data = {
+					imei: util.getImei(),
+					myWxid: util.getMyWxId(),
+				}
+				this.$axios.post("/statusGroupAddfriend", data)
+					.then((data) => {
+						this.addFriendsAllCount = 0;
+						for (var i = 0; i < data.length; i++) {
+							var status = data[i].status;
+							var count = data[i].count;
+							this.addFriendsAllCount += count;
+							switch(status) {
+								case "0":
+									this.addFriendsWaitCount = count;
+								break;
+								case "1":
+									this.addFriendsSuccessCount = count;
+								break;
+								case "3":
+									this.addFriendsUnansweredCount = count;
+								break;
+								case "4":
+									this.addFriendsFailCount = count;
+								break;
+								case "6":
+									this.addFriendsWaitVerificationCount = count;
+								break;
+							}
+						}
+					})
+					.catch(() => {});
+			}
 		},
 		created() {
 
