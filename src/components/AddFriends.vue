@@ -293,6 +293,7 @@
 				if(this.retryType.length > 0) {
 					var data = {
 						imei: util.getImei(),
+						myWxid: util.getMyWxId(),
 						statusList: this.retryType
 					}
 					this.$axios.post("/reTryAddfrien", data)
@@ -310,7 +311,8 @@
 				if(this.exportType.length > 0) {
 					var data = {
 						imei: util.getImei(),
-						statusList: this.exportType
+						myWxid: util.getMyWxId(),
+						statuss: this.exportType
 					}
 					this.$axios.post("/exportMyFriend", data)
 						.then((data) => {
