@@ -2,7 +2,7 @@
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
 			<div id="navbar">
-				<Nav @selectNav="selectNav" :face="selfData.headPic" @switchUser="switchUser"/>
+				<Nav @selectNav="selectNav" :userdata="wechatList" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -77,7 +77,8 @@
 				isShowAddFriends: false,
 				showMore: false,
 				showUser: true,
-				nowIndex:1
+				nowIndex:1,
+				wechatList: []
 			}
 		},
 		name: 'home',
@@ -97,8 +98,30 @@
 		},
 		methods: {
 			//切换用户刷新页面
-			switchUser(){
-				location.reload();
+			switchUser(index){
+				debugger;
+				let wx = this.wechatList[index];
+				util.removeToken();
+				util.removeExTime();
+				util.removeImei();
+				util.removeMyWxId();
+				util.setToken(wx.token);
+				util.setExTime(wx.exTime);
+				util.setImei(wx.imei);
+				util.setMyWxId(wx.wxid);
+      	this.wechatList[0].logined = false;
+				let firstUser = this.wechatList.splice(index,1);
+				firstUser[0].hasMsg = false;
+        firstUser[0].logined = true;
+				this.wechatList = [...[],...firstUser,...this.wechatList];
+				localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wechatList));
+				this.selectNav('Sessions');
+				this.$store.commit('initSessions');
+				var friends = this.$store.getters.filterSessionsByName;
+				if(friends.length) {
+					this.startChat(friends[0]);
+				}
+				this.$refs.chat.loadmore();
 			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
@@ -152,6 +175,7 @@
 				}
 			},
 			startChat: function(target) {
+				debugger;
 					this.showMore = true;
 				/* target.targetId */
 				// this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
@@ -164,9 +188,21 @@
 			listenMsg(msg){
 				debugger;
 				this.$refs.RightBox.$refs.RightBoxTalking.getkeyword(msg)
+			},
+			filterMsg(obj){
+				this.wechatList.map(item=>{
+					if(item.imei == obj.imei) {
+						item.hasMsg = true
+					} 
+					return item
+				})
+				console.log(this.wechatList);
 			}
 		},
 		mounted: function() {
+				this.wechatList = JSON.parse(
+					localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
+				);
 			//查询个人信息
 			this.$axios.post('/queryAddressBookByWxId', {
 					wxid: util.getMyWxId()
@@ -179,10 +215,12 @@
 
 			//WebSocket入口     
 			var websocketUrl = '';
+			let $this = this;
+			var iemis = localStorage.getItem('__WBS__H5__GLOBAL__IMEIS');
 			if (process.env.VUE_APP_MODE == 'development') {
-				websocketUrl = process.env.VUE_APP_SERVER_WEBSOCKET + util.getImei();
+				websocketUrl = process.env.VUE_APP_SERVER_WEBSOCKET + iemis;
 			} else {
-				websocketUrl = 'ws://' + window.location.host + '/chatWS/' + util.getImei();
+				websocketUrl = 'ws://' + window.location.host + '/chatWS/' + iemis;
 			}
 			var websocket = new WebSocket(websocketUrl);
 			websocket.onopen = () => {
@@ -190,12 +228,16 @@
 			};
 			websocket.onmessage = (event) => {
 				var json = JSON.parse(event.data);
-				//分发到各个组件
-				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend', 'RightBox'].forEach(t => {
-					if (this.$refs[t] && this.$refs[t].onWsMsg) {
-						this.$refs[t].onWsMsg(json);
-					}
-				});
+				if(json.messageType == 'NOTIFY_TO_SERVER' && json.imei != localStorage.getItem('__WBS__H5__GLOBAL__IMEI')) {
+					this.filterMsg(json);
+				} else {
+					//分发到各个组件
+					['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend', 'RightBox'].forEach(t => {
+						if (this.$refs[t] && this.$refs[t].onWsMsg) {
+							this.$refs[t].onWsMsg(json);
+						}
+					});
+				}
 			}
 		}
 	}

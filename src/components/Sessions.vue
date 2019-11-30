@@ -15,11 +15,17 @@
         components: {
             Session
         },
+        data(){
+            return {
+                imei:util.getImei()
+            }
+        },
         methods: {
             selectSession: function(target) {
                 this.$emit('selectSession', target)
             },
             onWsMsg: function(json) {
+                debugger;
                 if (json.messageType != 'NOTIFY_TO_SERVER')
                     return;
 
