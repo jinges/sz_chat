@@ -57,23 +57,23 @@
 						<span slot="title">
 							<el-tabs v-model="materialActiveName">
 							    <el-tab-pane label="文章链接" name="articles">
-									<Articles :type=1 />
+									<Articles :type="1" @msg="setMaterialId" />
 								</el-tab-pane>
 							    <el-tab-pane label="图片" name="pictures">
-									<Pictures :type=2 />
+									<Pictures :type="2" @msg="setMaterialId" />
 								</el-tab-pane>
 							    <el-tab-pane label="文本" name="texts">
-									<Articles :type=3 />
+									<Articles :type="3" @msg="setMaterialId" />
 								</el-tab-pane>
 							    <el-tab-pane label="视频" name="videos">
-									<Pictures :type=4 />
+									<Pictures :type="4" @msg="setMaterialId" />
 								</el-tab-pane>
 							    <el-tab-pane label="H5海报" name="poster">
-									<Pictures :type=5 />
+									<Pictures :type="5" @msg="setMaterialId" />
 								</el-tab-pane>
 							</el-tabs>
 						</span>
-						<el-button type="primary" size="small">发送</el-button>
+						<el-button type="primary" size="small" @click="sendTo()">发送</el-button>
 					</el-dialog>
 				</template>
 				<template v-if="uploadLoading">
@@ -134,7 +134,11 @@
 				selectAtUserId: [], //需要@的群成员
 				
 				isShowMaterial: false, //是否显示素材库
-				materialActiveName: 'articles'
+				materialActiveName: 'articles', // 素材类型
+				materialId: 0, // 素材id
+				materialUrl: '', // 素材链接
+				materialTitle: '', // 素材标题
+				sendToLoad: false,
 			}
 		},
 		computed: {
@@ -613,6 +617,101 @@
 			// 关闭素材库
 			closeMaterial: function() {
 				this.isShowMaterial = false;
+			},
+			setMaterialId: function(material) {
+				this.materialId = material.id;
+				this.materialTitle = material.title;
+				this.materialUrl = material.url;
+				this.isShowMaterial = true;
+				return false;
+			},
+			// 发送素材库内容
+			sendTo: function() {
+				if(!this.materialId){
+					this.$message({
+						showClose: true,
+						message: '请选择你要发送的内容！',
+						type: 'error'
+					});
+					return false
+				}
+				let tagStr = "";
+				let momentType = "";
+				if(!this.materialActiveName){
+				    momentType = 1;
+				} else {
+					if(this.materialActiveName == 'articles') {
+						momentType = 4;
+					} else if(this.materialActiveName == 'pictures' || this.materialActiveName == 'poster') {
+						momentType = 2;
+					} else if(this.materialActiveName == 'texts') {
+						momentType = 1;
+					} else if(this.materialActiveName == 'videos') {
+						momentType = 3;
+					}
+				}
+				let fileType = "";
+				let filePath = "";
+				if(this.materialActiveName == 'pictures' || this.materialActiveName == 'poster') {
+					fileType = "IMAGE";
+					filePath = this.materialUrl;
+				} else if(this.materialActiveName == 'videos') {
+					fileType = "VIDEO";
+					filePath = this.materialUrl;
+				} else {
+					fileType = "";
+					filePath = "";
+				}
+				let params = this.msgContent(fileType, filePath);
+				this.sendMsg(params);
+			},
+			msgContent(fileType, filePath){
+				let body = {
+					imei: util.getImei(),
+					createTime: new Date().getTime(),
+					myWxid: util.getMyWxId()
+				};
+				if(this.materialActiveName){
+				  if (
+				  this.materialActiveName == 'pictures' ||
+				  this.materialActiveName == 'poster' ||
+				  this.materialActiveName == 'videos'
+				  ) {
+					  body = Object.assign({}, body, {
+						  fileType: fileType,
+						  fileName: "",
+						  filePath: filePath,
+						  fileId: "",
+					  })
+				  } else {
+					  body = Object.assign({}, body, {
+						  sendContent: this.materialTitle,
+					  })
+				  }
+				}else{
+				   body = Object.assign({}, body, {
+						sendContent: this.materialTitle
+					})
+				}
+				return body;
+			},
+			sendMsg(params){
+				var $this = this;
+				let targetWxid = this.targetId;
+				params.targetWxid = targetWxid;
+				this.$axios
+					.post("/sendText", params)
+					.then(data => {})
+					.finally(()=>{
+						this.$message({
+							showClose: true,
+							message: '发送成功！',
+							type: 'success'
+						}); 
+						this.$emit('succ');
+						this.isShowMaterial = false;
+					})
+					.catch(() => {});
 			}
 		},
 		watch: {
