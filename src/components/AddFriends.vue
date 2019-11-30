@@ -119,12 +119,12 @@
 					<div style="padding: 0 20px;">
 						<div>选择需要重新尝试添加的用户</div>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">需要好友验证(20)</el-checkbox>
+						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="6">需要好友验证(20)</el-checkbox>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未回复(20)</el-checkbox>
+						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="3">未回复(20)</el-checkbox>
 						<div style="margin: 15px 0;"></div>
 						<div style="text-align: center; margin: 20px;">
-							<el-button size="small" type="primary" @click="onSubmit">加入队列</el-button>
+							<el-button size="small" type="primary" @click="onSubmitRetry">加入队列</el-button>
 						</div>
 					</div>
 				</el-tab-pane>
@@ -136,16 +136,16 @@
 			<div style="padding: 0 20px;">
 				<div>选择需要导出的用户</div>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">已添加(20)</el-checkbox>
+				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="1">已添加(20)</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">等待中(20)</el-checkbox>
+				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="0">等待中(20)</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">被拒绝(20)</el-checkbox> -->
-				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未回应(20)</el-checkbox>
-				<!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">未找到(20)</el-checkbox> -->
+				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="6" style="margin-right: 10px;">需好友验证(20)</el-checkbox>
+				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="3" style="margin-right: 10px;">未回应(20)</el-checkbox>
+				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="4" style="margin-right: 10px;">未找到(20)</el-checkbox>
 				<div style="margin: 15px 0;"></div>
 				<div style="text-align: center; margin: 20px;">
-					<el-button size="small" type="primary" @click="onSubmit">导出</el-button>
+					<el-button size="small" type="primary" @click="onSubmitExport">导出</el-button>
 				</div>
 			</div>
 		</el-dialog>
@@ -196,7 +196,9 @@
 				batchAddHeaders: {
 					Authorization: 'Bearer:' + util.getToken()
 				},
-				pageSize: 10
+				pageSize: 10,
+				retryType: [],
+				exportType: []
 			}
 		},
 		methods: {
@@ -249,6 +251,8 @@
 					wxid: '',
 					msg: ''
 				}
+				this.retryType = [];
+				this.exportType = [];
 			},
 			// 关闭添加好友页面
 			closeAddFriendDialog: function() {
@@ -257,6 +261,7 @@
 			// 弹出导出添加好友记录页面
 			showExportAddFriendDialog: function() {
 				this.isShowExportAddFriendDialog = true;
+				this.exportType = [];
 			},
 			// 关闭导出添加好友页面
 			closeExportAddFriendDialog: function() {
@@ -282,6 +287,39 @@
 				this.$refs.upload.submit();
 				this.closeAddFriendDialog();
 				this.getAddFriendInfo(1);
+			},
+			// 重试
+			onSubmitRetry: function() {
+				if(this.retryType.length > 0) {
+					var data = {
+						imei: util.getImei(),
+						statusList: this.retryType
+					}
+					this.$axios.post("/reTryAddfrien", data)
+						.then((data) => {
+							this.closeAddFriendDialog();
+							this.getAddFriendInfo(1);
+						})
+						.catch(() => {});
+				} else {
+					
+				}
+			},
+			// 导出
+			onSubmitExport: function() {
+				if(this.exportType.length > 0) {
+					var data = {
+						imei: util.getImei(),
+						statusList: this.exportType
+					}
+					this.$axios.post("/exportMyFriend", data)
+						.then((data) => {
+							this.closeAddFriendDialog();
+						})
+						.catch(() => {});
+				} else {
+					
+				}
 			},
 			currentChange:function(currentPage){
 			    this.getAddFriendInfo(currentPage);
