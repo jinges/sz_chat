@@ -18,10 +18,10 @@
 				<div class="name">添加成功</div>
 				<div class="value">{{addFriendsSuccessCount}}</div>
 			</div>
-			<div class="progress-info">
+			<!-- <div class="progress-info">
 				<div class="name">被拒绝</div>
 				<div class="value">{{addFriendsRefuseCount}}</div>
-			</div>
+			</div> -->
 			<div class="progress-info">
 				<div class="name">未通过</div>
 				<div class="value">{{addFriendsUnansweredCount}}</div>
@@ -30,10 +30,10 @@
 				<div class="name">查找失败</div>
 				<div class="value">{{addFriendsFailCount}}</div>
 			</div>
-			<div class="progress-info">
+			<!-- <div class="progress-info">
 				<div class="name">重复好友</div>
 				<div class="value">{{addFriendsRepeatCount}}</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
