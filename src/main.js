@@ -8,6 +8,8 @@ import './plugins/vuescroll.js'
 import axios from 'axios'
 import util from './util/util.js'
 
+import './assets/scss/style.scss'
+
 Vue.config.productionTip = false
 
 //router拦截
