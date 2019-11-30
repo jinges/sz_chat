@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar" style="border-bottom: 1px solid #e9e2e2">
     <div class="send-area">
-      <div class="icons" :style="options.toolbar || {}">
+      <div class="icons" >
         <font-awesome-icon @click.stop="showEmotion=!showEmotion" icon="smile"></font-awesome-icon>
         <transition name="slide" >
           <Emotions
@@ -19,7 +19,6 @@
         tabindex="-1"
         @click="setRangCoordinate"
         @keydown="setDownKeyValue($event)"
-        :style="{color: options.color, background: options.background}"
       ></div>
       <div class="tips">
         <!-- <el-button type="success" @click="send()" :style="options.btn || {}" size="mini">发送</el-button> -->
@@ -30,7 +29,10 @@
 <script>
 import Emotions from "@/components/Emotions.vue";
 export default {
-  props:['options'],
+  props:{'options':{
+    toolbar: {},
+    color: {}
+  }},
   components: {
     Emotions
   },

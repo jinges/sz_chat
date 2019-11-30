@@ -22,6 +22,16 @@ export default {
 	},
 
 
+	getImeis: () => {
+		return localStorage.getItem('__WBS__H5__GLOBAL__IMEIS');
+	},
+	setImeis: (imeis) => {
+		localStorage.setItem('__WBS__H5__GLOBAL__IMEIS', imei.join(','));
+	},
+	removeImeis: () => {
+		localStorage.removeItem('__WBS__H5__GLOBAL__IMEIS');
+	},
+	
 	getImei: () => {
 		return localStorage.getItem('__WBS__H5__GLOBAL__IMEI');
 	},
@@ -31,6 +41,7 @@ export default {
 	removeImei: () => {
 		localStorage.removeItem('__WBS__H5__GLOBAL__IMEI');
 	},
+
 
 
 	getToken: () => {
@@ -53,6 +64,8 @@ export default {
 	removeExTime: () => {
 		localStorage.removeItem('__WBS__H5__GLOBAL__TOKEN__EXTIME');
 	},
+
+	
 
 	//根据文件名后缀区分 文件类型
 	//IMAGE VOICE VIDEO FILE
