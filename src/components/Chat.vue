@@ -639,10 +639,10 @@
 				if(!this.materialActiveName){
 				    momentType = 1;
 				} else {
-					if(this.materialActiveName == 'articles') {
+					if(this.materialActiveName == 'articles' || this.materialActiveName == 'poster') {
 						momentType = 4;
 						apiType = "/sendLink";
-					} else if(this.materialActiveName == 'pictures' || this.materialActiveName == 'poster') {
+					} else if(this.materialActiveName == 'pictures') {
 						momentType = 2;
 						apiType = "/sendFile";
 					} else if(this.materialActiveName == 'texts') {
@@ -680,7 +680,6 @@
 				if(this.materialActiveName){
 				  if (
 				  this.materialActiveName == 'pictures' ||
-				  this.materialActiveName == 'poster' ||
 				  this.materialActiveName == 'videos'
 				  ) {
 					  body = Object.assign({}, body, {
@@ -689,7 +688,8 @@
 						  filePath: filePath,
 						  fileId: this.materialId,
 					  })
-				  } else if(this.materialActiveName == 'articles') {
+				  } else if(this.materialActiveName == 'poster' || 
+						this.materialActiveName == 'articles') {
 					  body = Object.assign({}, body, {
 						  title: this.materialTitle,
 						  desc: this.materialTitle,
