@@ -1,0 +1,189 @@
+/*
+  项目公共配色
+  2019-11-30
+  主要实现全局配色-绿色风格
+*/
+
+/*整体*/
+#home #box{
+	background: #f5f5f5;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+
+/*菜单栏图标颜色-绿*/
+.navbar{
+	background:#1e1f20;
+	background:rgba(30,31,32,.95);
+}
+
+.nav_icon{
+	color: #878687;
+}
+.nav_icon:hover {
+	color: #bdbdbd;
+}
+.nav_icon.active {
+	color: #09bb07;
+}
+.nav_icon.active:hover {
+	color: #09bb07;
+}
+
+/*好友列表*/
+.subnav{
+	background:#edeae8;
+}
+
+.subnav .search input{
+	background-color: #dbd9d8;
+	border: 1px solid #dbd9d8;
+}
+.subnav .search input:focus{
+	background-color: #f8f8f8;
+	border: 1px solid #dad9d7;
+}
+
+.subnav .search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
+.subnav .search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
+.subnav .search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
+.subnav .search input:-ms-input-placeholder { color:#818181; } /* ie */
+
+.subnav .search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
+.subnav .search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
+.subnav .search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
+.subnav .search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
+
+.subnav .search i{
+	color: #999;
+	font-weight: 600;
+}
+
+.subnav .search .plus{
+	border: none;
+	background: #dcd9d8;
+}
+
+.subnav .search .plus:hover{
+	border-color: #d1d1d1;
+	background: #d1d1d1;
+}
+
+.search .plus:hover:before{
+	background: #777;
+}
+.search .plus:hover:after{
+	background: #555;
+}
+ul.plus_menu{
+    background:#4c4c4c;
+}
+ul.plus_menu li:not(.is-disabled):hover{
+	background-color:#444444;
+}
+ul.plus_menu .popper__arrow:after{
+	border-bottom-color:#4c4c4c!important;
+}
+
+.sessions .session{
+	border: transparent;
+}
+.sessions .session .content .name{
+	color: #000;
+}
+.sessions .session .content .lastMsg{
+	color: #999;
+}
+.sessions .session .content .time{
+	color: #999;
+}
+.sessions .session:hover{
+	background-color: #dadada;
+}
+.sessions .session[active]{
+	background-color: #cac8c6;
+}
+
+
+/*通讯录*/
+.addressBook{
+	color: #000;
+}
+.addressBook .address_book_top:hover{
+	background-color: #dadada;
+}
+.addressBook .address_book_top.active{
+	background-color: #cac8c6;
+}
+.addressBook .friend:hover{
+	background-color: #dadada;
+}
+.addressBook .friend.active{
+	background-color: #cac8c6;
+}
+.addressBook .group{
+	color: #999;
+}
+.addressBook .refresh{
+	background-color: #dbd9d8;
+	color: #666;
+}
+
+
+/*对话框*/
+.chat{
+	background-color: #f5f5f5;
+}
+.chat .header{
+	color: #000;
+	border-bottom-color: #e5e5e5;
+}
+.chat .body #loadmore{
+	background-color: #dadada;
+	color: #fff;
+}
+.chat .body #loadmore:hover{
+	background-color: #ccc;
+}
+.chat .message .content{
+	background-color: #fff;
+	border: 1px solid #f0f0f0;
+	color: #232323;
+}
+.chat .sender .content:before{
+	border-color: transparent #fff transparent transparent;
+}
+.chat .message.receiver .content{
+	background-color: #9eea6a;
+	border: 1px solid #9eea6a;
+	color: #232323;
+}
+.chat .message.receiver .content:before{
+	border-color: transparent transparent transparent #9eea6a ;
+}
+.chat .el-loading-mask{
+	background-color: rgba(0, 0, 0, 0.1)!important;
+}
+
+.chat .el-loading-spinner .el-loading-text{
+	color: #999;
+}
+.chat .el-loading-spinner .path{
+	stroke: #999;
+}
+#content .chat .footer{
+	background: #fff;
+}
+
+#content .chat .footer textarea.editor{
+	border: 1px solid #eee;
+	background-color: #f5f5f5;
+}
+#content .chat .footer textarea:focus {
+    background-color: #fff;
+}
+#content .chat .footer .toolbar svg{
+	color: #bdbdbd;
+}
+#content .chat .footer .toolbar svg:hover{
+	color: #09bb07;
+}

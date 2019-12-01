@@ -3,8 +3,8 @@
 
         <div id="box" v-if="!showWxItem">
             <div class="title">
-                <img id="logo" src="../assets/logo.gif" />
-                <div id="text">WBS微运营平台</div>
+                <img id="logo" src="../assets/logo.png" />
+                <div id="text">汽车之家微运营平台</div>
             </div>
             <el-form :model="formData" :rules="rules" label-position="top" ref="form" hide-required-asterisk
                 status-icon>
@@ -102,7 +102,7 @@
                                                 continue;
                                             }
                                             this.wxList.push({
-                                                face: item.headPic,
+                                                face: item.headPic || require('@/assets/wechat.png'),
                                                 name:item.nickName,
                                                 imei: item.imei,
                                                 wxid: item.myWxid,
@@ -186,10 +186,14 @@
                 position: relative;
 
                 #logo {
-                    height: 159px;
+                    /*height: 159px; */
                     position: absolute;
-                    top: -42px;
-                    left: -107px;
+                    /* top: -42px; */
+                    /* left: -107px; */
+                    left: 12px;
+                    top: 50%;
+                    height: 36px;
+                    margin-top: -18px;
                 }
 
                 #text {

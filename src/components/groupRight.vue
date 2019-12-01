@@ -50,7 +50,7 @@
         },
         methods:{
             getMsg(item){
-                debugger;
+                
             },
             //type:1 2 3 4 5
             //item 选中的数据

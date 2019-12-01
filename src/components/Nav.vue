@@ -13,6 +13,7 @@
       @click="nav('Sessions',0)"
       :class="{active:activeIndex==0}"
       title="会话"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -20,6 +21,7 @@
       @click="nav('AddressBook',1)"
       :class="{active:activeIndex==1}"
       title="通讯录"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <!-- <font-awesome-icon :icon="['fab','bandcamp']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
@@ -30,6 +32,7 @@
       @click="nav('AddFriends',3)"
       :class="{active:activeIndex==3}"
       title="批量添加好友"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -37,6 +40,7 @@
       @click="logout"
       style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"
       title="退出系统"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -44,13 +48,13 @@
       @click="settings"
       style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"
       title="设置"
+      class="nav_icon"
     ></font-awesome-icon>
   </div>
 </template>
 
 <script>
 import util from "@/util/util.js";
-
 export default {
   props: ["userdata"],
   data() {
@@ -77,6 +81,9 @@ export default {
     //   );
     // },
     switchUser(wx, index) {
+      if(!index) {
+        return;
+      }
       this.$emit("switchUser", index);
     },
     nav: function(action, index) {
@@ -109,7 +116,6 @@ export default {
   }
 };
 </script>
-
 <style scoped lang="scss">
 .nav {
   display: flex;
@@ -117,7 +123,6 @@ export default {
   align-items: center;
   height: 100%;
   position: relative;
-
  
   .imgbox{
     height: 40px;
@@ -138,7 +143,6 @@ export default {
       display: block;
     }
   }
-
   .face {
     width: 40px;
     height: 40px;
@@ -147,17 +151,14 @@ export default {
     /*margin-bottom: 20px;*/
     cursor: pointer;
   }
-
   svg {
-    margin-top: 20px;
-    transition: 0.4s all ease;
-    cursor: pointer;
-    font-size: 25px;
-    color: #aaa;
-
-    &.active {
-      color: #409eff;
-    }
+      margin-top: 20px;
+      transition: .4s all ease;
+      cursor: pointer;
+      font-size: 25px;
+  }
+  .bottom_icon{
+      position: absolute;
   }
 }
 </style>
