@@ -20,7 +20,7 @@
 			<div class="header-tab-item" v-for="(item,index) in tabData" 
 				:key="index" 
 				@click="tabClick($event, index)" 
-				:class="{select:index===nowIndex}">
+				:class="{select:index===selectIndex}">
 				<svg>
 					<use :xlink:href="'#'+item.svg"/>
 				</svg>
@@ -29,16 +29,16 @@
 		</div>
 		<!-- 选项卡内容 -->
 		<div class="right-box-container">
-			<div class="right-box-item" v-show="nowIndex==0">
+			<div class="right-box-item" v-show="selectIndex==0">
 				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
-			<div class="right-box-item" v-show="nowIndex==1">
+			<div class="right-box-item" v-show="selectIndex==1">
 				<RightBoxUserInfo :myAddressBook="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
-			<div class="right-box-item" v-show="nowIndex==2">
+			<div class="right-box-item" v-show="selectIndex==2">
 				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
 			</div>
-			<div class="right-box-item" v-show="nowIndex==3">
+			<div class="right-box-item" v-show="selectIndex==3">
 				<RightBoxTalking ref="RightBoxTalking" ></RightBoxTalking>
 			</div>
 		</div>
@@ -60,6 +60,7 @@
 				title: '',
 				loading: false,
 				showPublicBlog: false,
+				selectIndex: 0,
 				tabData:[{
 					name:"用户图像",
 					svg:'svgUserImg'
@@ -88,7 +89,7 @@
 			tabClick(e, index){
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
-				this.nowIndex = index
+				this.selectIndex = index
 				// debugger;
 				if(index == 2) {
 					this.$refs.pengYouQuan.loadData();
@@ -101,6 +102,12 @@
 		},
 		created() {
 			// this.loadData();
+		},
+		watch: {
+		    nowIndex(newVal, oldVal){
+		    	//监听父组件对默认选项卡的选择
+		    	this.selectIndex = newVal;
+		    }
 		}
 	}
 </script>
