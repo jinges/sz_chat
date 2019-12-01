@@ -115,11 +115,11 @@
 				localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wechatList));
 				this.selectNav('Sessions');
 				this.$store.commit('initSessions');
-				var friends = this.$store.getters.filterSessionsByName;
-				if(friends.length) {
-					this.startChat(friends[0]);
-				}
-				this.$refs.chat.loadmore();
+				// var friends = this.$store.getters.filterSessionsByName;
+				// if(friends.length) {
+				// 	this.startChat(friends[0]);
+				// }
+				// this.$refs.chat.loadmore();
 			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
