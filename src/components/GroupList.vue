@@ -57,7 +57,6 @@
 
 		.header {
 			height: 45px;
-			border-bottom: 1px solid #aaa;
 			line-height: 45px;
 			text-align: center;
 			position: relative;

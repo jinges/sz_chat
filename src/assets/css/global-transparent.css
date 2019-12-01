@@ -85,4 +85,10 @@ ul.plus_menu div.popper__arrow:after{
 }
 
 
+/*申请加我的朋友-新的朋友*/
+.new_friend .header{
+	border-bottom: 1px solid #aaa;
+}
+
+
 
