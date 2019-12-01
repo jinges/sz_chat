@@ -77,6 +77,9 @@ export default {
     //   );
     // },
     switchUser(wx, index) {
+      if(!index) {
+        return;
+      }
       this.$emit("switchUser", index);
     },
     nav: function(action, index) {

@@ -253,7 +253,7 @@ export default {
     return {
       title: "",
       loading: false,
-      editState: editState,
+      // editState: editState,
       // userInfoData: [],
       userInfoData: {},
       tagData: [],

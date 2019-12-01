@@ -39,7 +39,7 @@
 				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==3">
-				<RightBoxTalking ref="RightBoxTalking"></RightBoxTalking>
+				<RightBoxTalking ref="RightBoxTalking" ></RightBoxTalking>
 			</div>
 		</div>
 	</div>

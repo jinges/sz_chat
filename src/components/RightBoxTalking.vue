@@ -41,6 +41,11 @@
 			}
 		},
 		watch: {
+			clean(o, n){
+				if(o != n) {
+					this.arrList = [];
+				}
+			}
 		},
 		components: {
 		},
@@ -57,6 +62,9 @@
 				this.detailUrl = item.detailUrl;
 				this.dialogVisible = true
 			},
+			cleanSrarch(){
+				this.arrList = [];
+			},
 			searchKeyword(id){
 				this.userid = id;
 				this.$axios.post('/getCustomerProfile', {
@@ -72,7 +80,6 @@
 						"sentence": msg
 					}).then(data => {
 						this.arrList = data
-						console.log(data)
 					}).catch(() => {});
 			},
 			search(){

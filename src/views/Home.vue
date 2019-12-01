@@ -99,7 +99,6 @@
 		methods: {
 			//切换用户刷新页面
 			switchUser(index){
-				debugger;
 				let wx = this.wechatList[index];
 				util.removeToken();
 				util.removeExTime();
@@ -126,7 +125,6 @@
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
 				this.showUser = false;
-					this.showMore = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
@@ -175,7 +173,6 @@
 				}
 			},
 			startChat: function(target) {
-				debugger;
 					this.showMore = true;
 				/* target.targetId */
 				// this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
@@ -184,6 +181,7 @@
 				this.targetInfo = target;
 				this.currentContent = 'Chat';
 				this.nowIndex = 3;
+				this.$refs.RightBox.$refs.RightBoxTalking.cleanSrarch()
 			},
 			listenMsg(msg){
 				debugger;
