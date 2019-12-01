@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <div class="users">
-      <div  v-for="(item,index) in userdatas" 
+      <div  v-for="(item,index) in wechatList" 
         :key="index"  class="imgbox" 
         :class="{hasMsg:item.hasMsg}"
         @click="switchUser(item, index)">
@@ -60,15 +60,15 @@ export default {
   data() {
     return {
       activeIndex: 0,
-      userdatas: wechatList
+      // userdatas: wechatList
     };
   },
   mounted() {
   },
   watch:{
-    wechatList(data){
-      this.userdatas = data;
-    },
+    // wechatList(data){
+    //   this.userdatas = data;
+    // },
     immediate: true
   },
   methods: {
