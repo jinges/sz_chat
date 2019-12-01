@@ -84,6 +84,9 @@ ul.plus_menu .popper__arrow:after{
 	border-bottom-color:#4c4c4c!important;
 }
 
+.sessions .session{
+	border: transparent;
+}
 .sessions .session .content .name{
 	color: #000;
 }
@@ -157,4 +160,30 @@ ul.plus_menu .popper__arrow:after{
 .chat .message.receiver .content:before{
 	border-color: transparent transparent transparent #9eea6a ;
 }
+.chat .el-loading-mask{
+	background-color: rgba(0, 0, 0, 0.1)!important;
+}
 
+.chat .el-loading-spinner .el-loading-text{
+	color: #999;
+}
+.chat .el-loading-spinner .path{
+	stroke: #999;
+}
+#content .chat .footer{
+	background: #fff;
+}
+
+#content .chat .footer textarea.editor{
+	border: 1px solid #eee;
+	background-color: #f5f5f5;
+}
+#content .chat .footer textarea:focus {
+    background-color: #fff;
+}
+#content .chat .footer .toolbar svg{
+	color: #bdbdbd;
+}
+#content .chat .footer .toolbar svg:hover{
+	color: #09bb07;
+}
