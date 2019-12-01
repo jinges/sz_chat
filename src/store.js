@@ -111,6 +111,27 @@ export default new Vuex.Store({
 				.catch(() => {});
 		},
 
+		refershFriend(){
+			Vue.prototype.$axios.post('/refreshAddressBook', {
+				imei: util.getImei(),
+				myWxid: util.getMyWxId(),
+				size: 5000
+			})
+		},
+
+		changeFriendList: (state,friends)=>{
+			debugger;
+			state.friends = friends.map(item => {
+				return {
+					face: item.addressBook.headPic || require('@/assets/wechat.png'),
+							name: item.remark ? item.remark : item.addressBook.nickName,
+							wxid: item.addressBook.wxid,
+							detail: item
+				}
+			})
+		},
+
+
 		modifyFriend: (state, friend) => {
 			for (var i = 0; i < state.friends.length; i++) {
 				if (state.friends[i].wxid == friend.wxid) {

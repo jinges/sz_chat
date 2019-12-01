@@ -282,7 +282,7 @@ export default {
   components: {},
   methods: {
     handleChange(value) {
-      // debugger;
+      // 
       console.log(111);
       console.log(value);
     },
@@ -323,7 +323,7 @@ export default {
       this.tagData.map(item => {
         tags.push(item.labelName);
       });
-      debugger;
+      
       this.$axios
         .post("/setTag", {
           myWxid: this.myWxid,

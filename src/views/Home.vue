@@ -184,7 +184,7 @@
 				this.$refs.RightBox.$refs.RightBoxTalking.cleanSrarch()
 			},
 			listenMsg(msg){
-				debugger;
+				
 				this.$refs.RightBox.$refs.RightBoxTalking.getkeyword(msg)
 			},
 			filterMsg(obj){

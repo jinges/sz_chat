@@ -207,7 +207,7 @@
 					var data = msgData.data;
 					this.loading = false;
 					var _this = this;
-					debugger;
+					
 					if (data.length == 0) {
 						this.nomore = true;
 						_this.history = [];
@@ -310,7 +310,7 @@
 			//以及收到消息
 			onWsMsg: function(json) {
 				this.$refs['groupMember'] && this.$refs['groupMember'].onWsMsg(json);
-					debugger;
+					
 				//将之前发送中状态改为已发送
 				if (json.messageType == 'SERVER_TO_CLIENT' && this.sendingMap[json.messageId]) {
 
