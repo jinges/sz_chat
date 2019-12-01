@@ -32,7 +32,7 @@ export default new Vuex.Store({
 		initFriends(state) {
 
 			function getAddressBook() {
-				return Vue.prototype.$axios.post('/queryMyAddressBook', {
+				return Vue.prototype.$axios.post('/refreshAddressBook', {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
 					size: 5000

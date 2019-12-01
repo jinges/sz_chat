@@ -100,12 +100,34 @@
 		methods: {
 			//切换用户刷新页面
 			switchUser(){
-				location.reload();
+
+			switchUser(index){
+				let wx = this.wechatList[index];
+				util.removeToken();
+				util.removeExTime();
+				util.removeImei();
+				util.removeMyWxId();
+				util.setToken(wx.token);
+				util.setExTime(wx.exTime);
+				util.setImei(wx.imei);
+				util.setMyWxId(wx.wxid);
+      	this.wechatList[0].logined = false;
+				let firstUser = this.wechatList.splice(index,1);
+				firstUser[0].hasMsg = false;
+        firstUser[0].logined = true;
+				this.wechatList = [...[],...firstUser,...this.wechatList];
+				localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wechatList));
+				this.selectNav('Sessions');
+				this.$store.commit('initSessions');
+				var friends = this.$store.getters.filterSessionsByName;
+				if(friends.length) {
+					this.startChat(friends[0]);
+				}
+				this.$refs.chat.loadmore();
 			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
 				this.showUser = false;
-					this.showMore = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
@@ -162,6 +184,7 @@
 				this.targetInfo = target;
 				this.currentContent = 'Chat';
 				this.nowIndex = 3;
+				this.$refs.RightBox.$refs.RightBoxTalking.cleanSrarch()
 			},
 			listenMsg(msg){
 				debugger;

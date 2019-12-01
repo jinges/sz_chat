@@ -193,7 +193,6 @@
 			},
 			//加载消息
 			loadmore: function() {
-				debugger;
 				if (!this.targetId)
 					return;
 				this.msgPage++;
@@ -211,6 +210,7 @@
 					debugger;
 					if (data.length == 0) {
 						this.nomore = true;
+						_this.history = [];
 						return;
 					}
 					data.forEach(item => {
@@ -221,7 +221,6 @@
 						} else {
 							face = item.mdr == 'OUT' ? this.myFace : this.targetFace;
 						}
-						console.log(face);
 						_this.history.unshift({
 							type: item.mdr == 'OUT' ? 'receiver' : 'sender',
 							media: media,
