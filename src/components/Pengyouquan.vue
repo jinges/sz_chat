@@ -103,7 +103,6 @@ export default {
     loadData() {
       let $this = this;
       this.loading = true;
-      debugger;
       if (this.$store.state.currentSession) {
         this.$axios
           .post("/momentListByWxid", {
