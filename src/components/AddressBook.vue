@@ -130,15 +130,13 @@ export default {
     flex-grow: 1;
   }
 
-  .refresh {
-    height: 30px;
-    text-align: right;
-    font-size: 12px;
-    line-height: 30px;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 0px 10px;
-    color: #e48863;
-    cursor: pointer;
+        .refresh {
+            height: 30px;
+            text-align: right;
+            font-size: 12px;
+            line-height: 30px;
+            padding: 0px 10px;
+            cursor:pointer;
 
     .icon {
       margin-right: 4px;

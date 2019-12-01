@@ -1,10 +1,10 @@
 <template>
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
-			<div id="navbar">
-				<Nav @selectNav="selectNav" :userdata="wechatList" @switchUser="switchUser"/>
+			<div id="navbar" class="navbar">
+				<Nav @selectNav="selectNav" :face="selfData.headPic" @switchUser="switchUser"/>
 			</div>
-			<div id="subNav" v-show="!isShowAddFriends">
+			<div id="subNav" v-show="!isShowAddFriends" class="subnav">
 				<Search ref="search" :searchType="currentSubNav" />
 				<transition-group name="slide" tag="div" id="subBox">
 					<Sessions ref="sessions" key="sessions" v-show="currentSubNav=='Sessions'" @selectSession="startChat" />
@@ -54,6 +54,8 @@
 	import AddFriends from '@/components/AddFriends.vue'
 	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
+    // import '../assets/css/global-transparent.css' /*引入公共样式*/
+    import '../assets/css/global.css' /*引入公共样式*/
 
 	export default {
 		data() {
@@ -77,8 +79,7 @@
 				isShowAddFriends: false,
 				showMore: false,
 				showUser: true,
-				nowIndex:1,
-				wechatList: []
+				nowIndex:1
 			}
 		},
 		name: 'home',
@@ -186,21 +187,9 @@
 			listenMsg(msg){
 				
 				this.$refs.RightBox.$refs.RightBoxTalking.getkeyword(msg)
-			},
-			filterMsg(obj){
-				this.wechatList.map(item=>{
-					if(item.imei == obj.imei) {
-						item.hasMsg = true
-					} 
-					return item
-				})
-				console.log(this.wechatList);
 			}
 		},
 		mounted: function() {
-				this.wechatList = JSON.parse(
-					localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
-				);
 			//查询个人信息
 			this.$axios.post('/queryAddressBookByWxId', {
 					wxid: util.getMyWxId()
@@ -213,12 +202,10 @@
 
 			//WebSocket入口     
 			var websocketUrl = '';
-			let $this = this;
-			var iemis = localStorage.getItem('__WBS__H5__GLOBAL__IMEIS');
 			if (process.env.VUE_APP_MODE == 'development') {
-				websocketUrl = process.env.VUE_APP_SERVER_WEBSOCKET + iemis;
+				websocketUrl = process.env.VUE_APP_SERVER_WEBSOCKET + util.getImei();
 			} else {
-				websocketUrl = 'ws://' + window.location.host + '/chatWS/' + iemis;
+				websocketUrl = 'ws://' + window.location.host + '/chatWS/' + util.getImei();
 			}
 			var websocket = new WebSocket(websocketUrl);
 			websocket.onopen = () => {
@@ -226,16 +213,12 @@
 			};
 			websocket.onmessage = (event) => {
 				var json = JSON.parse(event.data);
-				if(json.messageType == 'NOTIFY_TO_SERVER' && json.imei != localStorage.getItem('__WBS__H5__GLOBAL__IMEI')) {
-					this.filterMsg(json);
-				} else {
-					//分发到各个组件
-					['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend', 'RightBox'].forEach(t => {
-						if (this.$refs[t] && this.$refs[t].onWsMsg) {
-							this.$refs[t].onWsMsg(json);
-						}
-					});
-				}
+				//分发到各个组件
+				['search', 'sessions', 'addressBook', 'chat', 'pengYouQuan', 'detail', 'GroupList','newFriend', 'RightBox'].forEach(t => {
+					if (this.$refs[t] && this.$refs[t].onWsMsg) {
+						this.$refs[t].onWsMsg(json);
+					}
+				});
 			}
 		}
 	}
@@ -281,11 +264,9 @@
 
 			#navbar {
 				width: 60px;
-				background: rgba(0, 0, 0, 0.55);
 			}
 
 			#subNav {
-				background: rgba(0, 0, 0, 0.3);
 				width: 250px;
 				display: flex;
 				flex-direction: column;
