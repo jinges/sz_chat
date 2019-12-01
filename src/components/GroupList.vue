@@ -4,7 +4,7 @@
 			{{title}}
 		</div>
 		<ul class="group_list_ul">
-			<li class="group_list_li" v-for="(item,index) in $store.state.groupList" @click="selectGroup($event,index,item)">
+			<li class="group_list_li" v-for="(item,index) in $store.state.groupList" @click="selectGroup($event,index,item)" :key="index">
 				<div class="group_list_img" :style="[{backgroundImage: `url(${item.img})`}]"></div>
 				<div class="group_list_name">{{item.name}}</div>
 				<div class="group_list_btn">

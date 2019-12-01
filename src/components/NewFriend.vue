@@ -25,7 +25,6 @@
 			return {
 				bufferData: {},
 				loading: false,
-				bufferData: {},
 				result: [],
 				btnLoading: -1,
 				btnDisabled: false,

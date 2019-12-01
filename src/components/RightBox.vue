@@ -50,7 +50,7 @@
 	import RightBoxUserInfo from './RightBoxUserInfo.vue';
 	import Pengyouquan from './Pengyouquan.vue';
 	import RightBoxTalking from './RightBoxTalking.vue';
-	import util from '@/util/util.js'
+	import util from '../util/util.js';
 
 	export default {
 		name: 'RightBox',
