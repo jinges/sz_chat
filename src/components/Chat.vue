@@ -694,7 +694,7 @@
 						  title: this.materialTitle,
 						  desc: this.materialTitle,
 						  link: filePath,
-						  icon: '123456'
+						  icon: 'https://s.autoimg.cn/fe/topbar/logo_topbar.png'
 					  })
 				  } else {
 					  body = Object.assign({}, body, {

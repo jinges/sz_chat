@@ -28,7 +28,7 @@
 						<img class="face" :src="item.head || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574619131613&di=c49cacabc26880863b136fe8bc61c967&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F69ad7a731f43d4b8729f1a2fbe65c43801ca0f033250-EV1vMf_fw658'" />
 						<div class="content">
 							<div class="info" v-if="item.status!='查找失败'">
-								<div class="name">{{item.name || '暱稱'}}</div>
+								<div class="name">{{item.name || '未获取'}}</div>
 								<div class="address">{{item.province || '所在地'}}{{item.city}}</div>
 							</div>
 							<div class="info" v-else>
