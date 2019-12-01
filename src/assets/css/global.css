@@ -4,6 +4,11 @@
   主要实现全局配色-绿色风格
 */
 
+/*整体*/
+#home #box{
+	background: #f5f5f5;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
 
 /*菜单栏图标颜色-绿*/
 .navbar{
@@ -118,5 +123,38 @@ ul.plus_menu .popper__arrow:after{
 .addressBook .refresh{
 	background-color: #dbd9d8;
 	color: #666;
+}
+
+
+/*对话框*/
+.chat{
+	background-color: #f5f5f5;
+}
+.chat .header{
+	color: #000;
+	border-bottom-color: #e5e5e5;
+}
+.chat .body #loadmore{
+	background-color: #dadada;
+	color: #fff;
+}
+.chat .body #loadmore:hover{
+	background-color: #ccc;
+}
+.chat .message .content{
+	background-color: #fff;
+	border: 1px solid #f0f0f0;
+	color: #232323;
+}
+.chat .sender .content:before{
+	border-color: transparent #fff transparent transparent;
+}
+.chat .message.receiver .content{
+	background-color: #9eea6a;
+	border: 1px solid #9eea6a;
+	color: #232323;
+}
+.chat .message.receiver .content:before{
+	border-color: transparent transparent transparent #9eea6a ;
 }
 
