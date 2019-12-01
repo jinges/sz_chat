@@ -15,7 +15,7 @@
 						<div class="item remove">
 							<i class="el-icon-remove-outline" @click="removeMember"></i>
 						</div>
-						<div class="item" v-for="member in groupMembers" :targetId="member.targetId">
+						<div class="item" v-for="(member, index) in groupMembers" :targetId="member.targetId" :key="index">
 							<img :src="member.face" />
 							<div>{{member.nickName}}</div>
 						</div>
@@ -193,7 +193,6 @@
 			},
 			//加载消息
 			loadmore: function() {
-				// debugger;
 				if (!this.targetId)
 					return;
 				this.msgPage++;
@@ -208,9 +207,10 @@
 					var data = msgData.data;
 					this.loading = false;
 					var _this = this;
-					debugger;
+					
 					if (data.length == 0) {
 						this.nomore = true;
+						_this.history = [];
 						return;
 					}
 					data.forEach(item => {
@@ -221,7 +221,6 @@
 						} else {
 							face = item.mdr == 'OUT' ? this.myFace : this.targetFace;
 						}
-						console.log(face);
 						_this.history.unshift({
 							type: item.mdr == 'OUT' ? 'receiver' : 'sender',
 							media: media,
@@ -311,7 +310,6 @@
 			//以及收到消息
 			onWsMsg: function(json) {
 				this.$refs['groupMember'] && this.$refs['groupMember'].onWsMsg(json);
-					// debugger;
 				//将之前发送中状态改为已发送
 				if (json.messageType == 'SERVER_TO_CLIENT' && this.sendingMap[json.messageId]) {
 

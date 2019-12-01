@@ -5,12 +5,17 @@
 					<el-button slot="append" icon="el-icon-search" @click="search"></el-button>
 				</el-input>
 			</div>
+			<ul class="searchList history">
+				<li v-for="(item,index) in history" :key="index"  @click="eject(item)">
+					{{item.title}}
+					<span>{{item.subTitle}}</span>
+				</li>
+			</ul>
 			<ul class="searchList">
 				<li v-for="(item,index) in arrList" :key="index"  @click="eject(item)">
 					{{item.title}}
 					<span>{{item.subTitle}}</span>
 				</li>
-				
 			</ul>
 
 			<el-dialog
@@ -34,6 +39,7 @@
 			return {
 				dialogVisible:false,
 				arrList:[],
+				history: [],
 				searchTxt:'',
 				userid:'',
 				orderId:'',
@@ -57,6 +63,10 @@
 				this.detailUrl = item.detailUrl;
 				this.dialogVisible = true
 			},
+			cleanSrarch(){
+				this.arrList = [];
+				this.history = [];
+			},
 			searchKeyword(id){
 				this.userid = id;
 				this.$axios.post('/getCustomerProfile', {
@@ -71,8 +81,9 @@
 						"orderId": this.orderId,
 						"sentence": msg
 					}).then(data => {
-						this.arrList = data
-						console.log(data)
+						this.arrList = data;
+						this.history = [...[], ...data, ...this.history];
+						this.history = this.history.slice(0,3);
 					}).catch(() => {});
 			},
 			search(){
@@ -107,6 +118,9 @@
 			list-style-type:none;
 			padding-left: 0px;
 			font-size: 14px;
+			&.history{
+				margin-bottom: 10px;
+			}
 			li{
 				cursor: pointer;
 				background: #fff;

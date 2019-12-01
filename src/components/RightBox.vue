@@ -39,7 +39,7 @@
 				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
 			</div>
 			<div class="right-box-item" v-show="nowIndex==3">
-				<RightBoxTalking ref="RightBoxTalking"></RightBoxTalking>
+				<RightBoxTalking ref="RightBoxTalking" ></RightBoxTalking>
 			</div>
 		</div>
 	</div>
@@ -89,7 +89,10 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.nowIndex = index
-				console.log("切换到 "+ this.tabData[index].name)
+				// debugger;
+				if(index == 2) {
+					this.$refs.pengYouQuan.loadData();
+				}
 			},
 			onWsMsg(json) {
 				console.log('传数据都朋友圈');

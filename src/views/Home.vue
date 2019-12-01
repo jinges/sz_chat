@@ -1,8 +1,8 @@
 <template>
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
-			<div id="navbar">
-				<Nav @selectNav="selectNav" :userdata="wechatList" @switchUser="switchUser"/>
+			<div id="navbar" class="navbar">
+				<Nav @selectNav="selectNav" :wechatList="wechatList" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -54,6 +54,8 @@
 	import AddFriends from '@/components/AddFriends.vue'
 	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
+	// import '../assets/css/global-transparent.css' /*引入公共样式*/
+	import '../assets/css/global.css' /*引入公共样式*/
 
 	export default {
 		data() {
@@ -99,7 +101,6 @@
 		methods: {
 			//切换用户刷新页面
 			switchUser(index){
-				debugger;
 				let wx = this.wechatList[index];
 				util.removeToken();
 				util.removeExTime();
@@ -117,16 +118,15 @@
 				localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wechatList));
 				this.selectNav('Sessions');
 				this.$store.commit('initSessions');
-				var friends = this.$store.getters.filterSessionsByName;
-				if(friends.length) {
-					this.startChat(friends[0]);
-				}
-				this.$refs.chat.loadmore();
+				// var friends = this.$store.getters.filterSessionsByName;
+				// if(friends.length) {
+				// 	this.startChat(friends[0]);
+				// }
+				// this.$refs.chat.loadmore();
 			},
 			selectNav: function(t) {
 				this.isShowAddFriends = false;
 				this.showUser = false;
-					this.showMore = false;
 				if (t == 'Settings') {
 					this.detailOpt.disableMsg = true;
 					this.detailData = this.selfData;
@@ -151,7 +151,6 @@
 						targetName: detail.name
 					};
 					this.currentContent = 'Chat'
-
 				} else {
 					this.detailOpt.disableMsg = false;
 					this.myAddressBook = detail;
@@ -167,15 +166,12 @@
 				 if(type == "isGroupList"){
 					this.currentContent = 'GroupList';
 					this.$store.commit('initGroupList');
-
 				} else if(type == 'isNewFriend'){
 					this.currentContent = 'NewFriend';
 					this.$store.commit('initNewFriends');
-
 				}
 			},
 			startChat: function(target) {
-				debugger;
 					this.showMore = true;
 				/* target.targetId */
 				// this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
@@ -184,6 +180,7 @@
 				this.targetInfo = target;
 				this.currentContent = 'Chat';
 				this.nowIndex = 3;
+				this.$refs.RightBox.$refs.RightBoxTalking.cleanSrarch()
 			},
 			listenMsg(msg){
 				debugger;
@@ -196,7 +193,6 @@
 					} 
 					return item
 				})
-				console.log(this.wechatList);
 			}
 		},
 		mounted: function() {
@@ -212,7 +208,6 @@
 					util.setMyWxInfo(JSON.stringify(data));
 				})
 				.catch(() => {});
-
 			//WebSocket入口     
 			var websocketUrl = '';
 			let $this = this;
@@ -268,9 +263,6 @@
 			height: 700px;
 			max-height: 95%;
 			width: 1000px;
-			background: transparent;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-			background: rgba(0, 0, 0, 0.55);
 			color: #fff;
 			display: flex;
 			overflow: hidden;
@@ -283,11 +275,9 @@
 
 			#navbar {
 				width: 60px;
-				background: rgba(0, 0, 0, 0.55);
 			}
 
 			#subNav {
-				background: rgba(0, 0, 0, 0.3);
 				width: 250px;
 				display: flex;
 				flex-direction: column;

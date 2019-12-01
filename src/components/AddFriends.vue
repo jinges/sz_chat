@@ -58,7 +58,7 @@
 		</div>
 
 		<el-dialog title="新建好友添加任务" width="400px" :visible="isShowAddFriendDialog" :before-close="closeAddFriendDialog" id="addFriendDialog">
-			<el-tabs v-model="addType" type="card" @tab-click="handleClick" :stretch="true">
+			<el-tabs v-model="addType" type="card" :stretch="true">
 				<el-tab-pane label="批量添加" name="batchAdd">
 					<el-form ref="form" hide-required-asterisk status-icon style="padding: 0 20px;">
 						<el-form-item label="导入好友列表">
@@ -82,9 +82,6 @@
 							  class="upload-demo"
 							  ref="upload"
 							  action="/api/importAddfriendExcel"
-							  :on-preview="handlePreview"
-							  :on-remove="handleRemove"
-							  :file-list="fileList"
 							  :auto-upload="false"
 							  :data="{imei: imei}"
 							  :headers="batchAddHeaders">
@@ -119,9 +116,9 @@
 					<div style="padding: 0 20px;">
 						<div>选择需要重新尝试添加的用户</div>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="6">需要好友验证(20)</el-checkbox>
+						<el-checkbox v-model="retryType" :label="6">需要好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="3">未回复(20)</el-checkbox>
+						<el-checkbox v-model="retryType" :label="3">未回复({{addFriendsUnansweredCount}})</el-checkbox>
 						<div style="margin: 15px 0;"></div>
 						<div style="text-align: center; margin: 20px;">
 							<el-button size="small" type="primary" @click="onSubmitRetry">加入队列</el-button>
@@ -136,13 +133,13 @@
 			<div style="padding: 0 20px;">
 				<div>选择需要导出的用户</div>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="1">已添加(20)</el-checkbox>
+				<el-checkbox v-model="exportType" :label="1">已添加({{addFriendsSuccessCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="0">等待中(20)</el-checkbox>
+				<el-checkbox v-model="exportType" :label="0">等待中({{addFriendsWaitCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="6" style="margin-right: 10px;">需好友验证(20)</el-checkbox>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="3" style="margin-right: 10px;">未回应(20)</el-checkbox>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="4" style="margin-right: 10px;">未找到(20)</el-checkbox>
+				<el-checkbox v-model="exportType" :label="6" style="margin-right: 10px;">需好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="3" style="margin-right: 10px;">未回应({{addFriendsUnansweredCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="4" style="margin-right: 10px;">未找到({{addFriendsFailCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
 				<div style="text-align: center; margin: 20px;">
 					<el-button size="small" type="primary" @click="onSubmitExport">导出</el-button>
@@ -198,21 +195,31 @@
 				},
 				pageSize: 10,
 				retryType: [],
-				exportType: []
+				exportType: [],
+				addFriendsAllCount: 0,
+				addFriendsWaitCount: 0,
+				addFriendsWaitVerificationCount: 0,
+				addFriendsSuccessCount: 0,
+				addFriendsRefuseCount: 0,
+				addFriendsUnansweredCount: 0,
+				addFriendsFailCount: 0,
+				addFriendsRepeatCount: 0
 			}
 		},
 		methods: {
 			// 获取添加好友列表
 			getAddFriendInfo: function(pageIndex) {
+				this.statusGroupAddfriend();
 				this.$axios.post('/queryAddfriendByPage', {
 					imei: util.getImei(),
 					my_wxid: util.getMyWxId(),
 					page: pageIndex,
 					rows: this.pageSize
 				}).then(data => {
-					this.addFriendsAllCount = data.data.length;
 					for (var i = 0; i < data.data.length; i++) {
 						data.data[i].createdAt = data.data[i].createdAt.replace('T', ' ');
+						
+						/**
 						switch(data.data[i].status) {
 							case '添加成功':
 								this.addFriendsSuccessCount ++;
@@ -236,6 +243,7 @@
 								this.addFriendsWaitVerificationCount ++;
 								break;
 						}
+						*/
 					}
 					this.addFriendsInfo = data;
 				}).catch(() => {});
@@ -312,9 +320,11 @@
 					var data = {
 						imei: util.getImei(),
 						myWxid: util.getMyWxId(),
-						statuss: this.exportType
+						statuss: this.exportType.join(',')
 					}
-					this.$axios.post("/exportMyFriend", data)
+					window.open("/api/exportMyFriend?imei=" + data.imei + "&myWxid=" + data.myWxid + "&statuss=" + data.statuss, '_blank');
+					return;
+					this.$axios.get("/exportMyFriend?imei=" + data.imei + "&myWxid=" + data.myWxid + "&statuss=" + data.statuss, data)
 						.then((data) => {
 							this.closeAddFriendDialog();
 						})
@@ -322,6 +332,37 @@
 				} else {
 					
 				}
+			},
+			// 添加好友的统计
+			statusGroupAddfriend: function() {
+				var data = {
+					imei: util.getImei(),
+					myWxid: util.getMyWxId(),
+				}
+				this.$axios.post("/statusGroupAddfriend", data)
+					.then((data) => {
+						for (var i = 0; i < data.length; i++) {
+							var status = data[i].status;
+							switch(status) {
+								case "0":
+									this.addFriendsWaitCount = data[i].count;
+								break;
+								case "1":
+									this.addFriendsSuccessCount = data[i].count;
+								break;
+								case "3":
+									this.addFriendsUnansweredCount = data[i].count;
+								break;
+								case "4":
+									this.addFriendsFailCount = data[i].count;
+								break;
+								case "6":
+									this.addFriendsWaitVerificationCount = data[i].count;
+								break;
+							}
+						}
+					})
+					.catch(() => {});
 			},
 			currentChange:function(currentPage){
 			    this.getAddFriendInfo(currentPage);

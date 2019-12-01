@@ -507,7 +507,7 @@ export default {
       // this.userStatus = val;
     },
     handleChange(value) {
-      // debugger;
+      // 
       console.log(111);
       console.log(value);
     },
@@ -574,7 +574,6 @@ export default {
       this.tagData.map(item => {
         tags.push(item.labelName);
       });
-      // debugger;
       this.$axios
         .post("/setTag", {
           myWxid: this.myWxid,
@@ -586,7 +585,6 @@ export default {
     },
     saveUserInf() {
       let _this = this;
-      // console.log(_this.targetWxid);
       _this.licensePlateArea = "1";
       if (
         _this.name == null ||
@@ -612,6 +610,7 @@ export default {
             id: _this.userInfoData.id,
             gender: parseInt(_this.gender),
             intentModel: _this.intentModel,
+            //上牌地区
             // licensePlateArea: _this.licensePlateArea,
             licensePlateArea: "1",
             isLoan: parseInt(_this.isLoan),
@@ -620,8 +619,10 @@ export default {
             userStatus: parseInt(_this.userStatus),
             grading: _this.grading,
             remark: _this.remark,
+            //下次回访时间
             // nextVisitTime: _this.nextVisitTime,
             nextVisitTime: "2019-12-02 12:00",
+            //到店时间
             // arrivalTime: _this.arrivalTime,
             arrivalTime: "2019-12-02 12:00",
             defeatCause: parseInt(_this.defeatCause),

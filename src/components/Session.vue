@@ -19,6 +19,7 @@
         methods: {
             selectSession: function() {
                 $(this.$el).removeClass('newmsg').attr('active','active').siblings().removeAttr('active');
+                //debugger;
                 this.$store.commit('setCurrentSession',this.targetId);
                 this.$emit('selectSession', {
                     targetId: this.targetId,
@@ -77,7 +78,7 @@
             width: 38px;
             height: 38px;
             border-radius: 3px;
-            margin-right: 13px;
+            margin-right: 11px;
         }
 
         .content {
