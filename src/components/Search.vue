@@ -1,17 +1,23 @@
 <template>
     <div class="search">
-
-        <el-input size="small" style="width:180px;margin: 10px;" placeholder="请输入搜索内容" suffix-icon="el-icon-search"
-            v-model="searchText">
+        <el-input size="small" style="width:188px;margin: 10px;" placeholder="请输入搜索内容" suffix-icon="el-icon-search" v-model="searchText">
         </el-input>
 
         <el-dropdown trigger="click" @command="clickMenu">
             <span class="plus"></span>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="addFriend">添加好友</el-dropdown-item>
-                <el-dropdown-item command="createGroup">创建群组</el-dropdown-item>
-                <el-dropdown-item command="groupMessage">群发消息</el-dropdown-item>
-                <el-dropdown-item command="groupFriend">发送朋友圈</el-dropdown-item>
+            <el-dropdown-menu slot="dropdown"  class="plus_menu">
+                <el-dropdown-item command="addFriend">
+                    <font-awesome-icon icon="user-plus" />添加好友
+                </el-dropdown-item>
+                <el-dropdown-item command="createGroup">
+                    <font-awesome-icon icon="comment" />创建群组
+                </el-dropdown-item>
+                <el-dropdown-item command="groupMessage">
+                    <font-awesome-icon icon="comments" />群发消息
+                </el-dropdown-item>
+                <el-dropdown-item command="groupFriend">
+                    <font-awesome-icon icon="bullseye" />发送朋友圈
+                </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
 
@@ -119,9 +125,13 @@
 
 <style scoped lang="scss">
     .search {
-        background: rgba(0, 0, 0, 0.6);
+        /*background: rgba(0, 0, 0, 0.6);*/
 
+        div input{
+            background-color:red;
+        }
         .plus {
+            outline:none;
             cursor: pointer;
             margin-left: 5px;
             width: 24px;
@@ -138,7 +148,7 @@
 
                 &:before,
                 &:after {
-                    background: #fff;
+                    /*background: #fff;*/
                 }
             }
 
@@ -161,26 +171,20 @@
                 height: 2px;
                 background: #C0C4CC;
             }
-
         }
     }
-</style>
-<style lang="scss">
-    .el-dropdown-menu {
-        background-color: rgba(0, 0, 0, 0.4) !important;
-        border: none !important;
-
-        li {
-            color: #fff !important;
+    .plus_menu{
+        border: none;
+        li{
+            color: #fff;
 
             &:hover {
-                background-color: #66b1ff !important;
-                color: #fff !important;
+                color: #fff;
             }
-        }
 
-        .popper__arrow {
-            display: none !important;
+            svg{
+                margin-right: 5px;
+            }
         }
     }
 </style>

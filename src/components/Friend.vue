@@ -40,11 +40,9 @@
         box-sizing: border-box;
 
         &:hover {
-            background: rgba(103, 194, 58, 0.2);
         }
 
         &.active {
-            background: rgba(103, 194, 58, 0.5);
         }
 
         .face {

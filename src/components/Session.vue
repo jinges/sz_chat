@@ -77,7 +77,7 @@
             width: 38px;
             height: 38px;
             border-radius: 3px;
-            margin-right: 13px;
+            margin-right: 11px;
         }
 
         .content {
