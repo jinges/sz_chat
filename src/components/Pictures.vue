@@ -44,6 +44,7 @@
 				this.chooseIndex = index;
 				$(".transition-box").removeClass('on');
 				$(".transition-box#" + this.chooseIndex).addClass('on');
+				this.$emit('msg', this.data[index]);
 			},
 			// 获取图片信息
 			getPictrues: function(pageIndex, pageSize) {

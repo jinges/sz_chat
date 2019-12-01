@@ -8,7 +8,7 @@
 			</el-col>
 		</el-row>
 
-		<el-table ref="articlesTable" :data="tableData" style="width: 100%; border-top: 1px solid #EBEEF5;" @selection-change="handleSelectionChange"
+		<el-table @row-click="clickRow" ref="articlesTable" :data="tableData" style="width: 100%; border-top: 1px solid #EBEEF5;" @selection-change="handleSelectionChange"
 		 :show-header="false" stripe>
 			<el-table-column prop="title" label="标题"></el-table-column>
 			<el-table-column prop="id" label="选择" align="right">
@@ -57,6 +57,13 @@
 			},
 			search: function() {
 				this.getArticles(1, 10);
+			},
+			handleSelectionChange: function(val) {
+				console.log(val);
+			},
+			clickRow: function(row) {
+				this.articlesId = row.id;
+				this.$emit('msg', row);
 			}
 		},
 		mounted() {

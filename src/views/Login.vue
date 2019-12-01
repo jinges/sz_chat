@@ -24,7 +24,7 @@
         <transition name="slide">
             <div id="wxSel" v-if="showWxItem">
                 <div class="selectTitle">请选择要登录的微信</div>
-                <div v-for="(wx,index) in wxList" class="wxItem" :key="index" @click="login(wx)">
+                <div v-for="(wx,index) in wxList" class="wxItem" :key="index" @click="login(wx,index)">
                     <img :src="wx.face" class="face" />
                     <div class="detail">
                         <div class="name">昵称：{{wx.name}}</div>
@@ -94,17 +94,24 @@
                                             this.btnLoading = false;
                                             return;
                                         }
+                                        let imeis = [];
                                         for(let i=0;i<d.length;i++){
+                                            let item = d[i];
+                                            imeis.push(item.imei);
+                                            if(!item.myWxid) {
+                                                continue;
+                                            }
                                             this.wxList.push({
-                                                face: d[i].headPic,
-                                                name:d[i].nickName,
-                                                imei: d[i].imei,
-                                                wxid: d[i].myWxid,
+                                                face: item.headPic,
+                                                name:item.nickName,
+                                                imei: item.imei,
+                                                wxid: item.myWxid,
                                                 token: data.token,
-                                                exTime: data.expireTime
+                                                exTime: data.expireTime,
+                                                hasMsg: false
                                             });
                                         }
-		                                localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wxList));
+                                        localStorage.setItem('__WBS__H5__GLOBAL__IMEIS', imeis.join(','));
                                         // this.wxList = d
                                         // this.wxList.push({
                                         //     face: d.headPic,
@@ -124,11 +131,15 @@
                     }
                 });
             },
-            login: function(wx) {
+            login: function(wx, index) {
                 util.setToken(wx.token);
                 util.setExTime(wx.exTime);
                 util.setImei(wx.imei);
                 util.setMyWxId(wx.wxid);
+                this.wxList[index]['logined'] = true;
+                let firstUser = this.wxList.splice(index,1);
+                this.wxList = [...[],...firstUser,...this.wxList];
+		        localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wxList));
                 this.$router.push("/");
             }
         }
