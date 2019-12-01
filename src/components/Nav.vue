@@ -113,30 +113,48 @@ export default {
 </script>
 <style scoped lang="scss">
 .nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    position: relative;
-
-    #face {
-        width: 40px;
-        height: 40px;
-        margin-top: 15px;
-        border-radius: 3px;
-        /*margin-bottom: 20px;*/
-        cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+ 
+  .imgbox{
+    height: 40px;
+    width: 40px;
+    margin: 5px 10px;
+    &.hasMsg::before{
+      content: "";
+    width: 10px;
+    height: 10px;
+    background: #f00;
+    display: block;
+    position: absolute;
+    border-radius: 20px;
+    left: 44px;
+    margin-top: -4px;
     }
-
-    svg {
-        margin-top: 20px;
-        transition: .4s all ease;
-        cursor: pointer;
-        font-size: 25px;
+    img{
+      display: block;
     }
-
-    .bottom_icon {
-        position: absolute;
+  }
+  .face {
+    width: 40px;
+    height: 40px;
+    margin-top: 15px;
+    border-radius: 3px;
+    /*margin-bottom: 20px;*/
+    cursor: pointer;
+  }
+  svg {
+    margin-top: 20px;
+    transition: 0.4s all ease;
+    cursor: pointer;
+    font-size: 25px;
+    color: #aaa;
+    &.active {
+      color: #409eff;
     }
+  }
 }
 </style>
