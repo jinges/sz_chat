@@ -46,18 +46,18 @@ export default {
       list: []
     };
   },
-  watch: {
-    "$store.state.currentPengyouquan": function(newVal) {
-      if (newVal) {
-        var wx = this.$store.getters.filterFriendsById(newVal);
-        this.title = wx.name;
-        this.loadData();
-      } else {
-        this.title = "";
-        this.loadData();
-      }
-    }
-  },
+  // watch: {
+  //   "$store.state.currentPengyouquan": function(newVal) {
+  //     if (newVal) {
+  //       var wx = this.$store.getters.filterFriendsById(newVal);
+  //       this.title = wx.name;
+  //       this.loadData();
+  //     } else {
+  //       this.title = "";
+  //       this.loadData();
+  //     }
+  //   }
+  // },
   components: {
     Blog,
     PublishBlog
@@ -103,10 +103,11 @@ export default {
     loadData() {
       let $this = this;
       this.loading = true;
-      if (this.$store.state.currentPengyouquan) {
+      debugger;
+      if (this.$store.state.currentSession) {
         this.$axios
           .post("/momentListByWxid", {
-            targetWxid: this.$store.state.currentPengyouquan,
+            targetWxid: this.$store.state.currentSession,
             imei: util.getImei(),
             myWxid: util.getMyWxId()
           })
