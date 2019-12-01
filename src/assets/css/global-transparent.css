@@ -1,0 +1,88 @@
+/*
+  项目公共配色
+  2019-11-30
+  主要实现全局配色-半透明风格
+*/
+
+
+/*菜单栏图标颜色-蓝*/
+.navbar{
+	background: rgba(0, 0, 0, 0.55);
+}
+.nav_icon{
+	color: #aaa;
+}
+.nav_icon:hover {
+	color: #bdbdbd;
+}
+.nav_icon.active {
+	color: #409EFF;
+}
+.nav_icon.active:hover {
+	color: #09bb07;
+}
+
+/*好友列表*/
+.subnav{
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.search .plus:hover:before,{
+	background: #fff;
+}
+.search .plus:hover:after{
+	background: #fff;
+}
+ul.plus_menu{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+ul.plus_menu li:not(.is-disabled):hover{
+    background-color: #66b1ff;
+}
+ul.plus_menu div.popper__arrow{
+	top:-7px!important;
+	border-bottom-color: transparent!important;
+}
+
+ul.plus_menu div.popper__arrow:after{
+	border-bottom-color:rgba(0, 0, 0, 0.4)!important;
+}
+
+.sessions .session .content .name{
+	color: #fff;
+}
+.sessions .session .content .lastMsg{
+	color: #C0C4CC;
+}
+.sessions .session .content .time{
+	color: #909399;
+}
+.sessions .session:hover{
+	background-color: #dadada;
+}
+
+
+
+/*通讯录*/
+.addressBook{
+	color: #000;
+}
+.addressBook .address_book_top:hover{
+	background: rgba(103, 194, 58, 0.2);
+}
+.addressBook .address_book_top.active{
+	background: rgba(103, 194, 58, 0.5);
+}
+.addressBook .friend:hover{
+	background: rgba(103, 194, 58, 0.2);
+}
+.addressBook .friend.active{
+	background: rgba(103, 194, 58, 0.5);
+}
+.addressBook .refresh {
+    background: rgba(0, 0, 0, 0.4);
+    color: #e48863;
+}
+
+
+

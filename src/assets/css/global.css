@@ -1,0 +1,122 @@
+/*
+  项目公共配色
+  2019-11-30
+  主要实现全局配色-绿色风格
+*/
+
+
+/*菜单栏图标颜色-绿*/
+.navbar{
+	background:#1e1f20;
+	background:rgba(30,31,32,.95);
+}
+
+.nav_icon{
+	color: #878687;
+}
+.nav_icon:hover {
+	color: #bdbdbd;
+}
+.nav_icon.active {
+	color: #09bb07;
+}
+.nav_icon.active:hover {
+	color: #09bb07;
+}
+
+/*好友列表*/
+.subnav{
+	background:#edeae8;
+}
+
+.subnav .search input{
+	background-color: #dbd9d8;
+	border: 1px solid #dbd9d8;
+}
+.subnav .search input:focus{
+	background-color: #f8f8f8;
+	border: 1px solid #dad9d7;
+}
+
+.subnav .search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
+.subnav .search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
+.subnav .search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
+.subnav .search input:-ms-input-placeholder { color:#818181; } /* ie */
+
+.subnav .search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
+.subnav .search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
+.subnav .search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
+.subnav .search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
+
+.subnav .search i{
+	color: #999;
+	font-weight: 600;
+}
+
+.subnav .search .plus{
+	border: none;
+	background: #dcd9d8;
+}
+
+.subnav .search .plus:hover{
+	border-color: #d1d1d1;
+	background: #d1d1d1;
+}
+
+.search .plus:hover:before{
+	background: #777;
+}
+.search .plus:hover:after{
+	background: #555;
+}
+ul.plus_menu{
+    background:#4c4c4c;
+}
+ul.plus_menu li:not(.is-disabled):hover{
+	background-color:#444444;
+}
+ul.plus_menu .popper__arrow:after{
+	border-bottom-color:#4c4c4c!important;
+}
+
+.sessions .session .content .name{
+	color: #000;
+}
+.sessions .session .content .lastMsg{
+	color: #999;
+}
+.sessions .session .content .time{
+	color: #999;
+}
+.sessions .session:hover{
+	background-color: #dadada;
+}
+.sessions .session[active]{
+	background-color: #cac8c6;
+}
+
+
+/*通讯录*/
+.addressBook{
+	color: #000;
+}
+.addressBook .address_book_top:hover{
+	background-color: #dadada;
+}
+.addressBook .address_book_top.active{
+	background-color: #cac8c6;
+}
+.addressBook .friend:hover{
+	background-color: #dadada;
+}
+.addressBook .friend.active{
+	background-color: #cac8c6;
+}
+.addressBook .group{
+	color: #999;
+}
+.addressBook .refresh{
+	background-color: #dbd9d8;
+	color: #666;
+}
+
