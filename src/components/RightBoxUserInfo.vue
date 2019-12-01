@@ -22,9 +22,8 @@
           </div>
         </div>
       </div>
-      
-      
-      <div class="user_info_item" >
+
+      <div class="user_info_item">
         <div class="user_info_title">客户档案</div>
         <div class="user_info_wrap" v-if="!editState">
           <div class="user_info_wrap_li">
@@ -76,15 +75,18 @@
             <span class="user_info_wrap_sub">备注</span>
             <span class="user_info_wrap_text">{{userInfoData.remark}}</span>
           </div>
-          <div class="user_info_wrap_li">
+          <div
+            class="user_info_wrap_li"
+            v-if="(userInfoData.userStatus == 1 || userInfoData.userStatus == 2) ?true:false"
+          >
             <span class="user_info_wrap_sub">下次回访时间</span>
             <span class="user_info_wrap_text">{{userInfoData.nextVisitTime}}</span>
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userInfoData.userStatus == 2 ?true:false">
             <span class="user_info_wrap_sub">到店时间</span>
             <span class="user_info_wrap_text">{{userInfoData.arrivalTime}}</span>
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userInfoData.userStatus == 3 ?true:false">
             <span class="user_info_wrap_sub">战败原因</span>
             <span class="user_info_wrap_text" v-if="userInfoData.defeatCause == 1">无购车意向</span>
             <span class="user_info_wrap_text" v-if="userInfoData.defeatCause == 2">预算不符</span>
@@ -92,7 +94,7 @@
             <span class="user_info_wrap_text" v-if="userInfoData.defeatCause == 4">其它</span>
             <span class="user_info_wrap_text" v-if="userInfoData.defeatCause == null"></span>
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userInfoData.userStatus == 3 ?true:false">
             <span class="user_info_wrap_sub">战败原因其他</span>
             <span class="user_info_wrap_text">{{userInfoData.defeatCauseOther}}</span>
           </div>
@@ -100,115 +102,325 @@
         <div class="user_info_wrap" v-if="editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
-            <input type="text" class="user_info_wrap_text editor" id="name" v-model="userInfoData.name"/>
+            <input
+              type="text"
+              class="user_info_wrap_text editor"
+              name="fullname"
+              v-model="name"
+              required="required"
+              maxlength="10"
+            />
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户性别</span>
-            <input type="radio" name="sex" value="1" class="user_info_wrap_radio" :checked="userInfoData.gender == 1 ? true:false"/>
-            <label>男</label>
-            <input type="radio" name="sex" value="2" class="user_info_wrap_radio1" :checked="userInfoData.gender == 2 ? true:false"/>
-            <label>女</label>
+            <label>
+              <input
+                type="radio"
+                name="sex"
+                value="1"
+                class="user_info_wrap_radio"
+                v-model="gender"
+                :checked="gender == 1 ? true:false"
+                required="required"
+              />
+              男
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="sex"
+                value="2"
+                class="user_info_wrap_radio1"
+                v-model="gender"
+                :checked="gender == 2 ? true:false"
+                required="required"
+              />
+              女
+            </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">意向车型</span>
-            <input type="text" class="user_info_wrap_text editor" v-model="userInfoData.intentModel"/>
+            <input
+              type="text"
+              class="user_info_wrap_text editor"
+              v-model="intentModel"
+              required="required"
+              maxlength="50"
+            />
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
             <area-cascader
-              v-model="selected2"
+              v-model="licensePlateArea"
               :data="$pcaa"
               :level="1"
               size="small"
               @change="handleChange"
               class="user_info_wrap_cascader"
+              required="required"
             ></area-cascader>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
-            <input type="radio" name="isLoan" value="1" class="user_info_wrap_radio" :checked="userInfoData.isLoan == 1 ? true:false"/>
-            <label>是</label>
-            <input type="radio" name="isLoan" value="0" class="user_info_wrap_radio1" :checked="userInfoData.isLoan == 0 ? true:false" />
-            <label>否</label>
+            <label>
+              <input
+                type="radio"
+                name="isLoan"
+                value="1"
+                class="user_info_wrap_radio"
+                v-model="isLoan"
+                required="required"
+              />
+              是
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isLoan"
+                value="0"
+                class="user_info_wrap_radio1"
+                v-model="isLoan"
+                required="required"
+              />
+              否
+            </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否试驾</span>
-            <input type="radio" name="isTestDrive" value="1" class="user_info_wrap_radio" :checked="userInfoData.isTestDrive == 1 ? true:false"/>
-            <label>是</label>
-            <input type="radio" name="isTestDrive" value="0" class="user_info_wrap_radio1" :checked="userInfoData.isTestDrive == 0 ? true:false"/>
-            <label>否</label>
+            <label>
+              <input
+                type="radio"
+                name="isTestDrive"
+                value="1"
+                class="user_info_wrap_radio"
+                v-model="isTestDrive"
+                :checked="isTestDrive == 1 ? true:false"
+              />
+              是
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isTestDrive"
+                value="0"
+                class="user_info_wrap_radio1"
+                v-model="isTestDrive"
+                :checked="isTestDrive == 0 ? true:false"
+              />
+              否
+            </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">购车预算</span>
-            <input type="text" class="user_info_wrap_text editor" v-model="userInfoData.purchaseBudget"/>
+            <input type="number" class="user_info_wrap_text editor" v-model="purchaseBudget" />
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">用户状态</span>
-            <input type="radio" name="userStatus" value="1" class="user_info_wrap_radio" :checked="userInfoData.userStatus == 1 ? true:false"/>
-            <label>跟进中</label>
-            <input type="radio" name="userStatus" value="2" class="user_info_wrap_radio1" :checked="userInfoData.userStatus == 2 ? true:false"/>
-            <label>到店</label>
-            <input type="radio" name="userStatus" value="3" class="user_info_wrap_radio1" :checked="userInfoData.userStatus == 3 ? true:false"/>
-            <label>战败</label>
+            <label>
+              <input
+                type="radio"
+                name="userStatus"
+                value="1"
+                class="user_info_wrap_radio"
+                v-model="userStatus"
+                :checked="userStatus == 1 ? true:false"
+                required="required"
+                @change="changeUserStatus"
+              />
+              跟进中
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="userStatus"
+                value="2"
+                class="user_info_wrap_radio1"
+                v-model="userStatus"
+                :checked="userStatus == 2 ? true:false"
+                required="required"
+                @change="changeUserStatus"
+              />
+              到店
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="userStatus"
+                value="3"
+                class="user_info_wrap_radio1"
+                v-model="userStatus"
+                :checked="userStatus == 3 ? true:false"
+                required="required"
+                @change="changeUserStatus"
+              />
+              战败
+            </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户分级</span>
-            <input type="radio" name="grading" value="A" class="user_info_wrap_radio" :checked="userInfoData.grading == A ? true:false"/>
-            <label>A</label>
-            <input type="radio" name="grading" value="B" class="user_info_wrap_radio1" :checked="userInfoData.grading == B ? true:false"/>
-            <label>B</label>
-            <input type="radio" name="grading" value="C" class="user_info_wrap_radio1" :checked="userInfoData.grading == C ? true:false"/>
-            <label>C</label>
-            <input type="radio" name="grading" value="D" class="user_info_wrap_radio1" :checked="userInfoData.grading == D ? true:false"/>
-            <label>D</label>
-            <input type="radio" name="grading" value="H" class="user_info_wrap_radio" :checked="userInfoData.grading == H ? true:false"/>
-            <label>H</label>
+            <label>
+              <input
+                type="radio"
+                name="grading"
+                value="H"
+                class="user_info_wrap_radio"
+                v-model="grading"
+                :checked="grading == 'H' ? true:false"
+                required="required"
+              />
+              H
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="grading"
+                value="A"
+                class="user_info_wrap_radio1"
+                v-model="grading"
+                :checked="grading == 'A' ? true:false"
+                required="required"
+              />
+              A
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="grading"
+                value="B"
+                class="user_info_wrap_radio1"
+                v-model="grading"
+                :checked="grading == 'B' ? true:false"
+                required="required"
+              />
+              B
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="grading"
+                value="C"
+                class="user_info_wrap_radio1"
+                v-model="grading"
+                :checked="grading == 'C' ? true:false"
+                required="required"
+              />
+              C
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="grading"
+                value="D"
+                class="user_info_wrap_radio"
+                v-model="grading"
+                :checked="grading == 'D' ? true:false"
+                required="required"
+              />
+              D
+            </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">备注</span>
-            <input type="text" class="user_info_wrap_text editor" v-model="userInfoData.remark"/>
+            <textarea
+              type="text"
+              class="user_info_wrap_text editor"
+              v-model="remark"
+              maxlength="200"
+              rows="4"
+              cols="5"
+            />
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="(userStatus == 1 || userStatus == 2) ?true:false">
             <span class="user_info_wrap_sub">下次回访时间</span>
-            <el-date-picker
-              v-model="value1"
+            <!-- <el-date-picker
+              v-model="nextVisitTime"
               type="datetime"
               placeholder="选择日期时间"
               value-format="yyyy-MM-dd HH:mm:ss"
               format="yyyy-MM-dd HH:mm:ss"
               class="user_info_wrap_picker"
               size="small"
-            ></el-date-picker>
-            <!-- <date-picker v-model="time2" type="datetime" class="user_info_wrap_picker"></date-picker> -->
+            ></el-date-picker> -->
+            <date-picker v-model="time2" type="datetime" class="user_info_wrap_picker"></date-picker>
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userStatus == 2 ?true:false">
             <span class="user_info_wrap_sub">到店时间</span>
-            <el-date-picker
-              v-model="value1"
+            <!-- <el-date-picker
+              v-model="arrivalTime"
               type="datetime"
               placeholder="选择日期时间"
               value-format="yyyy-MM-dd HH:mm:ss"
               format="yyyy-MM-dd HH:mm:ss"
               class="user_info_wrap_picker"
               size="small"
-            ></el-date-picker>
+            ></el-date-picker>-->
+            <input
+              type="datetime-local"
+              name="user_date"
+              v-model="arrivalTime"
+              class="user_info_wrap_picker"
+            />
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因</span>
-            <input type="radio" name="defeatCause" value="1" class="user_info_wrap_radio" checked="userInfoData.defeatCause == 1 ? true:false"/>
-            <label>无购车意向</label>
-            <input type="radio" name="defeatCause" value="2" class="user_info_wrap_radio1" checked="userInfoData.defeatCause == 2 ? true:false"/>
-            <label>预算不符</label>
-            <input type="radio" name="defeatCause" value="3" class="user_info_wrap_radio1" checked="userInfoData.defeatCause == 3 ? true:false"/>
-            <label>客户已购车</label>
-            <input type="radio" name="sdefeatCauseex" value="4" class="user_info_wrap_radio1" checked="userInfoData.defeatCause == 4 ? true:false"/>
-            <label>其他</label>
+            <label>
+              <input
+                type="radio"
+                name="defeatCause"
+                value="1"
+                class="user_info_wrap_radio"
+                v-model="defeatCause"
+                :checked="defeatCause == 1 ? true:false"
+              />
+              无购车意向
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="defeatCause"
+                value="2"
+                class="user_info_wrap_radio1"
+                v-model="defeatCause"
+                :checked="defeatCause == 2 ? true:false"
+              />
+              预算不符
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="defeatCause"
+                value="3"
+                class="user_info_wrap_radio"
+                v-model="defeatCause"
+                :checked="defeatCause == 3 ? true:false"
+              />
+              客户已购车
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="defeatCause"
+                value="4"
+                class="user_info_wrap_radio1"
+                v-model="defeatCause"
+                :checked="defeatCause == 4 ? true:false"
+              />
+              其他
+            </label>
           </div>
-          <div class="user_info_wrap_li">
+          <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因其他</span>
-            <input type="text" class="user_info_wrap_text editor" v-model="userInfoData.defeatCauseOther"/>
+            <textarea
+              :disabled="defeatCause != 4 ? true:false"
+              type="text"
+              class="user_info_wrap_text editor"
+              v-model="defeatCauseOther"
+              maxlength="100"
+              rows="4"
+              cols="5"
+            />
           </div>
-        </div> 
+        </div>
       </div>
       <div class="user_info_item">
         <div class="user_info_title">标签</div>
@@ -253,7 +465,7 @@ export default {
     return {
       title: "",
       loading: false,
-      editState: editState,
+      // editState: editState,
       // userInfoData: [],
       userInfoData: {},
       tagData: [],
@@ -263,24 +475,37 @@ export default {
       targetWxid: myAddressBook.targetWxid,
       add: "",
       myWxid: util.getMyWxId(),
-      value1: "",
       options: provinceAndCityDataPlus,
-      selected2: [],
-      time2:'',
-      name:''
+      name: "",
+      gender: "",
+      intentModel: "",
+      licensePlateArea: "",
+      isLoan: "0",
+      isTestDrive: "",
+      purchaseBudget: "",
+      userStatus: "3",
+      grading: "",
+      remark: "",
+      nextVisitTime: "",
+      arrivalTime: "",
+      defeatCause: "",
+      defeatCauseOther: ""
     };
   },
   watch: {
     myAddressBook(newObj) {
       this.getLoadData(newObj);
-    },
-    editState(olddata, state) {
-      console.log(olddata, state);
-      this.editState = state;
     }
+    // editState(olddata, state) {
+    //   this.editState = state;
+    // }
   },
   components: {},
   methods: {
+    changeUserStatus(val) {
+      // console.log(val);
+      // this.userStatus = val;
+    },
     handleChange(value) {
       // debugger;
       console.log(111);
@@ -293,20 +518,46 @@ export default {
       this.allTags = [];
       this.getdata();
       this.getTags({
-        tenantId: this.imei,
+        tenantId: 1,
         myWxid: util.getMyWxId()
       });
     },
     editor() {
-      this.editState = !this.editState;
-      if (!!this.editState) {
+      //this.editState 默认为false 显示展示页 点击修改 变为true 显示编辑页
+      // this.editState = !this.editState;
+      if (!this.editState) {
+        this.editState = true;
         this.getTags({
-          tenantId: this.imei
+          tenantId: 1
         });
+        this.editUserInfo();
       } else {
-        this.saveTag();
         this.saveUserInf();
+        this.saveTag();
       }
+      // if (!!this.editState) {
+      //
+      // } else {
+      //   this.saveUserInf();
+      //   this.saveTag();
+      // }
+    },
+    //点编辑赋值
+    editUserInfo() {
+      this.name = this.userInfoData.name;
+      this.gender = parseInt(this.userInfoData.gender);
+      this.intentModel = this.userInfoData.intentModel;
+      this.licensePlateArea = this.userInfoData.licensePlateArea;
+      this.isLoan = parseInt(this.userInfoData.isLoan);
+      this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
+      this.purchaseBudget = this.userInfoData.purchaseBudget;
+      this.userStatus = parseInt(this.userInfoData.userStatus);
+      this.grading = this.userInfoData.grading;
+      this.remark = this.userInfoData.remark;
+      this.nextVisitTime = this.userInfoData.nextVisitTime;
+      this.arrivalTime = this.userInfoData.arrivalTime;
+      this.defeatCause = parseInt(this.userInfoData.defeatCause);
+      this.defeatCauseOther = this.userInfoData.defeatCauseOther;
     },
     getTags(params) {
       let $this = this;
@@ -323,7 +574,7 @@ export default {
       this.tagData.map(item => {
         tags.push(item.labelName);
       });
-      debugger;
+      // debugger;
       this.$axios
         .post("/setTag", {
           myWxid: this.myWxid,
@@ -335,20 +586,52 @@ export default {
     },
     saveUserInf() {
       let _this = this;
-      let fieldRecordList = _this.userInfoData;
-      console.log(fieldRecordList);
-      // let tags = document.querySelectorAll(".userEdit");
-      // tags.forEach((v, k) => {
-      //   fieldRecordList[k]["recordValue"] = v.innerHTML;
-      // });
-      this.$axios
-        .post("/saveCustomer", {
-          add: 1,
-          wxid: this.targetWxid,
-          fieldRecordList: fieldRecordList,
-          imei: this.imei
-        })
-        .then(data => {});
+      // console.log(_this.targetWxid);
+      _this.licensePlateArea = "1";
+      if (
+        _this.name == null ||
+        _this.gender == null ||
+        _this.intentModel == null ||
+        _this.licensePlateArea == null ||
+        _this.isLoan == null ||
+        _this.userStatus == null ||
+        _this.grading == null
+      ) {
+        this.$message({
+          message: "有未填写的必输字段",
+          type: "warn"
+        });
+        _this.editState = true;
+      } else {
+        this.$axios
+          .post("/saveCustomer", {
+            myWxid: _this.myWxid,
+            wxid:_this.targetWxid,
+            imei: _this.imei,
+            name: _this.name,
+            id: _this.userInfoData.id,
+            gender: parseInt(_this.gender),
+            intentModel: _this.intentModel,
+            // licensePlateArea: _this.licensePlateArea,
+            licensePlateArea: "1",
+            isLoan: parseInt(_this.isLoan),
+            isTestDrive: parseInt(_this.isTestDrive),
+            purchaseBudget: _this.purchaseBudget,
+            userStatus: parseInt(_this.userStatus),
+            grading: _this.grading,
+            remark: _this.remark,
+            // nextVisitTime: _this.nextVisitTime,
+            nextVisitTime: "2019-12-02 12:00",
+            // arrivalTime: _this.arrivalTime,
+            arrivalTime: "2019-12-02 12:00",
+            defeatCause: parseInt(_this.defeatCause),
+            defeatCauseOther: _this.defeatCauseOther
+          })
+          .then(data => {
+            _this.editState = false;
+            this.getdata();
+          });
+      }
     },
     removeTag(index) {
       var tag = this.tagData.splice(index, 1);
@@ -419,6 +702,7 @@ export default {
           display: block;
           padding: 0.1em;
           min-height: 1.4em;
+          color: #fff;
           &.editor {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.14);
@@ -427,6 +711,7 @@ export default {
             width: 6em;
             &:focus {
               outline: none;
+              color: #fff;
             }
           }
           // &.local {
@@ -444,8 +729,9 @@ export default {
         .user_info_wrap_picker {
           margin-left: 5.5em;
           border: 1px solid rgba(255, 255, 255, 0.2);
-          // width: 10em;
-          // opacity: 0.2;
+          width: 10em;
+          opacity: 0.2;
+          color: #fff;
         }
         .user_info_wrap_cascader {
           margin-left: 5em;

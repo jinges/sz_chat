@@ -193,7 +193,7 @@
 			},
 			//加载消息
 			loadmore: function() {
-				debugger;
+				// debugger;
 				if (!this.targetId)
 					return;
 				this.msgPage++;
@@ -311,7 +311,7 @@
 			//以及收到消息
 			onWsMsg: function(json) {
 				this.$refs['groupMember'] && this.$refs['groupMember'].onWsMsg(json);
-					debugger;
+					// debugger;
 				//将之前发送中状态改为已发送
 				if (json.messageType == 'SERVER_TO_CLIENT' && this.sendingMap[json.messageId]) {
 

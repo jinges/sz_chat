@@ -25,7 +25,7 @@
                 this.$emit('selectSession', target)
             },
             onWsMsg: function(json) {
-                debugger;
+                // debugger;
                 if (json.messageType != 'NOTIFY_TO_SERVER')
                     return;
 
