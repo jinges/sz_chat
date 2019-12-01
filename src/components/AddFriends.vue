@@ -58,7 +58,7 @@
 		</div>
 
 		<el-dialog title="新建好友添加任务" width="400px" :visible="isShowAddFriendDialog" :before-close="closeAddFriendDialog" id="addFriendDialog">
-			<el-tabs v-model="addType" type="card" @tab-click="handleClick" :stretch="true">
+			<el-tabs v-model="addType" type="card" :stretch="true">
 				<el-tab-pane label="批量添加" name="batchAdd">
 					<el-form ref="form" hide-required-asterisk status-icon style="padding: 0 20px;">
 						<el-form-item label="导入好友列表">
@@ -82,9 +82,6 @@
 							  class="upload-demo"
 							  ref="upload"
 							  action="/api/importAddfriendExcel"
-							  :on-preview="handlePreview"
-							  :on-remove="handleRemove"
-							  :file-list="fileList"
 							  :auto-upload="false"
 							  :data="{imei: imei}"
 							  :headers="batchAddHeaders">
@@ -119,9 +116,9 @@
 					<div style="padding: 0 20px;">
 						<div>选择需要重新尝试添加的用户</div>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="6">需要好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
+						<el-checkbox v-model="retryType" :label="6">需要好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
 						<div style="margin: 15px 0;"></div>
-						<el-checkbox :indeterminate="isIndeterminate" v-model="retryType" :label="3">未回复({{addFriendsUnansweredCount}})</el-checkbox>
+						<el-checkbox v-model="retryType" :label="3">未回复({{addFriendsUnansweredCount}})</el-checkbox>
 						<div style="margin: 15px 0;"></div>
 						<div style="text-align: center; margin: 20px;">
 							<el-button size="small" type="primary" @click="onSubmitRetry">加入队列</el-button>
@@ -136,13 +133,13 @@
 			<div style="padding: 0 20px;">
 				<div>选择需要导出的用户</div>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="1">已添加({{addFriendsSuccessCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="1">已添加({{addFriendsSuccessCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="0">等待中({{addFriendsWaitCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="0">等待中({{addFriendsWaitCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="6" style="margin-right: 10px;">需好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="3" style="margin-right: 10px;">未回应({{addFriendsUnansweredCount}})</el-checkbox>
-				<el-checkbox :indeterminate="isIndeterminate" v-model="exportType" :label="4" style="margin-right: 10px;">未找到({{addFriendsFailCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="6" style="margin-right: 10px;">需好友验证({{addFriendsWaitVerificationCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="3" style="margin-right: 10px;">未回应({{addFriendsUnansweredCount}})</el-checkbox>
+				<el-checkbox v-model="exportType" :label="4" style="margin-right: 10px;">未找到({{addFriendsFailCount}})</el-checkbox>
 				<div style="margin: 15px 0;"></div>
 				<div style="text-align: center; margin: 20px;">
 					<el-button size="small" type="primary" @click="onSubmitExport">导出</el-button>
