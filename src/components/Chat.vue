@@ -636,17 +636,22 @@
 				}
 				let tagStr = "";
 				let momentType = "";
+				let apiType = "";
 				if(!this.materialActiveName){
 				    momentType = 1;
 				} else {
 					if(this.materialActiveName == 'articles') {
 						momentType = 4;
+						apiType = "/sendLink";
 					} else if(this.materialActiveName == 'pictures' || this.materialActiveName == 'poster') {
 						momentType = 2;
+						apiType = "/sendFile";
 					} else if(this.materialActiveName == 'texts') {
 						momentType = 1;
+						apiType = "/sendText";
 					} else if(this.materialActiveName == 'videos') {
 						momentType = 3;
+						apiType = "/sendFile";
 					}
 				}
 				let fileType = "";
@@ -657,12 +662,15 @@
 				} else if(this.materialActiveName == 'videos') {
 					fileType = "VIDEO";
 					filePath = this.materialUrl;
+				} else if(this.materialActiveName == 'articles') {
+					fileType = "ARTICLES";
+					filePath = this.materialUrl;
 				} else {
 					fileType = "";
 					filePath = "";
 				}
 				let params = this.msgContent(fileType, filePath);
-				this.sendMsg(params);
+				this.sendMsg(apiType, params);
 			},
 			msgContent(fileType, filePath){
 				let body = {
@@ -678,9 +686,16 @@
 				  ) {
 					  body = Object.assign({}, body, {
 						  fileType: fileType,
-						  fileName: "",
+						  fileName: this.materialTitle,
 						  filePath: filePath,
-						  fileId: "",
+						  fileId: this.materialId,
+					  })
+				  } else if(this.materialActiveName == 'articles') {
+					  body = Object.assign({}, body, {
+						  title: this.materialTitle,
+						  desc: this.materialTitle,
+						  link: filePath,
+						  icon: '123456'
 					  })
 				  } else {
 					  body = Object.assign({}, body, {
@@ -694,12 +709,12 @@
 				}
 				return body;
 			},
-			sendMsg(params){
+			sendMsg(apiType, params){
 				var $this = this;
 				let targetWxid = this.targetId;
 				params.targetWxid = targetWxid;
 				this.$axios
-					.post("/sendText", params)
+					.post(apiType, params)
 					.then(data => {})
 					.finally(()=>{
 						this.$message({

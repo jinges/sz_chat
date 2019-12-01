@@ -10,7 +10,7 @@
 
 		<el-row :gutter="10">
 			<el-col :span="4" style="width: 20%;" v-for="(item, index) in data" :key="index">
-				<div class="grid-content transition-box" @click="choose(index)" :id="index">
+				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index">
 					<img :src="item.url" />
 				</div>
 			</el-col>
@@ -43,7 +43,7 @@
 			choose: function(index) {
 				this.chooseIndex = index;
 				$(".transition-box").removeClass('on');
-				$(".transition-box#" + this.chooseIndex).addClass('on');
+				$(".transition-box" + "[type='" + this.type + "']#" + this.chooseIndex).addClass('on');
 				this.$emit('msg', this.data[index]);
 			},
 			// 获取图片信息
@@ -66,7 +66,7 @@
 			}
 		},
 		mounted() {
-			$(".transition-box#" + this.chooseIndex).addClass('on');
+			$(".transition-box" + "[type='" + this.type + "']#" + this.chooseIndex).addClass('on');
 			this.getPictrues(1, 10);
 		}
 	}
