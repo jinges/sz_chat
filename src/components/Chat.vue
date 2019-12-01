@@ -15,7 +15,7 @@
 						<div class="item remove">
 							<i class="el-icon-remove-outline" @click="removeMember"></i>
 						</div>
-						<div class="item" v-for="member in groupMembers" :targetId="member.targetId">
+						<div class="item" v-for="(member, index) in groupMembers" :targetId="member.targetId" :key="index">
 							<img :src="member.face" />
 							<div>{{member.nickName}}</div>
 						</div>
@@ -38,7 +38,7 @@
 			<vue-scroll ref="vs">
 				<div id="nomore" v-if="nomore">没有更多消息了</div>
 				<div id="loadmore" v-else @click="loadmore">点击加载更多</div>
-				<Message v-for="item in history" v-bind="item" />
+				<Message v-for="(item, index) in history" v-bind="item" :key="index"/>
 			</vue-scroll>
 		</div>
 		<div class="footer">
@@ -310,7 +310,6 @@
 			//以及收到消息
 			onWsMsg: function(json) {
 				this.$refs['groupMember'] && this.$refs['groupMember'].onWsMsg(json);
-					
 				//将之前发送中状态改为已发送
 				if (json.messageType == 'SERVER_TO_CLIENT' && this.sendingMap[json.messageId]) {
 

@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <div class="users">
-      <div  v-for="(item,index) in userdata" 
+      <div  v-for="(item,index) in userdatas" 
         :key="index"  class="imgbox" 
         :class="{hasMsg:item.hasMsg}"
         @click="switchUser(item, index)">
@@ -56,18 +56,18 @@
 <script>
 import util from "@/util/util.js";
 export default {
-  props: ["userdata"],
+  props: ["wechatList"],
   data() {
     return {
       activeIndex: 0,
-      userdata: []
+      userdatas: wechatList
     };
   },
   mounted() {
   },
   watch:{
-    userdata(data){
-      this.userdata = data;
+    wechatList(data){
+      this.userdatas = data;
     },
     immediate: true
   },

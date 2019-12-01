@@ -2,7 +2,7 @@
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
 			<div id="navbar" class="navbar">
-				<Nav @selectNav="selectNav" :userdata="wechatList" @switchUser="switchUser"/>
+				<Nav @selectNav="selectNav" :wechatList="wechatList" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -193,7 +193,6 @@
 					} 
 					return item
 				})
-				console.log(this.wechatList);
 			}
 		},
 		mounted: function() {

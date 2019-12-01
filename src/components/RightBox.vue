@@ -50,7 +50,7 @@
 	import RightBoxUserInfo from './RightBoxUserInfo.vue';
 	import Pengyouquan from './Pengyouquan.vue';
 	import RightBoxTalking from './RightBoxTalking.vue';
-	import util from '@/util/util.js'
+	import util from '../util/util.js';
 
 	export default {
 		name: 'RightBox',
@@ -89,7 +89,10 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.nowIndex = index
-				console.log("切换到 "+ this.tabData[index].name)
+				// debugger;
+				if(index == 2) {
+					this.$refs.pengYouQuan.loadData();
+				}
 			},
 			onWsMsg(json) {
 				console.log('传数据都朋友圈');
