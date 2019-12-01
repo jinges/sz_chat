@@ -1,8 +1,8 @@
 <template>
 	<div id="home">
 		<div id="box" :class="{shrink:$store.state.pengyouquanVisible}">
-			<div id="navbar">
-				<Nav @selectNav="selectNav" :userdata="wechatList" @switchUser="switchUser"/>
+			<div id="navbar" class="navbar">
+				<Nav @selectNav="selectNav" :wechatList="wechatList" @switchUser="switchUser"/>
 			</div>
 			<div id="subNav" v-show="!isShowAddFriends">
 				<Search ref="search" :searchType="currentSubNav" />
@@ -54,6 +54,9 @@
 	import AddFriends from '@/components/AddFriends.vue'
 	import AddFriendsProgress from '@/components/AddFriendsProgress.vue'
 	import util from '@/util/util.js'
+	// import '../assets/css/global-transparent.css' /*引入公共样式*/
+	import '../assets/css/global.css' /*引入公共样式*/
+
 	export default {
 		data() {
 			return {
@@ -190,7 +193,6 @@
 					} 
 					return item
 				})
-				console.log(this.wechatList);
 			}
 		},
 		mounted: function() {
@@ -247,61 +249,68 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
 		.slide-enter-active {
 			transition: .3s all ease-in;
 		}
+
 		.slide-enter {
 			opacity: 0;
 			transform: translateX(-25px);
 		}
+
 		#box {
 			height: 700px;
 			max-height: 95%;
 			width: 1000px;
-			background: transparent;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-			background: rgba(0, 0, 0, 0.55);
 			color: #fff;
 			display: flex;
 			overflow: hidden;
 			border-radius: 6px;
 			transition: 0.3s all ease;
+
 			&.shrink {
 				border-radius: 6px 0px 0px 6px;
 			}
+
 			#navbar {
 				width: 60px;
-				background: rgba(0, 0, 0, 0.55);
 			}
+
 			#subNav {
-				background: rgba(0, 0, 0, 0.3);
 				width: 250px;
 				display: flex;
 				flex-direction: column;
+
 				#subBox {
 					flex-grow: 1;
 					height: 1px;
 				}
 			}
+
 			#content {
 				flex-grow: 3;
 			}
 		}
+
 		@media screen and (max-width: 1310px) {
 			#box.shrink {
 				width: 714px;
 			}
 		}
+
 		#pengyouquan {
 			width: 310px;
 			height: 100%;
 			border-radius: 0px 6px 6px 0px;
 		}
+
 		#RightBox, #addFriendsProgress {
 			width: 310px;
 			height: 700px;
 			max-height:95%;
 			border-radius: 0px 6px 6px 0px;
 		}
+
 	}
 </style>

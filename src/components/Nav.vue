@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
     <div class="users">
-      <div  v-for="(item,index) in userdata" 
+      <div  v-for="(item,index) in userdatas" 
         :key="index"  class="imgbox" 
         :class="{hasMsg:item.hasMsg}"
         @click="switchUser(item, index)">
@@ -13,6 +13,7 @@
       @click="nav('Sessions',0)"
       :class="{active:activeIndex==0}"
       title="会话"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -20,6 +21,7 @@
       @click="nav('AddressBook',1)"
       :class="{active:activeIndex==1}"
       title="通讯录"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <!-- <font-awesome-icon :icon="['fab','bandcamp']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
@@ -30,6 +32,7 @@
       @click="nav('AddFriends',3)"
       :class="{active:activeIndex==3}"
       title="批量添加好友"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -37,6 +40,7 @@
       @click="logout"
       style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"
       title="退出系统"
+      class="nav_icon"
     ></font-awesome-icon>
 
     <font-awesome-icon
@@ -44,6 +48,7 @@
       @click="settings"
       style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"
       title="设置"
+      class="nav_icon"
     ></font-awesome-icon>
   </div>
 </template>
@@ -51,18 +56,18 @@
 <script>
 import util from "@/util/util.js";
 export default {
-  props: ["userdata"],
+  props: ["wechatList"],
   data() {
     return {
       activeIndex: 0,
-      userdata: []
+      userdatas: wechatList
     };
   },
   mounted() {
   },
   watch:{
-    userdata(data){
-      this.userdata = data;
+    wechatList(data){
+      this.userdatas = data;
     },
     immediate: true
   },
@@ -147,14 +152,13 @@ export default {
     cursor: pointer;
   }
   svg {
-    margin-top: 20px;
-    transition: 0.4s all ease;
-    cursor: pointer;
-    font-size: 25px;
-    color: #aaa;
-    &.active {
-      color: #409eff;
-    }
+      margin-top: 20px;
+      transition: .4s all ease;
+      cursor: pointer;
+      font-size: 25px;
+  }
+  .bottom_icon{
+      position: absolute;
   }
 }
 </style>
