@@ -99,8 +99,6 @@
 		},
 		methods: {
 			//切换用户刷新页面
-			switchUser(){
-
 			switchUser(index){
 				let wx = this.wechatList[index];
 				util.removeToken();

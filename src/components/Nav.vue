@@ -1,85 +1,115 @@
 <template>
-    <div class="nav">
-        <el-dropdown trigger="click" @command="switchUser" placement="left">
-            <img :src="face" id="face" />
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item :key="index" v-for="(item,index) in userdata" :command="composeValue(item)">
-                    <img :src="item.face"  style="width:30px;height:30px;vertical-align:middle;"/>
-                    <span style="padding-left: 10px;position: relative;margin-top: -10%;">{{item.name}}</span>
-                </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-        <font-awesome-icon :icon="[activeIndex==0?'fas':'far','comment']" @click="nav('Sessions',0)" :class="{active:activeIndex==0}" class="nav_icon" title="会话">
-        </font-awesome-icon>
-        <font-awesome-icon :icon="[activeIndex==1?'fas':'far','address-book']" @click="nav('AddressBook',1)" :class="{active:activeIndex==1}" class="nav_icon" title="通讯录">
-        </font-awesome-icon>
-        <!-- <font-awesome-icon :icon="['fab','bandcamp']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
-        </font-awesome-icon> -->
-        <font-awesome-icon :icon="[activeIndex==3?'fas':'far','plus-square']" @click="nav('AddFriends',3)" :class="{active:activeIndex==3}" class="nav_icon" title="批量添加好友">
-        </font-awesome-icon>
-        <font-awesome-icon icon="sign-out-alt" @click="logout" style="bottom: 60px;" class="bottom_icon nav_icon" title="退出系统">
-        </font-awesome-icon>
-        <font-awesome-icon icon="cog" @click="settings" style="bottom: 15px;" class="bottom_icon nav_icon" title="设置">
-        </font-awesome-icon>
+  <div class="nav">
+    <div class="users">
+      <div  v-for="(item,index) in userdata" 
+        :key="index"  class="imgbox" 
+        :class="{hasMsg:item.hasMsg}"
+        @click="switchUser(item, index)">
+        <img class="face" :src="item.face" />
+      </div>
     </div>
-</template>
-<script>
-import util from '@/util/util.js'
+    <font-awesome-icon
+      :icon="[activeIndex==0?'fas':'far','comment']"
+      @click="nav('Sessions',0)"
+      :class="{active:activeIndex==0}"
+      title="会话"
+    ></font-awesome-icon>
 
+    <font-awesome-icon
+      :icon="[activeIndex==1?'fas':'far','address-book']"
+      @click="nav('AddressBook',1)"
+      :class="{active:activeIndex==1}"
+      title="通讯录"
+    ></font-awesome-icon>
+
+    <!-- <font-awesome-icon :icon="['fab','bandcamp']" @click="nav('pengyouquan',-1)" :class="{active:activeIndex==2}">
+    </font-awesome-icon>-->
+
+    <font-awesome-icon
+      :icon="[activeIndex==3?'fas':'far','plus-square']"
+      @click="nav('AddFriends',3)"
+      :class="{active:activeIndex==3}"
+      title="批量添加好友"
+    ></font-awesome-icon>
+
+    <font-awesome-icon
+      icon="sign-out-alt"
+      @click="logout"
+      style="position: absolute;bottom: 60px;color:#ccc;cursor: pointer;font-size: 25px;"
+      title="退出系统"
+    ></font-awesome-icon>
+
+    <font-awesome-icon
+      icon="cog"
+      @click="settings"
+      style="position: absolute;bottom: 15px;color:#ccc;cursor: pointer;font-size: 25px;"
+      title="设置"
+    ></font-awesome-icon>
+  </div>
+</template>
+
+<script>
+import util from "@/util/util.js";
 export default {
-    props: ["userdata"],
-    data() {
-        return {
-            activeIndex: 0,
-            userdata: []
-        };
+  props: ["userdata"],
+  data() {
+    return {
+      activeIndex: 0,
+      userdata: []
+    };
+  },
+  mounted() {
+  },
+  watch:{
+    userdata(data){
+      this.userdata = data;
     },
-    mounted() {},
-    watch: {
-        userdata(data) {
-            this.userdata = data;
-        },
-        immediate: true
+    immediate: true
+  },
+  methods: {
+    composeValue(item) {
+      return item;
     },
-    methods: {
-        composeValue(item) {
-            return item;
-        },
-        switchUser(wx, index) {
-            if (!index) {
-                return;
-            }
-            this.$emit("switchUser", index);
-        },
-        nav: function(action, index) {
-            if (index != -1) {
-                this.activeIndex = index;
-            }
-            this.$emit("selectNav", action);
-        },
-        logout: function() {
-            this.$confirm("确定要退出聊天窗口吗", "提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning"
-                })
-                .then(() => {
-                    util.removeToken();
-                    util.removeExTime();
-                    util.removeImei();
-                    util.removeMyWxId();
-                    util.removeImeis();
-                    this.$router.push({
-                        path: "logout"
-                    });
-                })
-                .catch(() => {});
-        },
-        settings: function() {
-            this.$emit("selectNav", "Settings");
-        }
+    // Alluser() {
+    //   this.userdata = JSON.parse(
+    //     localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
+    //   );
+    // },
+    switchUser(wx, index) {
+      if(!index) {
+        return;
+      }
+      this.$emit("switchUser", index);
+    },
+    nav: function(action, index) {
+      if (index != -1) {
+        this.activeIndex = index;
+      }
+      this.$emit("selectNav", action);
+    },
+    logout: function() {
+      this.$confirm("确定要退出聊天窗口吗", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          util.removeToken();
+          util.removeExTime();
+          util.removeImei();
+          util.removeMyWxId();
+          util.removeImeis();
+          this.$router.push({
+            path: "logout"
+          });
+        })
+        .catch(() => {});
+    },
+    settings: function() {
+      this.$emit("selectNav", "Settings");
     }
-}
+  }
+};
 </script>
 <style scoped lang="scss">
 .nav {
