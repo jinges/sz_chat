@@ -69,7 +69,6 @@ export default {
       this.history = [];
     },
     searchKeyword(wxid) {
-      console.log(113);
       this.$axios
         .post("/getCustomerProfile", {
           wxid: wxid
@@ -114,7 +113,7 @@ export default {
 .rightboxtalking {
   .el-dialog {
     height: 667px;
-    width: 337px;
+    width: 760px;
   }
 }
 </style>
