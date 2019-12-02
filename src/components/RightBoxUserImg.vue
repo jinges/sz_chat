@@ -19,6 +19,7 @@ import util from "@/util/util.js";
 		methods: {
 			/* /getCustomerProfile */
 			getCustomerProfile(id){
+				console.log(112)
 				this.$axios.post('/getCustomerProfile', {
 					wxid:id
 				}).then(data => {

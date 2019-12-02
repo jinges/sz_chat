@@ -47,8 +47,8 @@
         box-sizing: border-box;
         position: relative;
         
-        &.newmsg:not[active] {
-            &:before {
+        &.newmsg:not(.active) {
+            &::before {
                 content: '';
                 position: absolute;
                 display: inline-block;

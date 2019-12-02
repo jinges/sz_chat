@@ -6,19 +6,19 @@
         <div class="user_info_wrap">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">备注</span>
-            <span class="user_info_wrap_text">{{myAddressBook.remark}}</span>
+            <span class="user_info_wrap_text">{{remark}}</span>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">地区</span>
-            <span class="user_info_wrap_text">{{myAddressBook.addressBook.region}}</span>
+            <!-- <span class="user_info_wrap_text">{{myAddressBook.addressBook.region}}</span> -->
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">微信号</span>
-            <span class="user_info_wrap_text">{{myAddressBook.targetWxid}}</span>
+            <span class="user_info_wrap_text">{{targetWxid}}</span>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">来源</span>
-            <span class="user_info_wrap_text">{{myAddressBook.addFrom}}</span>
+            <span class="user_info_wrap_text">{{addFrom}}</span>
           </div>
         </div>
       </div>
@@ -459,7 +459,7 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 export default {
   name: "RightBoxUserInfo",
-  props: ["myAddressBook", "editState"],
+  props: ["remark", "targetWxid", "addFrom", "editState"],
   components: { DatePicker },
   data() {
     return {
@@ -472,7 +472,6 @@ export default {
       allTags: [],
       flag: 1,
       imei: util.getImei(),
-      targetWxid: myAddressBook.targetWxid,
       add: "",
       myWxid: util.getMyWxId(),
       options: provinceAndCityDataPlus,
@@ -485,7 +484,7 @@ export default {
       purchaseBudget: "",
       userStatus: "3",
       grading: "",
-      remark: "",
+      // remark: "",
       nextVisitTime: "",
       arrivalTime: "",
       defeatCause: "",
@@ -493,9 +492,6 @@ export default {
     };
   },
   watch: {
-    myAddressBook(newObj) {
-      this.getLoadData(newObj);
-    }
     // editState(olddata, state) {
     //   this.editState = state;
     // }

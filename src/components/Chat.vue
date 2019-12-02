@@ -52,7 +52,7 @@
 					<font-awesome-icon icon="folder"></font-awesome-icon>
 				</el-upload>
 				<template>
-					<font-awesome-icon @click.stop="isShowMaterial=!isShowMaterial" icon="document"></font-awesome-icon>
+					<font-awesome-icon @click.stop="isShowMaterial=!isShowMaterial" icon="bullhorn"></font-awesome-icon>
 					<el-dialog width="700px" :visible="isShowMaterial" :before-close="closeMaterial" id="materialDialog">
 						<span slot="title">
 							<el-tabs v-model="materialActiveName">
@@ -276,26 +276,28 @@
 						userId: this.selectAtUserId.toString()
 					};
 				}
+				this.sendText = '';
 
 				this.$axios.post(url, param).then(data => {
+					/*** 不起作用 **/
 					this.sendLoading = false;
 					this.sendingMap[data] = true;
-					this.history.push({
-						type: 'receiver',
-						media: 'text',
-						face: this.myFace,
-						content: this.sendText,
-						time: now.toLocaleString(),
-						sending: true,
-						sendingId: data
-					});
-					this.sendText = '';
+					// this.history.push({
+					// 	type: 'receiver',
+					// 	media: 'text',
+					// 	face: this.myFace,
+					// 	content: this.sendText,
+					// 	time: now.toLocaleString(),
+					// 	sending: true,
+					// 	sendingId: data
+					// });
+					// this.sendText = '';
 
-					//滚动到底部
-					this.$refs['vs'].scrollBy({
-							dy: 1000
-						}, 500,
-						'easeInQuad');
+					// //滚动到底部
+					// this.$refs['vs'].scrollBy({
+					// 		dy: 1000
+					// 	}, 500,
+					// 	'easeInQuad');
 				}).catch(() => {});
 			},
 			//添加@

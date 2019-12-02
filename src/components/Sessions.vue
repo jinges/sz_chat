@@ -1,7 +1,7 @@
 <template>
     <div class="sessions">
         <vue-scroll>
-            <Session v-for="session in $store.getters.filterSessionsByName" v-bind="session" @selectSession="selectSession" />
+            <Session v-for="(session, index) in $store.getters.filterSessionsByName" :key="index" v-bind="session" @selectSession="selectSession" />
         </vue-scroll>
     </div>
 </template>

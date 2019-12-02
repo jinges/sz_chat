@@ -33,7 +33,7 @@
 				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="selectIndex==1">
-				<RightBoxUserInfo :myAddressBook="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
+				<RightBoxUserInfo v-bind="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="selectIndex==2">
 				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
@@ -54,13 +54,14 @@
 
 	export default {
 		name: 'RightBox',
-		props:['myAddressBook', 'nowIndex'],
+		props:['myAddressBook', 'targetId', 'nowIndex'],
 		data() {
 			return {
 				title: '',
 				loading: false,
 				showPublicBlog: false,
-				selectIndex: 0,
+				user: {},
+				selectIndex: 3,
 				tabData:[{
 					name:"用户画像",
 					svg:'svgUserImg'
@@ -83,24 +84,26 @@
 			RightBoxTalking
 		},
 		mounted(){ 
-
+        this.$refs.RightBoxTalking.cleanSrarch();
+        this.$refs.RightBoxTalking.searchKeyword(
+          this.targetId
+        );
 		},
 		methods: {
 			tabClick(e, index){
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.selectIndex = index
-				// debugger;
+				debugger;
 				if(index == 1) {
-					this.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
+					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 2) {
 					this.$refs.pengYouQuan.loadData();
 				} else if (index == 3) {
-					this.$refs.RightBoxUserInfo.getLoadData(myAddressBook);
+					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				}
 			},
 			onWsMsg(json) {
-				console.log('传数据都朋友圈');
 				this.$refs['pengYouQuan'].onWsMsg(json);
 			}
 		},
@@ -108,9 +111,9 @@
 			// this.loadData();
 		},
 		watch: {
-		    nowIndex(newVal, oldVal){
-		    	//监听父组件对默认选项卡的选择
-		    	this.selectIndex = newVal;
+		    targetId(){
+					//监听父组件对默认选项卡的选择
+				this.selectIndex = 3
 		    }
 		}
 	}
