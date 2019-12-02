@@ -25,7 +25,7 @@
 
       <div class="user_info_item">
         <div class="user_info_title">客户档案</div>
-        <div class="user_info_wrap" v-if="!editState">
+        <div class="user_info_wrap" v-show="!editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
             <span class="user_info_wrap_text">{{userInfoData.name}}</span>
@@ -72,7 +72,7 @@
             <span class="user_info_wrap_text">{{userInfoData.grading}}</span>
           </div>
           <div class="user_info_wrap_li">
-            <span class="user_info_wrap_sub">备注</span>
+            <span class="user_info_wrap_sub">备注 </span>
             <span class="user_info_wrap_text">{{userInfoData.remark}}</span>
           </div>
           <div
@@ -99,7 +99,7 @@
             <span class="user_info_wrap_text">{{userInfoData.defeatCauseOther}}</span>
           </div>
         </div>
-        <div class="user_info_wrap" v-if="editState">
+        <div class="user_info_wrap" v-show="editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
             <input
@@ -460,14 +460,29 @@ import "vue2-datepicker/index.css";
 export default {
   name: "RightBoxUserInfo",
   props: ["myAddressBook", "editState"],
-  components: { DatePicker },
+  components: { DatePicker},
   data() {
     return {
       title: "",
       loading: false,
-      // editState: editState,
-      // userInfoData: [],
-      userInfoData: {},
+      name1:'',
+      userInfoData: {
+        remark:'',
+        name:'',
+        gender:'',
+        intentModel:'',
+        licensePlateArea:'',
+        isLoan:'',
+        isTestDrive:'',
+        purchaseBudget:'',
+        userStatus:'',
+        grading:'',
+        remark:'',
+        userStatus:'',
+        arrivalTime:'',
+        nextVisitTime:'',
+        defeatCause:''
+      },
       tagData: [],
       allTags: [],
       flag: 1,
@@ -485,7 +500,7 @@ export default {
       purchaseBudget: "",
       userStatus: "3",
       grading: "",
-      remark: "",
+      remark: "", 
       nextVisitTime: "",
       arrivalTime: "",
       defeatCause: "",
@@ -494,7 +509,7 @@ export default {
   },
   watch: {
     myAddressBook(newObj) {
-      this.getLoadData(newObj);
+       this.getLoadData(newObj);
     }
     // editState(olddata, state) {
     //   this.editState = state;
@@ -523,8 +538,6 @@ export default {
       });
     },
     editor() {
-      //this.editState 默认为false 显示展示页 点击修改 变为true 显示编辑页
-      // this.editState = !this.editState;
       if (!this.editState) {
         this.editState = true;
         this.getTags({
@@ -535,12 +548,6 @@ export default {
         this.saveUserInf();
         this.saveTag();
       }
-      // if (!!this.editState) {
-      //
-      // } else {
-      //   this.saveUserInf();
-      //   this.saveTag();
-      // }
     },
     //点编辑赋值
     editUserInfo() {
@@ -643,15 +650,13 @@ export default {
       this.tagData = [...this.tagData, ...tag];
     },
     getdata() {
-      let $this = this;
       this.$axios
         .post("/getCustomer", {
           imei: util.getImei(),
           wxid: this.targetWxid
         })
         .then(data => {
-          $this.userInfoData = data;
-          // console.log($this.userInfoData);
+          this.userInfoData = data;
         });
     }
   },
@@ -793,3 +798,4 @@ export default {
   text-align: center;
 }
 </style>
+

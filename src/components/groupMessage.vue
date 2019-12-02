@@ -151,7 +151,7 @@ export default {
         //单个循环调用
         let fileType = "";
         let filePath = "";
-        if (this.RightContentType == 2 || this.RightContentType == 5) {
+       /* if (this.RightContentType == 2 || this.RightContentType == 5) {
           fileType = "IMAGE";
           filePath = this.RightContentType.url;
         } else if (this.RightContentType == 4) {
@@ -160,21 +160,30 @@ export default {
         } else {
           fileType = "";
           filePath = "";
-        }
+        } */
         let params = this.msgContent(fileType, filePath);
-        this.sendGroupMsg(0, params)
+        this.sendGroupMsg(0, params,this.RightContentType)
         
       }
     },
-    sendGroupMsg(i, params){
+    sendGroupMsg(i, params,RightContentType){
         var $this = this;
         let freads = this.friendList;
         let targetWxid = freads[i].targetWxid;
         let len = freads.length;
         params.targetWxid = targetWxid;
+        let url = '';
+         if (RightContentType == 2  || RightContentType == 4 
+          ) {
+            url= '/sendFile'
+          }else if( RightContentType == 1  || RightContentType == 5 ){
+              url= '/sendLink'
+          }else{
+               url= '/sendText'
+          }
         var a = ++i;
         this.$axios
-            .post("/sendText", params)
+            .post(url, params)
             .then(data => {})
             .finally(()=>{
                         console.log(a,len);
@@ -189,7 +198,7 @@ export default {
                 if(a < len) {
                     let t = Math.ceil(Math.random() * 1+1.5);
                     setTimeout(() => {
-                        $this.sendGroupMsg(a, params);
+                        $this.sendGroupMsg(a, params,RightContentType);
                     }, t * 1000);
                 }
             })
@@ -203,19 +212,25 @@ export default {
         };
         if(this.RightContentType){
           if (
-          this.RightContentType == 2 ||
-          this.RightContentType == 5 ||
-          this.RightContentType == 4
+          this.RightContentType == 2  ||
+          this.RightContentType == 4 
           ) {
               body = Object.assign({}, body, {
-                  fileType: fileType,
-                  fileName: "",
-                  filePath: filePath,
-                  fileId: "",
+                  "fileId": this.RightContentSelectData.id,
+                  "fileName": this.RightContentSelectData.title,
+                  "filePath": this.RightContentSelectData.url,
+                  "fileType": this.RightContentType == 2 ? "IMAGE" : 'VIDEO',
               })
-          } else {
+          } else if( this.RightContentType == 1  || this.RightContentType == 5 ) {
               body = Object.assign({}, body, {
-                  sendContent: this.RightContentSelectData.title,
+                  "desc": this.RightContentSelectData.title,
+                  "icon": "https://s.autoimg.cn/fe/topbar/logo_topbar.png",
+                  "link": this.RightContentSelectData.url,
+                  "title": this.RightContentSelectData.title,
+              })
+          }else{
+            body = Object.assign({}, body, {
+                "sendContent": this.RightContentSelectData.title,
               })
           }
         }else{
