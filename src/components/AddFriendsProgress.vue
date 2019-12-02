@@ -55,6 +55,7 @@
 			}
 		},
 		mounted() {
+			/**
 			this.statusGroupAddfriend();
 			this.$axios.post('/queryAddfriendByPage', {
 				imei: util.getImei(),
@@ -86,10 +87,10 @@
 							this.addFriendsWaitVerificationCount ++;
 							break;
 					}
-					*/
+					*
 				}
 				this.addFriendsInfo = data;
-			}).catch(() => {});
+			}).catch(() => {});*/
 		},
 		methods: {
 			// 添加好友的统计
