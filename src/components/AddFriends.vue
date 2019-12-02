@@ -8,8 +8,17 @@
 		</div>
 
 		<div class="content">
+			<div style="width: 100%; border-bottom: 1px solid #d5d5d5; cursor: pointer;">
+				<div class="title" @click="showAddFriendDialog()" style="text-align: center; padding: 10px; width: 13%; float: left;">
+					<i class="el-icon-plus"></i>添加
+				</div>
+				<div class="title" @click="showExportAddFriendDialog()" style="float: left; padding: 10px; width: 82%; border: 0;">
+					<i class="el-icon-download"></i>导出
+				</div>
+				<div style="clear: both;"></div>
+			</div>
 			<div class="addFriends-type">
-				<div class="title" @click="showAddFriendDialog()"><i class="el-icon-plus"></i>添加</div>
+				<!-- <div class="title" @click="showAddFriendDialog()"><i class="el-icon-plus"></i>添加</div> -->
 				<div class="type-list">
 					<div class="type-item on" show-type="">全部</div>
 					<div class="type-item" show-type="等待添加">等待中</div>
@@ -22,7 +31,7 @@
 				</div>
 			</div>
 			<div class="addFriends-list">
-				<div class="title" @click="showExportAddFriendDialog()"><i class="el-icon-download"></i>导出</div>
+				<!-- <div class="title" @click="showExportAddFriendDialog()"><i class="el-icon-download"></i>导出</div> -->
 				<div class="friends-list" style="overflow: auto; height: 500px;">
 					<div class="friend session" v-for="(item, index) in addFriendsInfo.data" :key="index" :status="item.status">
 						<img class="face" :src="item.head || 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574619131613&di=c49cacabc26880863b136fe8bc61c967&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F69ad7a731f43d4b8729f1a2fbe65c43801ca0f033250-EV1vMf_fw658'" />
