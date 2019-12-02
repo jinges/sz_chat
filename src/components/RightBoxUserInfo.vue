@@ -123,7 +123,7 @@
               name="fullname"
               v-model="phone"
               required="required"
-              maxlength="10"
+              maxlength="11"
             />
           </div>
           <div class="user_info_wrap_li">
