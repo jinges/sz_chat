@@ -62,7 +62,7 @@
 				showPublicBlog: false,
 				selectIndex: 0,
 				tabData:[{
-					name:"用户图像",
+					name:"用户画像",
 					svg:'svgUserImg'
 				},{
 					name:"档案资料",
@@ -91,8 +91,12 @@
 				this.activeItem = index || 0
 				this.selectIndex = index
 				// debugger;
-				if(index == 2) {
+				if(index == 1) {
+					this.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
+				} else if(index == 2) {
 					this.$refs.pengYouQuan.loadData();
+				} else if (index == 3) {
+					this.$refs.RightBoxUserInfo.getLoadData(myAddressBook);
 				}
 			},
 			onWsMsg(json) {

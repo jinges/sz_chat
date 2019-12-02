@@ -110,10 +110,10 @@
 				util.setExTime(wx.exTime);
 				util.setImei(wx.imei);
 				util.setMyWxId(wx.wxid);
-      	this.wechatList[0].logined = false;
+      			this.wechatList[0].logined = false;
 				let firstUser = this.wechatList.splice(index,1);
 				firstUser[0].hasMsg = false;
-        firstUser[0].logined = true;
+        		firstUser[0].logined = true;
 				this.wechatList = [...[],...firstUser,...this.wechatList];
 				localStorage.setItem('__WBS__H5__GLOBAL__WXLIST', JSON.stringify(this.wechatList));
 				this.selectNav('Sessions');

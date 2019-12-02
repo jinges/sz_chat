@@ -118,8 +118,10 @@
 			list-style-type:none;
 			padding-left: 0px;
 			font-size: 14px;
+			background: rgba(0,0,0,.4)
 			&.history{
 				margin-bottom: 10px;
+				background: rgba(0,0,0,.2)
 			}
 			li{
 				cursor: pointer;
