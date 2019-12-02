@@ -48,11 +48,11 @@
 					<Emotions @emotionBlur="closeEmotions" v-show="showEmotion" @selected="selectEmotion" id="emotions" />
 				</transition>
 				<el-upload :disabled="uploadLoading" :action="uploadAction" name="files" :on-success="fileUploadSucc"
-				 :show-file-list="false" :before-upload="fileUploadBefore" v-if="false">
+				 :show-file-list="false" :before-upload="fileUploadBefore" >
 					<font-awesome-icon icon="folder"></font-awesome-icon>
 				</el-upload>
 				<template>
-					<font-awesome-icon @click.stop="isShowMaterial=!isShowMaterial" icon="folder"></font-awesome-icon>
+					<font-awesome-icon @click.stop="isShowMaterial=!isShowMaterial" icon="document"></font-awesome-icon>
 					<el-dialog width="700px" :visible="isShowMaterial" :before-close="closeMaterial" id="materialDialog">
 						<span slot="title">
 							<el-tabs v-model="materialActiveName">
