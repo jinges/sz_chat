@@ -71,7 +71,8 @@ export default {
     searchKeyword(wxid) {
       this.$axios
         .post("/getCustomerProfile", {
-          wxid: wxid
+          wxid: wxid,
+		  imei:util.getImei()
         })
         .then(data => {
           this.orderId = data.orderId;

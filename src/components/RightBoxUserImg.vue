@@ -19,7 +19,7 @@ import util from "@/util/util.js";
 		methods: {
 			/* /getCustomerProfile */
 			getCustomerProfile(id){
-				let imei = util.getImei();
+				let imei = util.getImei()
 				console.log(imei);
 				this.$axios.post('/getCustomerProfile', {
 					wxid:id,
