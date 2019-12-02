@@ -380,7 +380,7 @@
 		},
 		mounted: function() {
 			let that = this;
-			that.getAddFriendInfo(1);
+			// that.getAddFriendInfo(1);
 
 			$(".type-list .type-item").click(function(e) {
 				$(".type-list .type-item").removeClass('on');

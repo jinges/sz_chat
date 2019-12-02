@@ -135,6 +135,8 @@
                     this.$store.commit('updatePengyouquanVisible',!this.$store.state.pengyouquanVisible);
 				} else if (t == 'AddFriends') {
                     this.isShowAddFriends = true;
+					this.$refs.addFriends.getAddFriendInfo(1);
+					this.$refs.addFriendsProgress.statusGroupAddfriend();
 				} else {
 					this.showUser = true;
 					this.currentSubNav = t;
