@@ -19,9 +19,11 @@ import util from "@/util/util.js";
 		methods: {
 			/* /getCustomerProfile */
 			getCustomerProfile(id){
-				console.log(112)
+				let imei = util.getImei();
+				console.log(imei);
 				this.$axios.post('/getCustomerProfile', {
-					wxid:id
+					wxid:id,
+					imei: imei
 				}).then(data => {
 					this.profileUrl = data.profileUrl
 				}).catch(() => {});

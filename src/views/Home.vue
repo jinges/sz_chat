@@ -189,6 +189,7 @@ export default {
       }
     },
     selectFriend: function(isGroup, detail) {
+      debugger;
       this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(
         detail.targetWxid,
         ""

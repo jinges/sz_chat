@@ -33,7 +33,7 @@
 				<RightBoxUserImg ref="RightBoxUserImg"></RightBoxUserImg>
 			</div>
 			<div class="right-box-item" v-show="selectIndex==1">
-				<RightBoxUserInfo v-bind="myAddressBook" :editState='false' ref="RightBoxUserInfo"></RightBoxUserInfo>
+				<RightBoxUserInfo :myAddressBook="myAddressBook" ref="RightBoxUserInfo"></RightBoxUserInfo>
 			</div>
 			<div class="right-box-item" v-show="selectIndex==2">
 				<Pengyouquan ref="pengYouQuan" id="pengyouquan"></Pengyouquan>
@@ -94,7 +94,6 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.selectIndex = index
-				debugger;
 				if(index == 1) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 2) {
