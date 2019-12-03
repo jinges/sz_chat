@@ -94,7 +94,7 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.selectIndex = index
-				if(index == 1) {
+				if(index == 0) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 2) {
 					this.$refs.pengYouQuan.loadData();
@@ -107,7 +107,6 @@
 			}
 		},
 		created() {
-			// this.loadData();
 		},
 		watch: {
 		    targetId(){

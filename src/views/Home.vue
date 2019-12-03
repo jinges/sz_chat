@@ -187,17 +187,15 @@ export default {
         this.showUser = true;
         this.currentSubNav = t;
       }
+      if(t == 'AddressBook') {
+        debugger;
+        this.$store.commit("initFriends");
+      }
     },
     selectFriend: function(isGroup, detail) {
-      debugger;
-      this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(
-        detail.targetWxid,
-        ""
-      );
-      this.$refs.RightBox.$refs.RightBoxTalking.searchKeyword(
-        detail.targetWxid
-      );
+      
       this.showMore = false;
+      debugger;
       if (isGroup) {
         this.targetInfo = {
           isGroup: true,
@@ -206,12 +204,12 @@ export default {
         };
         this.currentContent = "Chat";
       } else {
-        this.$store.commit("initFriends");
         this.detailOpt.disableMsg = false;
         this.myAddressBook = detail;
         this.detailData = detail.addressBook;
         this.currentContent = "Detail";
         this.showMore = true;
+        this.targetId = detail.targetWxid;
     // this.$store.commit("initFriends");
         this.$store.commit("updatePengyouquanVisible", true);
         this.$store.commit("setCurrentPengyouquan", detail.addrBookId);
