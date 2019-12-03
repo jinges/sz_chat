@@ -132,10 +132,10 @@ export default {
   }
   li {
     cursor: pointer;
-    background: #fff;
-    color: #606266;
+    background: #333;
+    color: #eee;
     padding: 10px;
-    border-bottom: 1px solid #606266;
+    border-bottom: 1px solid #555;
     span {
       display: block;
       font-size: 12px;
