@@ -270,7 +270,6 @@
             </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus < 3">
-            
             <span class="user_info_wrap_sub">下次回访时间</span>
             <div class="user_info_wrap_text">
               <el-date-picker
@@ -286,40 +285,46 @@
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 2">
             <span class="user_info_wrap_sub">到店时间</span>
-            <el-date-picker
-              v-model="arrivalTime"
-              type="datetime"
-              placeholder="选择日期时间"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              format="yyyy-MM-dd HH:mm:ss"
-              class="user_info_wrap_picker"
-              size="small"
-            ></el-date-picker>
+            <div class="user_info_wrap_text">
+              <el-date-picker
+                v-model="arrivalTime"
+                type="datetime"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd HH:mm:ss"
+                class="user_info_wrap_picker"
+                size="small"
+              ></el-date-picker>
+            </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因</span>
-            <label v-for="(item, index) of ['无购车意向','预算不符','客户已购车','其他']" :key="index">
-              <input
-                type="radio"
-                name="defeatCause"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="defeatCause"
-                :checked="defeatCause == index"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['无购车意向','预算不符','客户已购车','其他']" :key="index">
+                <input
+                  type="radio"
+                  name="defeatCause"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="defeatCause"
+                  :checked="defeatCause == index"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因其他</span>
+            <div class="user_info_wrap_text">
             <textarea
               type="text"
-              class="user_info_wrap_text editor"
+              class="editor"
               v-model="defeatCauseOther"
               maxlength="100"
               rows="4"
               cols="5"
             />
+            </div>
           </div>
         </div>
       </div>
