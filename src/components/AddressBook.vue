@@ -95,7 +95,7 @@ export default {
   },
   props: ["ignoreGroup"],
   created: function() {
-    this.$store.commit("initFriends");
+    // this.$store.commit("initFriends");
   },
   components: {
     Friend,

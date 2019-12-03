@@ -206,11 +206,13 @@ export default {
         };
         this.currentContent = "Chat";
       } else {
+        this.$store.commit("initFriends");
         this.detailOpt.disableMsg = false;
         this.myAddressBook = detail;
         this.detailData = detail.addressBook;
         this.currentContent = "Detail";
         this.showMore = true;
+    // this.$store.commit("initFriends");
         this.$store.commit("updatePengyouquanVisible", true);
         this.$store.commit("setCurrentPengyouquan", detail.addrBookId);
       }
