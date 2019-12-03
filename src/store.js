@@ -125,7 +125,7 @@ export default new Vuex.Store({
 		},
 
 		changeFriendList: (state,friends)=>{
-			debugger;
+			
 			state.friends = friends.map(item => {
 				return {
 					face: item.addressBook.headPic || require('@/assets/timg.jpg'),

@@ -519,7 +519,7 @@ export default {
         });
         this.editState = true;
       } else {
-        debugger;
+        
         this.$axios
           .post("/saveCustomer", {
             myWxid: this.myWxid,
