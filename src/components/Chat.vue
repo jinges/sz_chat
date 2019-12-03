@@ -132,6 +132,7 @@
           class="editor"
           placeholder="请输入内容,Ctrl+Enter发送"
           v-model="sendText"
+          ref="inputBox"
           @keydown.ctrl.enter="send"
         ></textarea>
       </AtMember>
@@ -277,6 +278,7 @@ export default {
             return;
           }
           data.forEach(item => {
+            
             var media = item.mt.toLowerCase();
             var face = "";
             if (this.isGroup) {
@@ -285,7 +287,7 @@ export default {
                   ? this.myFace
                   : this.groupMemberFace(item.rid);
             } else {
-              face = item.mdr == "OUT" ? this.myFace : this.myFace;
+              face = item.mdr == "OUT" ? this.myFace : this.targetFace;
             }
             _this.history.unshift({
               type: item.mdr == "OUT" ? "receiver" : "sender",
@@ -360,16 +362,17 @@ export default {
           /*** 不起作用 **/
           this.sendLoading = false;
           this.sendingMap[data] = true;
-          this.history.push({
-            type: "receiver",
-            media: "text",
-            face: this.myFace,
-            content: this.sendText,
-            time: now.toLocaleString(),
-            sending: true,
-            sendingId: data
-          });
-          this.sendText = "";
+          // this.history.push({
+          //   type: "receiver",
+          //   media: "text",
+          //   face: this.myFace,
+          //   content: this.sendText,
+          //   time: now.toLocaleString(),
+          //   sending: true,
+          //   sendingId: data
+          // });
+          
+          this.$refs.inputBox.value = '';
 
           //滚动到底部
           this.$refs["vs"].scrollBy(
@@ -393,7 +396,7 @@ export default {
     //发送消息确认
     //以及收到消息
     onWsMsg: function(json) {
-      debugger;
+      
       this.$refs["groupMember"] && this.$refs["groupMember"].onWsMsg(json);
       //将之前发送中状态改为已发送
       if (

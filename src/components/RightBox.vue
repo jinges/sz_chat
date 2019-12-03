@@ -98,7 +98,7 @@
 				if(index == 0) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 1) {
-					debugger;
+					
 					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				} else if(index == 2) {
 					this.$refs.pengYouQuan.loadData();

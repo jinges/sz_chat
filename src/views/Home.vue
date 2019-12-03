@@ -23,7 +23,6 @@
         </transition-group>
       </div>
       <div id="content" v-show="!isShowAddFriends">
-      {{isShowAddFriends}} --{{showMore}}--{{showUser}}
         <transition name="slide">
           <Chat
             ref="chat"
@@ -180,7 +179,7 @@ export default {
       // }
       // this.$refs.chat.loadmore();
       this.$refs.sessions.initSel();
-      debugger;
+      
       this.getCurrentUser(wx.wxid);
       setTimeout(()=>{
         this.loading = false;
@@ -207,14 +206,14 @@ export default {
         this.currentSubNav = t;
       }
       if(t == 'AddressBook') {
-        //debugger;
+        //
         this.$store.commit("initFriends");
       }
     },
     selectFriend: function(isGroup, detail) {
       
       this.showMore = false;
-      //debugger;
+      //
       if (isGroup) {
         this.targetInfo = {
           isGroup: true,
@@ -260,7 +259,7 @@ export default {
       // this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
       this.currentContent = "Chat";
       this.showMore = false;
-      debugger;
+      
       if (!target.isGroup) {
         this.nowIndex = 3;
         this.targetInfo = target;

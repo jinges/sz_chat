@@ -99,6 +99,7 @@ axios.interceptors.response.use(function(response) {
         var data = response.data;
         if (data.errcode != 0) {
             Vue.prototype.$message.error(data.errmsg);
+            return response.data;
         } else {
             return response.data.data;
         }

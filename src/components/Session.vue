@@ -19,7 +19,7 @@
         methods: {
             selectSession: function() {
                 // $(this.$el).removeClass('newmsg').addClass('active').siblings().removeClass('active');
-                //debugger;
+                //
                 this.$store.commit('setCurrentSession',this.targetId);
                 this.$emit('selectSession', {
                     targetId: this.targetId,
