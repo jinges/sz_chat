@@ -90,7 +90,7 @@
 							<el-upload
 							  class="upload-demo"
 							  ref="upload"
-							  action="/api/importAddfriendExcel"
+							  action="/importAddfriendExcel"
 							  :auto-upload="false"
 							  :data="{imei: imei}"
 							  :headers="batchAddHeaders">
