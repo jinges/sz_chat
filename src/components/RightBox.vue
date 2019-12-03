@@ -62,6 +62,7 @@
 				showPublicBlog: false,
 				user: {},
 				selectIndex: 3,
+				activeItem: 3,
 				tabData:[{
 					name:"用户画像",
 					svg:'svgUserImg'
@@ -94,7 +95,6 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.selectIndex = index
-				debugger;
 				if(index == 0) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 1) {
@@ -115,11 +115,12 @@
 		watch: {
 		    targetId(targetId){
 					//监听父组件对默认选项卡的选择
-				this.selectIndex = 3
-        this.$refs.RightBoxTalking.cleanSrarch();
-        this.$refs.RightBoxTalking.searchKeyword(
-          targetId
-        );
+					this.selectIndex = 3
+					this.activeItem = 3;
+					this.$refs.RightBoxTalking.cleanSrarch();
+					this.$refs.RightBoxTalking.searchKeyword(
+						targetId
+					);
 		    }
 		}
 	}

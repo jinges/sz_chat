@@ -167,11 +167,11 @@ export default {
         "__WBS__H5__GLOBAL__WXLIST",
         JSON.stringify(this.wechatList)
       );
-        this.$store.commit("initFriends");
+      this.$store.commit("initFriends");
+      this.$store.commit("initSessions");
       this.currentContent = false;
       this.targetId = firstUser[0].wxid;
       this.selectNav("Sessions");
-      this.$store.commit("initSessions");
       this.$store.commit("initNewFriends");
       this.showMore = false;
       // var friends = this.$store.getters.filterSessionsByName;
@@ -284,6 +284,8 @@ export default {
     this.wechatList = JSON.parse(
       localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
     );
+      this.$store.commit("initFriends");
+      this.$store.commit("initSessions");
     //查询个人信息
     this.$axios
       .post("/queryAddressBookByWxId", {

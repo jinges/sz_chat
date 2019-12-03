@@ -327,5 +327,10 @@ ul.plus_menu .popper__arrow:after{
 	color: #666;
 }
 
+/* 客户档案 */
+.area-select .area-selected-trigger{
+	padding-left: .5em;
+}
+
 
 
