@@ -129,6 +129,10 @@ export default {
   &.history {
     margin-bottom: 10px;
     background: rgba(0, 0, 0, 0.2);
+
+    li{
+      background: #ddd;
+    }
   }
   li {
     cursor: pointer;
