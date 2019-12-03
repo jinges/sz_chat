@@ -30,9 +30,8 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		initFriends(state) {
-
 			function getAddressBook() {
-				return Vue.prototype.$axios.post('/refreshAddressBook', {
+				return Vue.prototype.$axios.post('/queryMyAddressBook', {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
 					size: 5000
@@ -77,18 +76,24 @@ export default new Vuex.Store({
 					wxid: util.getMyWxId(),
 				})
 				.then(data => {
-					state.newFriends = data.data.map(function(item) {
-						return {
-							face: item.smallheadimgurl,
-							name: item.fromnickname,
-							content: item.content,
-							wxid: item.wxid,
-							ticket: item.ticket,
-							scene: item.scene,
-							encryptusername: item.encryptusername,
-							detail: item
-						}
-					});
+					console.log("获取新朋友数据",data);
+					if(data.data){
+						state.newFriends = data.data.map(function(item) {
+							return {
+								face: item.smallheadimgurl,
+								name: item.fromnickname,
+								content: item.content,
+								wxid: item.wxid,
+								ticket: item.ticket,
+								scene: item.scene,
+								encryptusername: item.encryptusername,
+								detail: item
+							}
+						});
+					}else{
+						state.newFriends = []
+					}
+					
 				})
 				.catch(() => {});
 		},
@@ -120,6 +125,7 @@ export default new Vuex.Store({
 		},
 
 		changeFriendList: (state,friends)=>{
+			debugger;
 			state.friends = friends.map(item => {
 				return {
 					face: item.addressBook.headPic || require('@/assets/wechat.png'),

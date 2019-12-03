@@ -25,10 +25,14 @@
 
       <div class="user_info_item">
         <div class="user_info_title">客户档案</div>
-        <div class="user_info_wrap" v-if="!editState">
+        <div class="user_info_wrap" v-show="!editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
             <span class="user_info_wrap_text">{{userInfoData.name}}</span>
+          </div>
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">手机号码</span>
+            <span class="user_info_wrap_text">{{userInfoData.phone}}</span>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户性别</span>
@@ -72,7 +76,7 @@
             <span class="user_info_wrap_text">{{userInfoData.grading}}</span>
           </div>
           <div class="user_info_wrap_li">
-            <span class="user_info_wrap_sub">备注</span>
+            <span class="user_info_wrap_sub">备注 </span>
             <span class="user_info_wrap_text">{{userInfoData.remark}}</span>
           </div>
           <div
@@ -99,7 +103,7 @@
             <span class="user_info_wrap_text">{{userInfoData.defeatCauseOther}}</span>
           </div>
         </div>
-        <div class="user_info_wrap" v-if="editState">
+        <div class="user_info_wrap" v-show="editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
             <input
@@ -107,6 +111,17 @@
               class="user_info_wrap_text editor"
               name="fullname"
               v-model="name"
+              required="required"
+              maxlength="10"
+            />
+          </div>
+          <div class="user_info_wrap_li">
+            <span class="user_info_wrap_sub">手机号码</span>
+            <input
+              type="text"
+              class="user_info_wrap_text editor"
+              name="fullname"
+              v-model="phone"
               required="required"
               maxlength="10"
             />
@@ -162,52 +177,31 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
-            <label>
+            <label v-for="(item, index) of ['是','否']" :key="index">
               <input
                 type="radio"
                 name="isLoan"
                 value="1"
                 class="user_info_wrap_radio"
                 v-model="isLoan"
+                :checked="userInfoData.isLoan == index"
                 required="required"
               />
-              是
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="isLoan"
-                value="0"
-                class="user_info_wrap_radio1"
-                v-model="isLoan"
-                required="required"
-              />
-              否
+              {{item}}
             </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否试驾</span>
-            <label>
+            <label v-for="(item, index) of ['是','否']" :key="index">
               <input
                 type="radio"
                 name="isTestDrive"
                 value="1"
                 class="user_info_wrap_radio"
                 v-model="isTestDrive"
-                :checked="isTestDrive == 1 ? true:false"
+                :checked="isTestDrive == index"
               />
-              是
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="isTestDrive"
-                value="0"
-                class="user_info_wrap_radio1"
-                v-model="isTestDrive"
-                :checked="isTestDrive == 0 ? true:false"
-              />
-              否
+              {{item}}
             </label>
           </div>
           <div class="user_info_wrap_li">
@@ -216,107 +210,33 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">用户状态</span>
-            <label>
+            <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
               <input
                 type="radio"
                 name="userStatus"
                 value="1"
                 class="user_info_wrap_radio"
                 v-model="userStatus"
-                :checked="userStatus == 1 ? true:false"
+                :checked="userStatus == (index + 1)"
                 required="required"
                 @change="changeUserStatus"
               />
-              跟进中
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="userStatus"
-                value="2"
-                class="user_info_wrap_radio1"
-                v-model="userStatus"
-                :checked="userStatus == 2 ? true:false"
-                required="required"
-                @change="changeUserStatus"
-              />
-              到店
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="userStatus"
-                value="3"
-                class="user_info_wrap_radio1"
-                v-model="userStatus"
-                :checked="userStatus == 3 ? true:false"
-                required="required"
-                @change="changeUserStatus"
-              />
-              战败
+              {{item}}
             </label>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户分级</span>
-            <label>
+            <label v-for="(item, index) in ['H','A','B','C','D']" :key="index" @click="setLevel(item)">
               <input
                 type="radio"
                 name="grading"
-                value="H"
+                :value="item"
                 class="user_info_wrap_radio"
                 v-model="grading"
-                :checked="grading == 'H' ? true:false"
+                :checked="grading == item"
                 required="required"
               />
-              H
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="grading"
-                value="A"
-                class="user_info_wrap_radio1"
-                v-model="grading"
-                :checked="grading == 'A' ? true:false"
-                required="required"
-              />
-              A
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="grading"
-                value="B"
-                class="user_info_wrap_radio1"
-                v-model="grading"
-                :checked="grading == 'B' ? true:false"
-                required="required"
-              />
-              B
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="grading"
-                value="C"
-                class="user_info_wrap_radio1"
-                v-model="grading"
-                :checked="grading == 'C' ? true:false"
-                required="required"
-              />
-              C
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="grading"
-                value="D"
-                class="user_info_wrap_radio"
-                v-model="grading"
-                :checked="grading == 'D' ? true:false"
-                required="required"
-              />
-              D
+              {{item}}
             </label>
           </div>
           <div class="user_info_wrap_li">
@@ -341,7 +261,7 @@
               class="user_info_wrap_picker"
               size="small"
             ></el-date-picker> -->
-            <date-picker v-model="time2" type="datetime" class="user_info_wrap_picker"></date-picker>
+            <!-- <date-picker v-model="time2" type="datetime" class="user_info_wrap_picker"></date-picker> -->
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 2 ?true:false">
             <span class="user_info_wrap_sub">到店时间</span>
@@ -353,13 +273,13 @@
               format="yyyy-MM-dd HH:mm:ss"
               class="user_info_wrap_picker"
               size="small"
-            ></el-date-picker>-->
-            <input
+            ></el-date-picker> -->
+            <!-- <input
               type="datetime-local"
               name="user_date"
               v-model="arrivalTime"
               class="user_info_wrap_picker"
-            />
+            /> -->
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因</span>
@@ -441,7 +361,7 @@
               @click="checkTag(index)"
               v-for="(item,index) in allTags"
               :key="index"
-            >{{item.tagName}}</span>
+            >{{item.labelName}}</span>
           </div>
         </div>
       </div>
@@ -459,20 +379,39 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 export default {
   name: "RightBoxUserInfo",
-  props: ["myAddressBook", "editState"],
+  props: ["myAddressBook"],
   components: { DatePicker },
   data() {
     return {
       title: "",
       loading: false,
-      // editState: editState,
-      // userInfoData: [],
-      userInfoData: {},
+      name1:'',
+      time2:'',
+        editState: false,
+        labelName: '',
+        phone: '',
+      userInfoData: {
+        remark:'',
+        name:'',
+        phone: '',
+        gender:'',
+        intentModel:'',
+        licensePlateArea:'',
+        isLoan:'',
+        isTestDrive:'',
+        purchaseBudget:'',
+        userStatus:'',
+        grading:'',
+        remark:'',
+        userStatus:'',
+        arrivalTime:'',
+        nextVisitTime:'',
+        defeatCause:''
+      },
       tagData: [],
       allTags: [],
       flag: 1,
       imei: util.getImei(),
-      targetWxid: myAddressBook.targetWxid,
       add: "",
       myWxid: util.getMyWxId(),
       options: provinceAndCityDataPlus,
@@ -485,7 +424,7 @@ export default {
       purchaseBudget: "",
       userStatus: "3",
       grading: "",
-      remark: "",
+      remark: "", 
       nextVisitTime: "",
       arrivalTime: "",
       defeatCause: "",
@@ -494,17 +433,27 @@ export default {
   },
   watch: {
     myAddressBook(newObj) {
-      this.getLoadData(newObj);
+       this.getLoadData(newObj);
     }
-    // editState(olddata, state) {
-    //   this.editState = state;
-    // }
   },
   components: {},
   methods: {
+    setLevel(tag){
+      if(this.tagData.length>0) {
+        let first = this.tagData.shift();
+        if(first.level) {
+          first.labelName = tag;
+          this.tagData.unshift(first);
+        } else {
+          this.tagData.unshift({labelName: tag, level: true});
+        }
+      } else {
+          this.tagData.unshift({labelName: tag, level: true});
+      }
+    },
     changeUserStatus(val) {
       // console.log(val);
-      // this.userStatus = val;
+      this.userStatus = val;
     },
     handleChange(value) {
       // 
@@ -523,8 +472,7 @@ export default {
       });
     },
     editor() {
-      //this.editState 默认为false 显示展示页 点击修改 变为true 显示编辑页
-      // this.editState = !this.editState;
+      console.log(this.targetWxid);
       if (!this.editState) {
         this.editState = true;
         this.getTags({
@@ -535,12 +483,6 @@ export default {
         this.saveUserInf();
         this.saveTag();
       }
-      // if (!!this.editState) {
-      //
-      // } else {
-      //   this.saveUserInf();
-      //   this.saveTag();
-      // }
     },
     //点编辑赋值
     editUserInfo() {
@@ -558,6 +500,7 @@ export default {
       this.arrivalTime = this.userInfoData.arrivalTime;
       this.defeatCause = parseInt(this.userInfoData.defeatCause);
       this.defeatCauseOther = this.userInfoData.defeatCauseOther;
+      this.phone = this.userInfoData.phone;
     },
     getTags(params) {
       let $this = this;
@@ -584,52 +527,54 @@ export default {
         .then(data => {});
     },
     saveUserInf() {
-      let _this = this;
-      _this.licensePlateArea = "1";
+      this.licensePlateArea = "1";
+      let targetWxid = this.myAddressBook.targetWxid;
       if (
-        _this.name == null ||
-        _this.gender == null ||
-        _this.intentModel == null ||
-        _this.licensePlateArea == null ||
-        _this.isLoan == null ||
-        _this.userStatus == null ||
-        _this.grading == null
+        this.name == null ||
+        this.gender == null ||
+        this.intentModel == null ||
+        this.licensePlateArea == null ||
+        this.isLoan == null ||
+        this.userStatus == null ||
+        this.grading == null
       ) {
         this.$message({
           message: "有未填写的必输字段",
           type: "warn"
         });
-        _this.editState = true;
+        this.editState = true;
       } else {
+        debugger;
         this.$axios
           .post("/saveCustomer", {
-            myWxid: _this.myWxid,
-            wxid:_this.targetWxid,
-            imei: _this.imei,
-            name: _this.name,
-            id: _this.userInfoData.id,
-            gender: parseInt(_this.gender),
-            intentModel: _this.intentModel,
+            myWxid: this.myWxid,
+            wxid: targetWxid,
+            imei: this.imei,
+            name: this.name,
+            id: this.userInfoData.id,
+            phone: this.phone,
+            gender: parseInt(this.gender),
+            intentModel: this.intentModel,
             //上牌地区
-            // licensePlateArea: _this.licensePlateArea,
+            // licensePlateArea: this.licensePlateArea,
             licensePlateArea: "1",
-            isLoan: parseInt(_this.isLoan),
-            isTestDrive: parseInt(_this.isTestDrive),
-            purchaseBudget: _this.purchaseBudget,
-            userStatus: parseInt(_this.userStatus),
-            grading: _this.grading,
-            remark: _this.remark,
+            isLoan: parseInt(this.isLoan),
+            isTestDrive: parseInt(this.isTestDrive),
+            purchaseBudget: this.purchaseBudget,
+            userStatus: parseInt(this.userStatus),
+            grading: this.grading,
+            remark: this.remark,
             //下次回访时间
-            // nextVisitTime: _this.nextVisitTime,
+            // nextVisitTime: this.nextVisitTime,
             nextVisitTime: "2019-12-02 12:00",
             //到店时间
-            // arrivalTime: _this.arrivalTime,
+            // arrivalTime: this.arrivalTime,
             arrivalTime: "2019-12-02 12:00",
-            defeatCause: parseInt(_this.defeatCause),
-            defeatCauseOther: _this.defeatCauseOther
+            defeatCause: parseInt(this.defeatCause),
+            defeatCauseOther: this.defeatCauseOther
           })
           .then(data => {
-            _this.editState = false;
+            this.editState = false;
             this.getdata();
           });
       }
@@ -643,15 +588,13 @@ export default {
       this.tagData = [...this.tagData, ...tag];
     },
     getdata() {
-      let $this = this;
       this.$axios
         .post("/getCustomer", {
           imei: util.getImei(),
           wxid: this.targetWxid
         })
         .then(data => {
-          $this.userInfoData = data;
-          // console.log($this.userInfoData);
+          this.userInfoData = data;
         });
     }
   },
@@ -793,3 +736,4 @@ export default {
   text-align: center;
 }
 </style>
+

@@ -48,6 +48,7 @@
       </symbol>
     </svg>
     <!-- 列表区 -->
+   
     <div class="container">
       <vue-scroll style="width:100%">
         <template v-for="topItem in topsData">
@@ -95,7 +96,7 @@ export default {
   },
   props: ["ignoreGroup"],
   created: function() {
-    this.$store.commit("initFriends");
+    // this.$store.commit("initFriends");
   },
   components: {
     Friend,

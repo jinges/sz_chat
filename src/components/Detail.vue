@@ -57,7 +57,7 @@
 		<div>
 			<el-button v-if="!opt.disableMsg" type="success" plain @click="startChat" style="background:transparent;margin-top:10px;">发消息</el-button>
 			<el-button v-if="!opt.disableMsg" type="danger" plain @click="delFriend" style="background:transparent;margin-top:10px;">删除好友</el-button>
-			<el-button v-if="!opt.disableMsg" type="warning" plain @click="pengyouquan" style="background:transparent;margin-top:10px;">朋友圈</el-button>
+			<!-- <el-button v-if="!opt.disableMsg" type="warning" plain @click="pengyouquan" style="background:transparent;margin-top:10px;">朋友圈</el-button> -->
 		</div>
 	</div>
 </template>
