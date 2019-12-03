@@ -77,6 +77,12 @@
         v-show="isShowAddFriends"
       ></AddFriendsProgress>
     </transition>
+    
+    <transition name="el-zoom-in-center">
+      <div class="loading" v-if="loading">
+        <span>Loading……</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -116,7 +122,7 @@ export default {
         disableMsg: false
       },
       myAddressBook: {},
-
+      loading: false,
       isShowAddFriends: false,
       showMore: false,
       showUser: true,
@@ -142,6 +148,7 @@ export default {
   methods: {
     //切换用户刷新页面
     switchUser(index) {
+      this.loading = true;
       let wx = this.wechatList[index];
       util.removeToken();
       util.removeExTime();
@@ -172,6 +179,9 @@ export default {
       // }
       // this.$refs.chat.loadmore();
       this.$refs.sessions.initSel();
+      setTimeout(()=>{
+        this.loading = false;
+      }, 1000)
     },
     selectNav: function(t) {
       this.isShowAddFriends = false;
@@ -399,6 +409,30 @@ export default {
     height: 700px;
     max-height: 95%;
     border-radius: 0px 6px 6px 0px;
+  }
+  .loading{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000000000000;
+    background: rgba(255,255,255,.2);
+    span{
+      width: 300px;
+      height: 40px;
+      position: absolute;
+      color: #b9b8b8;
+      font-weight: 400;
+      font-size: 32px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    text-align: center;
+    }
   }
 }
 </style>
