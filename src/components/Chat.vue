@@ -277,6 +277,7 @@ export default {
             return;
           }
           data.forEach(item => {
+            debugger;
             var media = item.mt.toLowerCase();
             var face = "";
             if (this.isGroup) {
@@ -285,7 +286,7 @@ export default {
                   ? this.myFace
                   : this.groupMemberFace(item.rid);
             } else {
-              face = item.mdr == "OUT" ? this.myFace : this.myFace;
+              face = item.mdr == "OUT" ? this.myFace : this.targetFace;
             }
             _this.history.unshift({
               type: item.mdr == "OUT" ? "receiver" : "sender",
@@ -360,16 +361,15 @@ export default {
           /*** 不起作用 **/
           this.sendLoading = false;
           this.sendingMap[data] = true;
-          this.history.push({
-            type: "receiver",
-            media: "text",
-            face: this.myFace,
-            content: this.sendText,
-            time: now.toLocaleString(),
-            sending: true,
-            sendingId: data
-          });
-          this.sendText = "";
+          // this.history.push({
+          //   type: "receiver",
+          //   media: "text",
+          //   face: this.myFace,
+          //   content: this.sendText,
+          //   time: now.toLocaleString(),
+          //   sending: true,
+          //   sendingId: data
+          // });
 
           //滚动到底部
           this.$refs["vs"].scrollBy(
