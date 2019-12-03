@@ -701,7 +701,7 @@ export default {
           
         }
         .user_info_wrap_radio {
-          vertical-align: middle;
+          
         }
         .user_info_wrap_picker {
           margin-left: 5.5em;
