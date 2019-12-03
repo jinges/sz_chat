@@ -180,6 +180,8 @@ export default {
       // }
       // this.$refs.chat.loadmore();
       this.$refs.sessions.initSel();
+      debugger;
+      this.getCurrentUser(wx.wxid);
       setTimeout(()=>{
         this.loading = false;
       }, 1000)
@@ -278,7 +280,20 @@ export default {
         }
         return item;
       });
-    }
+    },
+  getCurrentUser(wxid){
+    //查询个人信息
+    this.$axios
+      .post("/queryAddressBookByWxId", {
+        wxid: wxid
+      })
+      .then(data => {
+        this.selfData = data;
+        util.setMyWxInfo(JSON.stringify(data));
+      })
+      .catch(() => {});
+
+  }
   },
   mounted: function() {
     this.wechatList = JSON.parse(
@@ -286,16 +301,7 @@ export default {
     );
       this.$store.commit("initFriends");
       this.$store.commit("initSessions");
-    //查询个人信息
-    this.$axios
-      .post("/queryAddressBookByWxId", {
-        wxid: util.getMyWxId()
-      })
-      .then(data => {
-        this.selfData = data;
-        util.setMyWxInfo(JSON.stringify(data));
-      })
-      .catch(() => {});
+      this.getCurrentUser(util.getMyWxId());
     //WebSocket入口
     var websocketUrl = "";
     let $this = this;
