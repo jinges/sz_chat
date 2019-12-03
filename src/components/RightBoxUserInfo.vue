@@ -521,7 +521,7 @@ export default {
         .post("/setTag", {
           myWxid: this.myWxid,
           targetWxid: this.targetWxid,
-          Tag: tags,
+          tag: tags,
           imei: this.imei
         })
         .then(data => {});
