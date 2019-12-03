@@ -49,7 +49,7 @@ export default new Vuex.Store({
 				.then(Vue.prototype.$axios.spread(function(addressBookData) {
 					var arr = addressBookData.data.map(item => {
 						return {
-							face: item.addressBook.headPic || require('@/assets/wechat.png'),
+							face: item.addressBook.headPic || require('@/assets/timg.jpg'),
 							name: item.remark ? item.remark : item.addressBook.nickName,
 							wxid: item.addressBook.wxid,
 							detail: item
@@ -128,7 +128,7 @@ export default new Vuex.Store({
 			debugger;
 			state.friends = friends.map(item => {
 				return {
-					face: item.addressBook.headPic || require('@/assets/wechat.png'),
+					face: item.addressBook.headPic || require('@/assets/timg.jpg'),
 							name: item.remark ? item.remark : item.addressBook.nickName,
 							wxid: item.addressBook.wxid,
 							detail: item
@@ -155,8 +155,8 @@ export default new Vuex.Store({
 					state.sessions = data.data.map(function(item) {
 						return {
 							name: item.name || '',
-							face: item.chartMode == 'SINGLE' ? item.headPic : require(
-								'@/assets/wechat.png'),
+							face: item.chartMode == 'SINGLE' ? item.headPic|| require('@/assets/timg.jpg') : require(
+								'@/assets/timg.jpg'),
 							lastMsg: item.msg,
 							lastTime: item.updateTime,
 							targetId: item.targetId,
