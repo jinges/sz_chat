@@ -167,6 +167,7 @@ export default {
         "__WBS__H5__GLOBAL__WXLIST",
         JSON.stringify(this.wechatList)
       );
+        this.$store.commit("initFriends");
       this.currentContent = false;
       this.targetId = firstUser[0].wxid;
       this.selectNav("Sessions");
@@ -226,7 +227,7 @@ export default {
         this.currentContent = "Detail";
         this.showMore = true;
         this.targetId = detail.targetWxid;
-    // this.$store.commit("initFriends");
+    //  this.$store.commit("initFriends");
         this.$store.commit("updatePengyouquanVisible", true);
         this.$store.commit("setCurrentPengyouquan", detail.addrBookId);
       }

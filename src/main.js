@@ -9,13 +9,6 @@ import axios from 'axios'
 import util from './util/util.js'
 import filters from './filter'
 
-import { pcaa } from 'area-data-vue';
-import './assets/style/select.css';
-import AreaLinkageVue from 'area-linkage-vue';
-Vue.prototype.$pcaa = pcaa;
-
-Vue.use(AreaLinkageVue)
-
 Object.keys(filters).map(key => {
     Vue.use(key, filters[key])
 })
