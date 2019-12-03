@@ -389,7 +389,7 @@ export default {
 
   #RightBox,
   #addFriendsProgress {
-    width: 310px;
+    width: 375px;
     height: 700px;
     max-height: 95%;
     border-radius: 0px 6px 6px 0px;
