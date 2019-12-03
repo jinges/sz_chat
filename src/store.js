@@ -30,9 +30,8 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		initFriends(state) {
-
 			function getAddressBook() {
-				return Vue.prototype.$axios.post('/refreshAddressBook', {
+				return Vue.prototype.$axios.post('/queryMyAddressBook', {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
 					size: 5000
@@ -120,6 +119,7 @@ export default new Vuex.Store({
 		},
 
 		changeFriendList: (state,friends)=>{
+			debugger;
 			state.friends = friends.map(item => {
 				return {
 					face: item.addressBook.headPic || require('@/assets/wechat.png'),
