@@ -11,6 +11,7 @@
 }
 
 /*菜单栏图标颜色-绿*/
+
 .navbar{
 	background:#1e1f20;
 	background:rgba(30,31,32,.95);
@@ -27,6 +28,17 @@
 }
 .nav_icon.active:hover {
 	color: #09bb07;
+}
+.navbar .nav::before {
+    content: '';
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    border: 6px solid #edeae8;
+    border-color: transparent #edeae8 transparent transparent;
+    position: absolute;
+    top: 28px;
+    right: 0;
 }
 
 /*好友列表*/

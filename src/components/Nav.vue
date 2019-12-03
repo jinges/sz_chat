@@ -5,7 +5,8 @@
         :key="index"  class="imgbox" 
         :class="{hasMsg:item.hasMsg}"
         @click="switchUser(item, index)">
-        <img class="face" :src="item.face" />
+        <div class="face" :style="[{backgroundImage: `url(${item.face})`}]"></div>
+        
       </div>
     </div>
     <font-awesome-icon
@@ -123,11 +124,17 @@ export default {
   align-items: center;
   height: 100%;
   position: relative;
+
+  .users{
+    margin-top: 3px;
+  }
  
   .imgbox{
     height: 40px;
     width: 40px;
-    margin: 5px 10px;
+    margin: 12px 10px 0 10px;
+    background: url(../assets/timg.jpg) no-repeat;
+    background-size: cover;
     &.hasMsg::before{
       content: "";
     width: 10px;
@@ -146,10 +153,12 @@ export default {
   .face {
     width: 40px;
     height: 40px;
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     border-radius: 3px;
     /*margin-bottom: 20px;*/
     cursor: pointer;
+    background-repeat: no-repeat;
+		background-size: cover;
   }
   svg {
       margin-top: 20px;
