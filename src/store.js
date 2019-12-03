@@ -76,18 +76,24 @@ export default new Vuex.Store({
 					wxid: util.getMyWxId(),
 				})
 				.then(data => {
-					state.newFriends = data.data.map(function(item) {
-						return {
-							face: item.smallheadimgurl,
-							name: item.fromnickname,
-							content: item.content,
-							wxid: item.wxid,
-							ticket: item.ticket,
-							scene: item.scene,
-							encryptusername: item.encryptusername,
-							detail: item
-						}
-					});
+					console.log("获取新朋友数据",data);
+					if(data.data){
+						state.newFriends = data.data.map(function(item) {
+							return {
+								face: item.smallheadimgurl,
+								name: item.fromnickname,
+								content: item.content,
+								wxid: item.wxid,
+								ticket: item.ticket,
+								scene: item.scene,
+								encryptusername: item.encryptusername,
+								detail: item
+							}
+						});
+					}else{
+						state.newFriends = []
+					}
+					
 				})
 				.catch(() => {});
 		},
