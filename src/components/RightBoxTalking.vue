@@ -129,13 +129,17 @@ export default {
   &.history {
     margin-bottom: 10px;
     background: rgba(0, 0, 0, 0.2);
+
+    li{
+      background: #ddd;
+    }
   }
   li {
     cursor: pointer;
-    background: #333;
-    color: #eee;
+    background: #fff;
+    color: #606266;
     padding: 10px;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #606266;
     span {
       display: block;
       font-size: 12px;
