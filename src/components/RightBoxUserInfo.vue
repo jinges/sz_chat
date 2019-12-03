@@ -173,12 +173,14 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
-            <el-cascader
-              size="large"
-              :options="options"
-              v-model="licensePlateArea"
-              @change="handleChange">
-            </el-cascader>
+            <div class="user_info_wrap_text">
+              <el-cascader
+                size="large"
+                :options="options"
+                v-model="licensePlateArea"
+                @change="handleChange">
+              </el-cascader>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
@@ -221,19 +223,21 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">用户状态</span>
-            <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
-              <input
-                type="radio"
-                name="userStatus"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="userStatus"
-                :checked="userStatus == (index + 1)"
-                required="required"
-                @change="changeUserStatus(index)"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
+                <input
+                  type="radio"
+                  name="userStatus"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="userStatus"
+                  :checked="userStatus == (index + 1)"
+                  required="required"
+                  @change="changeUserStatus(index)"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户分级</span>
@@ -266,16 +270,19 @@
             </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus < 3">
+            
             <span class="user_info_wrap_sub">下次回访时间</span>
-            <el-date-picker
-              v-model="nextVisitTime"
-              type="datetime"
-              placeholder="选择日期时间"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              format="yyyy-MM-dd HH:mm:ss"
-              class="user_info_wrap_picker"
-              size="small"
-            ></el-date-picker>
+            <div class="user_info_wrap_text">
+              <el-date-picker
+                v-model="nextVisitTime"
+                type="datetime"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd HH:mm:ss"
+                class="user_info_wrap_picker editor"
+                size="small"
+              ></el-date-picker>
+            </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 2">
             <span class="user_info_wrap_sub">到店时间</span>
@@ -642,10 +649,7 @@ export default {
           
         }
         .user_info_wrap_picker {
-          margin-left: 5.5em;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          width: 10em;
-          opacity: 0.2;
+          width: 100%;
           color: #fff;
         }
         .area-select{

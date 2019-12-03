@@ -328,8 +328,14 @@ ul.plus_menu .popper__arrow:after{
 }
 
 /* 客户档案 */
-.area-select .area-selected-trigger{
+.user_info .area-select .area-selected-trigger{
 	padding-left: .5em;
+}
+.user_info .el-input__inner{
+	background-color: transparent;
+	border: none;
+	color: #fff;
+
 }
 
 
