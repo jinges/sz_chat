@@ -95,6 +95,14 @@
 		methods: {
 			// 添加好友的统计
 			statusGroupAddfriend: function() {
+				this.addFriendsAllCount = 0;
+				this.addFriendsWaitCount = 0;
+				this.addFriendsWaitVerificationCount = 0;
+				this.addFriendsSuccessCount = 0;
+				this.addFriendsRefuseCount = 0;
+				this.addFriendsUnansweredCount = 0;
+				this.addFriendsFailCount = 0;
+				this.addFriendsRepeatCount = 0;
 				var data = {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
