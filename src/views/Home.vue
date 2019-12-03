@@ -188,14 +188,14 @@ export default {
         this.currentSubNav = t;
       }
       if(t == 'AddressBook') {
-        debugger;
+        //debugger;
         this.$store.commit("initFriends");
       }
     },
     selectFriend: function(isGroup, detail) {
       
       this.showMore = false;
-      debugger;
+      //debugger;
       if (isGroup) {
         this.targetInfo = {
           isGroup: true,
