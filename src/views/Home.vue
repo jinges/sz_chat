@@ -161,6 +161,7 @@ export default {
       );
       this.selectNav("Sessions");
       this.$store.commit("initSessions");
+      this.$store.commit("initNewFriends");
       // var friends = this.$store.getters.filterSessionsByName;
       // if(friends.length) {
       // 	this.startChat(friends[0]);
