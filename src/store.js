@@ -151,6 +151,7 @@ export default new Vuex.Store({
 					size: 100
 				})
 				.then(data => {
+					debugger;
 					state.sessions = data.data.map(function(item) {
 						return {
 							name: item.name || '',

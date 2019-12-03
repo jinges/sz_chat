@@ -1,7 +1,7 @@
 <template>
     <div class="sessions">
         <vue-scroll>
-            <Session v-for="(session, index) in $store.getters.filterSessionsByName" :key="index" v-bind="session" @selectSession="selectSession" />
+            <Session v-for="(session, index) in $store.getters.filterSessionsByName" :key="index" :selIndex="selIndex" :index="index" v-bind="session" @selectSession="selectSession" />
         </vue-scroll>
     </div>
 </template>
@@ -15,9 +15,18 @@
         components: {
             Session
         },
+        data(){
+            return {
+                selIndex: 0
+            }
+        },
         methods: {
+            initSel(){
+                this.selIndex = 0;
+            },
             selectSession: function(target) {
-                this.$emit('selectSession', target)
+                this.$emit('selectSession', target);
+                this.selIndex = target.selIndex;
             },
             onWsMsg: function(json) {
                 if (json.messageType != 'NOTIFY_TO_SERVER')

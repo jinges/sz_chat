@@ -282,22 +282,22 @@
 					/*** 不起作用 **/
 					this.sendLoading = false;
 					this.sendingMap[data] = true;
-					// this.history.push({
-					// 	type: 'receiver',
-					// 	media: 'text',
-					// 	face: this.myFace,
-					// 	content: this.sendText,
-					// 	time: now.toLocaleString(),
-					// 	sending: true,
-					// 	sendingId: data
-					// });
-					// this.sendText = '';
+					this.history.push({
+						type: 'receiver',
+						media: 'text',
+						face: this.myFace,
+						content: this.sendText,
+						time: now.toLocaleString(),
+						sending: true,
+						sendingId: data
+					});
+					this.sendText = '';
 
-					// //滚动到底部
-					// this.$refs['vs'].scrollBy({
-					// 		dy: 1000
-					// 	}, 500,
-					// 	'easeInQuad');
+					//滚动到底部
+					this.$refs['vs'].scrollBy({
+							dy: 1000
+						}, 500,
+						'easeInQuad');
 				}).catch(() => {});
 			},
 			//添加@
