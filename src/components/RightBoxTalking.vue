@@ -73,7 +73,7 @@ export default {
       this.$axios
         .post("/getCustomerProfile", {
           wxid: wxid,
-		  imei:util.getImei()
+		      imei:util.getImei()
         })
         .then(data => {
           this.orderId = data.orderId;
@@ -81,6 +81,9 @@ export default {
         .catch(() => {});
     },
     getkeyword(msg) {
+      if(!this.orderId.length) {
+        return false;
+      }
       this.$axios
         .post("/searchKeyword", {
           orderId: this.orderId,

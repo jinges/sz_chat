@@ -23,6 +23,7 @@
         </transition-group>
       </div>
       <div id="content" v-show="!isShowAddFriends">
+      {{isShowAddFriends}} --{{showMore}}--{{showUser}}
         <transition name="slide">
           <Chat
             ref="chat"
@@ -159,14 +160,18 @@ export default {
         "__WBS__H5__GLOBAL__WXLIST",
         JSON.stringify(this.wechatList)
       );
+      this.currentContent = false;
+      this.targetId = firstUser[0].wxid;
       this.selectNav("Sessions");
       this.$store.commit("initSessions");
       this.$store.commit("initNewFriends");
+      this.showMore = false;
       // var friends = this.$store.getters.filterSessionsByName;
       // if(friends.length) {
       // 	this.startChat(friends[0]);
       // }
       // this.$refs.chat.loadmore();
+      this.$refs.sessions.initSel();
     },
     selectNav: function(t) {
       this.isShowAddFriends = false;
@@ -242,6 +247,7 @@ export default {
       // this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
       this.currentContent = "Chat";
       this.showMore = false;
+      debugger;
       if (!target.isGroup) {
         this.nowIndex = 3;
         this.targetInfo = target;

@@ -1,5 +1,5 @@
 <template>
-    <div :class="{session:true,newmsg:newmsg}" @click="selectSession">
+    <div :class="{session:true,newmsg:newmsg, active: index == selIndex}" @click="selectSession">
         <img class="face" :src="face" />
         <div class="content">
             <div class="name">{{name}}</div>
@@ -15,17 +15,18 @@
     moment.locale('zh-cn');
 
     export default {
-        props: ['face', 'name', 'lastMsg', 'lastTime', 'targetId', 'newmsg','isGroup'],
+        props: ['face', 'name', 'lastMsg', 'lastTime', 'targetId', 'newmsg','isGroup', 'index', 'selIndex'],
         methods: {
             selectSession: function() {
-                $(this.$el).removeClass('newmsg').attr('active','active').siblings().removeAttr('active');
+                // $(this.$el).removeClass('newmsg').addClass('active').siblings().removeClass('active');
                 //debugger;
                 this.$store.commit('setCurrentSession',this.targetId);
                 this.$emit('selectSession', {
                     targetId: this.targetId,
                     targetFace: this.face,
                     targetName: this.name,
-                    isGroup:this.isGroup
+                    isGroup:this.isGroup,
+                    selIndex: this.index
                 });
             }
         },
@@ -66,7 +67,7 @@
             background: rgba(230, 162, 60, 0.2);
         }
 
-        &[active]{
+        &.active{
             background: rgba(230, 162, 60, 0.5);
 
             .lastMsg {
