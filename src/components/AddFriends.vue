@@ -100,7 +100,7 @@
 							  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
 							</el-upload>
 						</el-form-item>
-						<el-form-item label="打招呼消息" prop="sendWord">
+						<el-form-item label="打招呼消息" prop="sendWord" style="display: none;">
 							<el-input placeholder="您好!"></el-input>
 						</el-form-item>
 						<el-form-item style="text-align: center;">
