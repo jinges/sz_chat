@@ -5,15 +5,15 @@
         <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
       </el-input>
     </div>
-    <ul class="searchList history">
-      <li v-for="(item,index) in history" :key="index" @click="eject(item)">
-        {{item.title}}
+    <ul class="searchList searchSeparate">
+      <li v-for="(item,index) in arrList" :key="index" @click="eject(item)">
+        {{item.title.replace('搜索.','')}}
         <span>{{item.subTitle}}</span>
       </li>
-    </ul>
-    <ul class="searchList">
-      <li v-for="(item,index) in arrList" :key="index" @click="eject(item)">
-        {{item.title}}
+    </ul>	
+    <ul class="searchList history">
+      <li v-for="(item,index) in history" :key="index" @click="eject(item)">
+        {{item.title.replace('搜索.','')}}
         <span>{{item.subTitle}}</span>
       </li>
     </ul>
@@ -127,12 +127,13 @@ export default {
   font-size: 14px;
   background: rgba(0, 0, 0, 0.4);
   &.history {
-    margin-bottom: 10px;
-    background: rgba(0, 0, 0, 0.2);
-
     li{
       background: #ddd;
     }
+  }
+  &.searchSeparate {
+	margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.2);
   }
   li {
     cursor: pointer;
