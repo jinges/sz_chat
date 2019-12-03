@@ -90,7 +90,7 @@
 							<el-upload
 							  class="upload-demo"
 							  ref="upload"
-							  action="/api/importAddfriendExcel"
+							  action="/importAddfriendExcel"
 							  :auto-upload="false"
 							  :data="{imei: imei}"
 							  :headers="batchAddHeaders">
@@ -100,7 +100,7 @@
 							  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
 							</el-upload>
 						</el-form-item>
-						<el-form-item label="打招呼消息" prop="sendWord">
+						<el-form-item label="打招呼消息" prop="sendWord" style="display: none;">
 							<el-input placeholder="您好!"></el-input>
 						</el-form-item>
 						<el-form-item style="text-align: center;">
@@ -345,6 +345,14 @@
 			},
 			// 添加好友的统计
 			statusGroupAddfriend: function() {
+				this.addFriendsAllCount = 0;
+				this.addFriendsWaitCount = 0;
+				this.addFriendsWaitVerificationCount = 0;
+				this.addFriendsSuccessCount = 0;
+				this.addFriendsRefuseCount = 0;
+				this.addFriendsUnansweredCount = 0;
+				this.addFriendsFailCount = 0;
+				this.addFriendsRepeatCount = 0;
 				var data = {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
