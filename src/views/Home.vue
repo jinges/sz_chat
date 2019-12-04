@@ -113,7 +113,7 @@ export default {
       selfData: {},
       //要展示的微信详情
       detailData: {},
-    targetId:'',
+      targetId:'',
       //群组信息
       GroupListData: {},
       GroupListlOpt: {},
@@ -258,11 +258,11 @@ export default {
       // this.$refs.RightBox.$refs.RightBoxUserInfo.getdata(target.targetId)
       // this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
       this.currentContent = "Chat";
+      this.targetInfo = target;
       this.showMore = false;
       
       if (!target.isGroup) {
         this.nowIndex = 3;
-        this.targetInfo = target;
         this.showMore = true;
         this.targetId = target.targetId;
         let friend = this.getUserInf(target.targetId)

@@ -31,7 +31,8 @@
 				title:'新的朋友',
 				detail: Object,
 				agreeBtnText: '接受',
-
+				delete_myWxid: '',
+				delete_targetUserName: '',
 			}
 		},
 		computed: {
@@ -41,17 +42,30 @@
 			agreeNewFriend: function(event, index, item) {
 				this.btnLoading = index;
 				this.btnDisabled = true;
-				//console.log('同意好友申请：'+item.name);
+				// console.log('-------->同意好友申请：item='+JSON.stringify(item));
 				Vue.prototype.$axios.post('/confirmAdd', {
 					imei: util.getImei(),
 					myWxid: item.wxid,
 					scene: item.scene,
-					stranger: item.encryptusername
+					stranger: item.ticket,
+					targetWxid: item.detail.fromusername
 				}).then(data => {
 					this.bufferData[data] = true;
+					this.delete_myWxid = item.wxid;
+					this.delete_targetUserName = item.detail.fromusername;
 				})
 				.catch(() => {});
 			},
+			deleteAddFriendReq: function() {
+                Vue.prototype.$axios.post('/deleteAddFriendReq', {
+                    myWxid: this.delete_myWxid,
+                    targetUserName: this.delete_targetUserName
+                }).then(data => {
+					console.log('-------deleteAddFriendReq,will initNewFriends');
+                    this.$store.commit('initNewFriends');
+                })
+                .catch(() => {});
+            },
 			onWsMsg(json) {
 			    if (json.commandName == 'SERVER_CONFIRM_ADD_BUDDY_ACK') {
 			        var messageId = json.messageId;
@@ -59,7 +73,7 @@
 			        if (this.bufferData[messageId]) {
 			            this.$message.success('添加好友成功');
 			            delete this.bufferData[messageId];
-			            this.$store.commit('initNewFriends');
+			            this.deleteAddFriendReq();
 
 			            this.btnLoading = -1;
 			            this.btnDisabled = false;
