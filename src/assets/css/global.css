@@ -65,7 +65,7 @@
 #box #subNav .search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
 #box #subNav .search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
 
-#box #subNav .search i{
+#box #subNav .search i.el-icon-search{
 	color: #999;
 	font-weight: 600;
 }
@@ -335,6 +335,17 @@ ul.plus_menu .popper__arrow:after{
 	background-color: transparent;
 	border: none;
 	color: #fff;
+
+}
+
+/* 新建群组 */
+#createGroup .el-transfer-panel__item{
+	height: 58px;
+} 
+#createGroup .el-transfer-panel__item .el-checkbox__input{
+	top: 22px;
+}
+.is-disabled{
 
 }
 
