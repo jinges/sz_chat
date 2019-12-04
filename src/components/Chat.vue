@@ -849,15 +849,15 @@ export default {
           this.uploadLoading = false;
           this.sendingMap[data] = true;
 
-          this.history.push({
-            type: "receiver",
-            media: fileType.toLowerCase(),
-            face: this.myFace,
-            content: res.data[0].url,
-            time: now.toLocaleString(),
-            sending: true,
-            sendingId: data
-          });
+          // this.history.push({
+          //   type: "receiver",
+          //   media: fileType.toLowerCase(),
+          //   face: this.myFace,
+          //   content: res.data[0].url,
+          //   time: now.toLocaleString(),
+          //   sending: true,
+          //   sendingId: data
+          // });
 
           //滚动到底部
           this.$refs["vs"].scrollBy(
