@@ -46,7 +46,8 @@
 					imei: util.getImei(),
 					myWxid: item.wxid,
 					scene: item.scene,
-					stranger: item.encryptusername
+					stranger: item.ticket,
+					targetWxid:item.fromusername
 				}).then(data => {
 					this.bufferData[data] = true;
 				})
