@@ -94,6 +94,9 @@ export default {
     cleanSrarch() {
       this.arrList = [];
       this.history = [];
+      this.talkArrList = [];
+      this.talkArrList = [];
+
     },
     searchKeyword(wxid) {
       this.$axios
@@ -183,6 +186,7 @@ export default {
       } else {
         this.getTalkKeyword(this.talkSearchTxt);
       }
+      this.talkSearchTxt = '';
     }
   },
   created() {

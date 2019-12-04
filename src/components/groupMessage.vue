@@ -34,6 +34,7 @@ export default {
       msg:'',
       options: {  //配置所有的样式
         background: '#fff',
+        color: '#000',
         color:'black',
         //toolbar icon导航的样式
         // toolbar: {

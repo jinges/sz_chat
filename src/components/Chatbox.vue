@@ -163,8 +163,8 @@ export default {
   .myarea {
     height: 70px;
     padding: 5px 15px;
-    color: #fff;
-    background: 'rgba(0,0,0,.4)';
+    color: #000;
+    background: #fff;
   }
   .myarea:focus {
     outline: none;
