@@ -165,7 +165,7 @@
 	export default {
 		data() {
 			return {
-				imei: util.getImei(),
+				imei: '',
 				showType: '',
 				isShowAddFriendDialog: false,
 				isShowExportAddFriendDialog: false,
@@ -262,6 +262,7 @@
 			showAddFriendDialog: function() {
 				this.isShowAddFriendDialog = true;
 				this.addType = 'batchAdd';
+				this.imei = util.getImei();
 				this.appointAddFormData = {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
