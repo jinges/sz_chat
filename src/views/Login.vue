@@ -102,7 +102,7 @@
                                                 continue;
                                             }
                                             this.wxList.push({
-                                                face: item.headPic || require('@/assets/wechat.png'),
+                                                face: item.headPic || require('@/assets/timg.jpg'),
                                                 name:item.nickName,
                                                 imei: item.imei,
                                                 wxid: item.myWxid,

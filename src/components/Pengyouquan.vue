@@ -90,7 +90,7 @@ export default {
       ) {
         this.loading = false;
         var content = JSON.parse(json.messageContent);
-        this.list = content.momentList;
+        this.list = content.momentList || [];
       } else if (json.commandName == "SERVER_POST_MOMENT_ACK") {
         this.$refs["publishBlog"].onWsMsg(json);
       } else if (

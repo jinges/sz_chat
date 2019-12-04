@@ -62,6 +62,7 @@
 				showPublicBlog: false,
 				user: {},
 				selectIndex: 3,
+				activeItem: 3,
 				tabData:[{
 					name:"用户画像",
 					svg:'svgUserImg'
@@ -96,10 +97,13 @@
 				this.selectIndex = index
 				if(index == 0) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
+				} else if(index == 1) {
+					
+					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				} else if(index == 2) {
 					this.$refs.pengYouQuan.loadData();
 				} else if (index == 3) {
-					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
+					// this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				}
 			},
 			onWsMsg(json) {
@@ -109,9 +113,14 @@
 		created() {
 		},
 		watch: {
-		    targetId(){
+		    targetId(targetId){
 					//监听父组件对默认选项卡的选择
-				this.selectIndex = 3
+					this.selectIndex = 3
+					this.activeItem = 3;
+					this.$refs.RightBoxTalking.cleanSrarch();
+					this.$refs.RightBoxTalking.searchKeyword(
+						targetId
+					);
 		    }
 		}
 	}

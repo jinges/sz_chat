@@ -106,239 +106,225 @@
         <div class="user_info_wrap" v-show="editState">
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户姓名</span>
-            <input
-              type="text"
-              class="user_info_wrap_text editor"
-              name="fullname"
-              v-model="name"
-              required="required"
-              maxlength="10"
-            />
+            <div class="user_info_wrap_text">
+              <input
+                type="text"
+                class="editor"
+                name="fullname"
+                v-model="name"
+                required="required"
+                maxlength="10"
+              />
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">手机号码</span>
-            <input
-              type="text"
-              class="user_info_wrap_text editor"
-              name="fullname"
-              v-model="phone"
-              required="required"
-              maxlength="10"
-            />
+            <div class="user_info_wrap_text">
+              <input
+                type="text"
+                class="editor"
+                name="fullname"
+                v-model="phone"
+                required="required"
+                maxlength="11"
+              />
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户性别</span>
-            <label>
-              <input
-                type="radio"
-                name="sex"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="gender"
-                :checked="gender == 1 ? true:false"
-                required="required"
-              />
-              男
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="sex"
-                value="2"
-                class="user_info_wrap_radio1"
-                v-model="gender"
-                :checked="gender == 2 ? true:false"
-                required="required"
-              />
-              女
-            </label>
+            <div class="user_info_wrap_text">
+              <label>
+                <input
+                  type="radio"
+                  name="sex"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="gender"
+                  :checked="gender == 1 ? true:false"
+                  required="required"
+                />
+                男
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="sex"
+                  value="2"
+                  class="user_info_wrap_radio1"
+                  v-model="gender"
+                  :checked="gender == 2 ? true:false"
+                  required="required"
+                />
+                女
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">意向车型</span>
-            <input
-              type="text"
-              class="user_info_wrap_text editor"
-              v-model="intentModel"
-              required="required"
-              maxlength="50"
-            />
+            <div class="user_info_wrap_text">
+              <input
+                type="text"
+                class="editor"
+                v-model="intentModel"
+                required="required"
+                maxlength="50"
+              />
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
-            <area-cascader
-              v-model="licensePlateArea"
-              :data="$pcaa"
-              :level="1"
-              size="small"
-              @change="handleChange"
-              class="user_info_wrap_cascader"
-              required="required"
-            ></area-cascader>
+            <div class="user_info_wrap_text">
+              <el-cascader
+                size="large"
+                :options="options"
+                v-model="licensePlateArea"
+                @change="handleChange">
+              </el-cascader>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
-            <label v-for="(item, index) of ['是','否']" :key="index">
-              <input
-                type="radio"
-                name="isLoan"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="isLoan"
-                :checked="userInfoData.isLoan == index"
-                required="required"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['是','否']" :key="index">
+                <input
+                  type="radio"
+                  name="isLoan"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="isLoan"
+                  :checked="userInfoData.isLoan == index"
+                  required="required"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否试驾</span>
-            <label v-for="(item, index) of ['是','否']" :key="index">
-              <input
-                type="radio"
-                name="isTestDrive"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="isTestDrive"
-                :checked="isTestDrive == index"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['是','否']" :key="index">
+                <input
+                  type="radio"
+                  name="isTestDrive"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="isTestDrive"
+                  :checked="isTestDrive == index"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">购车预算</span>
-            <input type="number" class="user_info_wrap_text editor" v-model="purchaseBudget" />
+            <div class="user_info_wrap_text">
+              <input type="number" class="editor" v-model="purchaseBudget" />
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">用户状态</span>
-            <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
-              <input
-                type="radio"
-                name="userStatus"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="userStatus"
-                :checked="userStatus == (index + 1)"
-                required="required"
-                @change="changeUserStatus"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
+                <input
+                  type="radio"
+                  name="userStatus"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="userStatus"
+                  :checked="userStatus == (index + 1)"
+                  required="required"
+                  @change="changeUserStatus(index)"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">客户分级</span>
-            <label v-for="(item, index) in ['H','A','B','C','D']" :key="index" @click="setLevel(item)">
-              <input
-                type="radio"
-                name="grading"
-                :value="item"
-                class="user_info_wrap_radio"
-                v-model="grading"
-                :checked="grading == item"
-                required="required"
-              />
-              {{item}}
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) in ['H','A','B','C','D']" :key="index" @click="setLevel(item)">
+                <input
+                  type="radio"
+                  name="grading"
+                  :value="item"
+                  class="user_info_wrap_radio"
+                  v-model="grading"
+                  :checked="grading == item"
+                  required="required"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">备注</span>
-            <textarea
-              type="text"
-              class="user_info_wrap_text editor"
-              v-model="remark"
-              maxlength="200"
-              rows="4"
-              cols="5"
-            />
+            <div class="user_info_wrap_text">
+              <textarea
+                type="text"
+                class="editor"
+                v-model="remark"
+                maxlength="200"
+                rows="4"
+                cols="5"
+              />
+            </div>
           </div>
-          <div class="user_info_wrap_li" v-if="(userStatus == 1 || userStatus == 2) ?true:false">
+          <div class="user_info_wrap_li" v-if="userStatus < 3">
             <span class="user_info_wrap_sub">下次回访时间</span>
-            <!-- <el-date-picker
-              v-model="nextVisitTime"
-              type="datetime"
-              placeholder="选择日期时间"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              format="yyyy-MM-dd HH:mm:ss"
-              class="user_info_wrap_picker"
-              size="small"
-            ></el-date-picker> -->
-            <!-- <date-picker v-model="time2" type="datetime" class="user_info_wrap_picker"></date-picker> -->
+            <div class="user_info_wrap_text">
+              <el-date-picker
+                v-model="nextVisitTime"
+                type="datetime"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd HH:mm:ss"
+                class="user_info_wrap_picker editor"
+                size="small"
+              ></el-date-picker>
+            </div>
           </div>
-          <div class="user_info_wrap_li" v-if="userStatus == 2 ?true:false">
+          <div class="user_info_wrap_li" v-if="userStatus == 2">
             <span class="user_info_wrap_sub">到店时间</span>
-            <!-- <el-date-picker
-              v-model="arrivalTime"
-              type="datetime"
-              placeholder="选择日期时间"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              format="yyyy-MM-dd HH:mm:ss"
-              class="user_info_wrap_picker"
-              size="small"
-            ></el-date-picker> -->
-            <!-- <input
-              type="datetime-local"
-              name="user_date"
-              v-model="arrivalTime"
-              class="user_info_wrap_picker"
-            /> -->
+            <div class="user_info_wrap_text">
+              <el-date-picker
+                v-model="arrivalTime"
+                type="datetime"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                format="yyyy-MM-dd HH:mm:ss"
+                class="user_info_wrap_picker"
+                size="small"
+              ></el-date-picker>
+            </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因</span>
-            <label>
-              <input
-                type="radio"
-                name="defeatCause"
-                value="1"
-                class="user_info_wrap_radio"
-                v-model="defeatCause"
-                :checked="defeatCause == 1 ? true:false"
-              />
-              无购车意向
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="defeatCause"
-                value="2"
-                class="user_info_wrap_radio1"
-                v-model="defeatCause"
-                :checked="defeatCause == 2 ? true:false"
-              />
-              预算不符
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="defeatCause"
-                value="3"
-                class="user_info_wrap_radio"
-                v-model="defeatCause"
-                :checked="defeatCause == 3 ? true:false"
-              />
-              客户已购车
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="defeatCause"
-                value="4"
-                class="user_info_wrap_radio1"
-                v-model="defeatCause"
-                :checked="defeatCause == 4 ? true:false"
-              />
-              其他
-            </label>
+            <div class="user_info_wrap_text">
+              <label v-for="(item, index) of ['无购车意向','预算不符','客户已购车','其他']" :key="index">
+                <input
+                  type="radio"
+                  name="defeatCause"
+                  value="1"
+                  class="user_info_wrap_radio"
+                  v-model="defeatCause"
+                  :checked="defeatCause == index"
+                />
+                {{item}}
+              </label>
+            </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因其他</span>
+            <div class="user_info_wrap_text">
             <textarea
-              :disabled="defeatCause != 4 ? true:false"
               type="text"
-              class="user_info_wrap_text editor"
+              class="editor"
               v-model="defeatCauseOther"
               maxlength="100"
               rows="4"
               cols="5"
             />
+            </div>
           </div>
         </div>
       </div>
@@ -374,13 +360,10 @@
 
 <script>
 import util from "@/util/util.js";
-import { regionData, provinceAndCityDataPlus } from "element-china-area-data";
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/index.css";
+import { CodeToText, provinceAndCityData } from "element-china-area-data";
 export default {
   name: "RightBoxUserInfo",
   props: ["myAddressBook"],
-  components: { DatePicker },
   data() {
     return {
       title: "",
@@ -398,7 +381,7 @@ export default {
         intentModel:'',
         licensePlateArea:'',
         isLoan:'',
-        isTestDrive:'',
+        isTestDrive: 0,
         purchaseBudget:'',
         userStatus:'',
         grading:'',
@@ -414,13 +397,13 @@ export default {
       imei: util.getImei(),
       add: "",
       myWxid: util.getMyWxId(),
-      options: provinceAndCityDataPlus,
+      options: provinceAndCityData,
       name: "",
       gender: "",
       intentModel: "",
       licensePlateArea: "",
       isLoan: "0",
-      isTestDrive: "",
+      isTestDrive: 0,
       purchaseBudget: "",
       userStatus: "3",
       grading: "",
@@ -452,13 +435,11 @@ export default {
       }
     },
     changeUserStatus(val) {
-      // console.log(val);
-      this.userStatus = val;
+      this.userStatus = val + 1;
     },
     handleChange(value) {
       // 
-      console.log(111);
-      console.log(value);
+      this.licensePlateArea = value[1];
     },
     getLoadData(obj) {
       this.imei = util.getImei();
@@ -472,9 +453,7 @@ export default {
       });
     },
     editor() {
-      console.log(this.targetWxid);
       if (!this.editState) {
-        this.editState = true;
         this.getTags({
           tenantId: 1
         });
@@ -483,13 +462,15 @@ export default {
         this.saveUserInf();
         this.saveTag();
       }
+
+        this.editState = !this.editState;
     },
     //点编辑赋值
     editUserInfo() {
       this.name = this.userInfoData.name;
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
-      this.licensePlateArea = this.userInfoData.licensePlateArea;
+      this.licensePlateArea = this.userInfoData.licensePlateArea ? CodeToText[this.userInfoData.licensePlateArea] : '';
       this.isLoan = parseInt(this.userInfoData.isLoan);
       this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
       this.purchaseBudget = this.userInfoData.purchaseBudget;
@@ -521,13 +502,12 @@ export default {
         .post("/setTag", {
           myWxid: this.myWxid,
           targetWxid: this.targetWxid,
-          Tag: tags,
+          tag: tags,
           imei: this.imei
         })
         .then(data => {});
     },
     saveUserInf() {
-      this.licensePlateArea = "1";
       let targetWxid = this.myAddressBook.targetWxid;
       if (
         this.name == null ||
@@ -544,7 +524,7 @@ export default {
         });
         this.editState = true;
       } else {
-        debugger;
+        
         this.$axios
           .post("/saveCustomer", {
             myWxid: this.myWxid,
@@ -555,9 +535,7 @@ export default {
             phone: this.phone,
             gender: parseInt(this.gender),
             intentModel: this.intentModel,
-            //上牌地区
-            // licensePlateArea: this.licensePlateArea,
-            licensePlateArea: "1",
+            licensePlateArea: this.licensePlateArea,
             isLoan: parseInt(this.isLoan),
             isTestDrive: parseInt(this.isTestDrive),
             purchaseBudget: this.purchaseBudget,
@@ -574,7 +552,6 @@ export default {
             defeatCauseOther: this.defeatCauseOther
           })
           .then(data => {
-            this.editState = false;
             this.getdata();
           });
       }
@@ -647,12 +624,17 @@ export default {
           padding: 0.1em;
           min-height: 1.4em;
           color: #fff;
-          &.editor {
+          vertical-align: middle;
+
+          .editor {
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.14);
             border-radius: 4px;
             padding: 0.04em 0.6em;
-            width: 6em;
+            min-width: 6em;
+            width: 100%;
+            line-height: 1.4em;
+            color:#fff;
             &:focus {
               outline: none;
               color: #fff;
@@ -666,19 +648,21 @@ export default {
           //   padding: 0.04em 0.6em;
           //   opacity: 0.2;
           // }
+          
         }
         .user_info_wrap_radio {
-          margin-left: 5.2em;
+          
         }
         .user_info_wrap_picker {
-          margin-left: 5.5em;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          width: 10em;
-          opacity: 0.2;
+          width: 100%;
           color: #fff;
         }
+        .area-select{
+            padding-left: 7px;
+        }
         .user_info_wrap_cascader {
-          margin-left: 5em;
+          
+          // margin-left: 5em;
           // border: 1px solid rgba(255, 255, 255, 0.2);
           // opacity: 0.2;
         }

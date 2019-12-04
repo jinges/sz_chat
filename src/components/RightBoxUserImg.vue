@@ -1,6 +1,7 @@
 <template>
 	
-	<iframe :src="profileUrl" height="100%" width="100%" name="user-img" frameborder="0"></iframe>
+	<iframe :src="profileUrl" v-if="profileUrl.length" height="100%" width="100%" name="user-img" frameborder="0"></iframe>
+	<span v-else>没有画像</span>
 </template>
 
 <script>
@@ -25,7 +26,11 @@ import util from "@/util/util.js";
 					wxid:id,
 					imei: imei
 				}).then(data => {
-					this.profileUrl = data.profileUrl
+					this.profileUrl = '';
+					if(!data.errcode) {
+						this.profileUrl = data.profileUrl
+					}
+					
 				}).catch(() => {});
 			}
 		},

@@ -76,6 +76,12 @@
         v-show="isShowAddFriends"
       ></AddFriendsProgress>
     </transition>
+    
+    <transition name="el-zoom-in-center">
+      <div class="loading" v-if="loading">
+        <span>Loading……</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -115,7 +121,7 @@ export default {
         disableMsg: false
       },
       myAddressBook: {},
-
+      loading: false,
       isShowAddFriends: false,
       showMore: false,
       showUser: true,
@@ -141,6 +147,7 @@ export default {
   methods: {
     //切换用户刷新页面
     switchUser(index) {
+      this.loading = true;
       let wx = this.wechatList[index];
       util.removeToken();
       util.removeExTime();
@@ -159,14 +166,24 @@ export default {
         "__WBS__H5__GLOBAL__WXLIST",
         JSON.stringify(this.wechatList)
       );
-      this.selectNav("Sessions");
+      this.$store.commit("initFriends");
       this.$store.commit("initSessions");
+      this.currentContent = false;
+      this.targetId = firstUser[0].wxid;
+      this.selectNav("Sessions");
       this.$store.commit("initNewFriends");
+      this.showMore = false;
       // var friends = this.$store.getters.filterSessionsByName;
       // if(friends.length) {
       // 	this.startChat(friends[0]);
       // }
       // this.$refs.chat.loadmore();
+      this.$refs.sessions.initSel();
+      
+      this.getCurrentUser(wx.wxid);
+      setTimeout(()=>{
+        this.loading = false;
+      }, 1000)
     },
     selectNav: function(t) {
       this.isShowAddFriends = false;
@@ -189,14 +206,14 @@ export default {
         this.currentSubNav = t;
       }
       if(t == 'AddressBook') {
-        //debugger;
+        //
         this.$store.commit("initFriends");
       }
     },
     selectFriend: function(isGroup, detail) {
       
       this.showMore = false;
-      //debugger;
+      //
       if (isGroup) {
         this.targetInfo = {
           isGroup: true,
@@ -211,7 +228,7 @@ export default {
         this.currentContent = "Detail";
         this.showMore = true;
         this.targetId = detail.targetWxid;
-    // this.$store.commit("initFriends");
+    //  this.$store.commit("initFriends");
         this.$store.commit("updatePengyouquanVisible", true);
         this.$store.commit("setCurrentPengyouquan", detail.addrBookId);
       }
@@ -242,6 +259,7 @@ export default {
       // this.$refs.RightBox.$refs.RightBoxUserImg.getCustomerProfile(target.targetId)
       this.currentContent = "Chat";
       this.showMore = false;
+      
       if (!target.isGroup) {
         this.nowIndex = 3;
         this.targetInfo = target;
@@ -261,22 +279,28 @@ export default {
         }
         return item;
       });
-    }
-  },
-  mounted: function() {
-    this.wechatList = JSON.parse(
-      localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
-    );
+    },
+  getCurrentUser(wxid){
     //查询个人信息
     this.$axios
       .post("/queryAddressBookByWxId", {
-        wxid: util.getMyWxId()
+        wxid: wxid
       })
       .then(data => {
         this.selfData = data;
         util.setMyWxInfo(JSON.stringify(data));
       })
       .catch(() => {});
+
+  }
+  },
+  mounted: function() {
+    this.wechatList = JSON.parse(
+      localStorage.getItem("__WBS__H5__GLOBAL__WXLIST", this.wxList)
+    );
+      this.$store.commit("initFriends");
+      this.$store.commit("initSessions");
+      this.getCurrentUser(util.getMyWxId());
     //WebSocket入口
     var websocketUrl = "";
     let $this = this;
@@ -389,10 +413,34 @@ export default {
 
   #RightBox,
   #addFriendsProgress {
-    width: 310px;
+    width: 375px;
     height: 700px;
     max-height: 95%;
     border-radius: 0px 6px 6px 0px;
+  }
+  .loading{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000000000000;
+    background: rgba(255,255,255,.2);
+    span{
+      width: 300px;
+      height: 40px;
+      position: absolute;
+      color: #b9b8b8;
+      font-weight: 400;
+      font-size: 32px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    text-align: center;
+    }
   }
 }
 </style>
