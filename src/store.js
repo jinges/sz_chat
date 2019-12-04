@@ -26,7 +26,8 @@ export default new Vuex.Store({
 		sessionsKeyword: '', //搜索我的会话关键字
 		currentSession: '', //当前聊天的targetId
 		pengyouquanVisible: '', //显示/隐藏朋友圈
-		currentPengyouquan: '' //当前正在查看的朋友圈
+		currentPengyouquan: '', //当前正在查看的朋友圈，
+		speedMsg: ''
 	},
 	mutations: {
 		initFriends(state) {
@@ -189,6 +190,9 @@ export default new Vuex.Store({
 		updatePengyouquanVisible: (state, visible) => {
 			state.pengyouquanVisible = visible;
 		},
+		updateSpeedMsg:(state, msg)=>{
+			state.speedMsg = msg;
+		},
 		//session置顶
 		topSession: (state, newmsg) => {
 			var sessionIndex = -1;
@@ -291,6 +295,9 @@ export default new Vuex.Store({
 				}
 			}
 			return null;
+		},
+		getSpeedMsg: state =>{
+			return state.speedMsg;
 		},
 		//根据wxname搜索我的会话
 		filterSessionsByName: state => {

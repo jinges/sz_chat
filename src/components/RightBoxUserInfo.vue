@@ -495,7 +495,7 @@ export default {
     saveTag() {
       let tags = [];
       this.tagData.map(item => {
-        tags.push(item.labelName);
+        tags.push(item);
       });
       this.$axios
         .post("/setTag", {
