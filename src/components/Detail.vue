@@ -134,7 +134,7 @@
 				this.$axios.post('setRemark', {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
-					remarkAndTag: this.remark,
+					remark: this.remark,
 					targetWxid: this.wxid
 				}).then((data) => {
 					this.bufferData[data] = true;
