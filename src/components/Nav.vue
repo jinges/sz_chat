@@ -2,7 +2,7 @@
   <div class="nav">
     <div class="users">
       <div  v-for="(item,index) in wechatList" 
-        :key="index"  class="imgbox" 
+        :key="index"  class="imgbox default_head" 
         :class="{hasMsg:item.hasMsg}"
         @click="switchUser(item, index)">
         <div class="face" :style="[{backgroundImage: `url(${item.face})`}]"></div>
@@ -133,8 +133,6 @@ export default {
     height: 40px;
     width: 40px;
     margin: 12px 10px 0 10px;
-    background: url(../assets/timg.jpg) no-repeat;
-    background-size: cover;
     &.hasMsg::before{
       content: "";
     width: 10px;

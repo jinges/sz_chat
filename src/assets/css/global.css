@@ -10,6 +10,13 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
 
+/* 默认头像 */
+.default_head{
+	background-image: url("../timg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 /*菜单栏图标颜色-绿*/
 
 .navbar{
@@ -46,26 +53,29 @@
 	background:#edeae8;
 }
 
-#box #subNav .search input{
+#box #subNav .search .friend_search input{
 	background-color: #dbd9d8;
 	border: 1px solid #dbd9d8;
 }
-#box #subNav .search input:focus{
+#box #subNav .search .friend_search input:focus{
 	background-color: #f8f8f8;
 	border: 1px solid #dad9d7;
 }
+#box #subNav .search .friend_search{
+	vertical-align: middle;
+}
 
-#box #subNav .search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
-#box #subNav .search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
-#box #subNav .search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
-#box #subNav .search input:-ms-input-placeholder { color:#818181; } /* ie */
+#box #subNav .search .friend_search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
+#box #subNav .search .friend_search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
+#box #subNav .search .friend_search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
+#box #subNav .search .friend_search input:-ms-input-placeholder { color:#818181; } /* ie */
 
-#box #subNav .search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
-#box #subNav .search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
-#box #subNav .search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
-#box #subNav .search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
+#box #subNav .search .friend_search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
+#box #subNav .search .friend_search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
+#box #subNav .search .friend_search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
+#box #subNav .search .friend_search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
 
-#box #subNav .search i{
+#box #subNav .search i.el-icon-search{
 	color: #999;
 	font-weight: 600;
 }
@@ -335,6 +345,17 @@ ul.plus_menu .popper__arrow:after{
 	background-color: transparent;
 	border: none;
 	color: #fff;
+
+}
+
+/* 新建群组 */
+#createGroup .el-transfer-panel__item{
+	height: 58px;
+} 
+#createGroup .el-transfer-panel__item .el-checkbox__input{
+	top: 22px;
+}
+.is-disabled{
 
 }
 

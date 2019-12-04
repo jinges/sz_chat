@@ -1,7 +1,9 @@
 <template>
-	
 	<iframe :src="profileUrl" v-if="profileUrl.length" height="100%" width="100%" name="user-img" frameborder="0"></iframe>
-	<span v-else>没有画像</span>
+	<div v-else class="no_user_img">
+		<font-awesome-icon icon="inbox"></font-awesome-icon><br/>
+		<span>没有画像</span>
+	</div>
 </template>
 
 <script>
@@ -42,5 +44,17 @@ import util from "@/util/util.js";
 </script>
 
 <style lang="scss" scoped>
-	
+	.no_user_img{
+		text-align: center;
+		padding: 64px 0;
+		color: #999;
+		line-height: 1.4;
+		
+		svg{
+			width: 32px;
+			height: 32px;
+		}
+
+
+	}
 </style>

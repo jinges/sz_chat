@@ -139,6 +139,7 @@ export default {
       //console.log("话术历史",this.talkHistory);
       if(item.content){
         //this.$store.state.sendTalkMsg = item.content;
+        this.$store.commit("updateSpeedMsg", item.content);
       }
     },
     selectTalkHistory(item){

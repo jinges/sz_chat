@@ -1,6 +1,6 @@
 <template>
     <div :class="['message',type]">
-        <img :src="face" class="face" />
+        <div class="face default_head" :style="[{backgroundImage: `url(${face})`}]"></div>
         <div class="content">
             <!--图片消息-->
             <img v-if="media=='image'" @click="showImg(content)" style="cursor: pointer;max-width:250px;max-height:300px;border-radius: 4px;padding:8px 10px;"

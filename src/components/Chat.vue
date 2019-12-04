@@ -118,10 +118,8 @@
       <AtMember
         :members="isGroup?groupMembers:[]"
         name-key="nickName"
-        v-model="sendText"
         :filterMatch="filterMatch"
         :deleteMatch="deleteMatch"
-        :value="targetId"
       >
         <!-- custom: with avatars -->
         <template slot="item" scope="s">
@@ -170,6 +168,7 @@ export default {
   props: ["targetId", "targetFace", "targetName", "myFace", "isGroup"],
   data() {
     return {
+      speedMsg:'',
       //群组
       groupMembers: [], //群成员
       showGroupInfo: false, //群聊详情
@@ -1046,6 +1045,10 @@ export default {
     }
   },
   watch: {
+    '$store.state.speedMsg'(val){
+      console.log(val);
+      this.sendText += val;
+    },
     targetName(newVal) {
       this.groupName = newVal;
       this.title = newVal;
@@ -1201,6 +1204,7 @@ export default {
   .body {
     height: 1px;
     flex-grow: 1;
+    position: relative;
 
     #loadmore {
       padding: 7px 0px;
