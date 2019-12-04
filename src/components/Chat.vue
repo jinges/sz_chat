@@ -1204,6 +1204,7 @@ export default {
   .body {
     height: 1px;
     flex-grow: 1;
+    position: relative;
 
     #loadmore {
       padding: 7px 0px;
