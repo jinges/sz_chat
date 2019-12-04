@@ -343,7 +343,7 @@
 						myWxid: util.getMyWxId(),
 						statuss: this.exportType.join(',')
 					}
-					window.open("/api/exportMyFriend?imei=" + data.imei + "&myWxid=" + data.myWxid + "&statuss=" + data.statuss, '_blank');
+					window.open("/exportMyFriend?imei=" + data.imei + "&myWxid=" + data.myWxid + "&statuss=" + data.statuss, '_blank');
 					return;
 					this.$axios.get("/exportMyFriend?imei=" + data.imei + "&myWxid=" + data.myWxid + "&statuss=" + data.statuss, data)
 						.then((data) => {
