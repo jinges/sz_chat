@@ -46,24 +46,24 @@
 	background:#edeae8;
 }
 
-#box #subNav .search input{
+#box #subNav .search .friend_search input{
 	background-color: #dbd9d8;
 	border: 1px solid #dbd9d8;
 }
-#box #subNav .search input:focus{
+#box #subNav .search .friend_search input:focus{
 	background-color: #f8f8f8;
 	border: 1px solid #dad9d7;
 }
 
-#box #subNav .search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
-#box #subNav .search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
-#box #subNav .search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
-#box #subNav .search input:-ms-input-placeholder { color:#818181; } /* ie */
+#box #subNav .search .friend_search input::-webkit-input-placeholder { color:#818181; }/* webkit专用 */
+#box #subNav .search .friend_search input::-moz-placeholder { color:#818181; } /* firefox 19+ */
+#box #subNav .search .friend_search input:-moz-placeholder { color:#818181; } /* Mozilla Firefox 4 to 18 */
+#box #subNav .search .friend_search input:-ms-input-placeholder { color:#818181; } /* ie */
 
-#box #subNav .search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
-#box #subNav .search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
-#box #subNav .search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
-#box #subNav .search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
+#box #subNav .search .friend_search input:focus::-webkit-input-placeholder { color:#f8f8f8; }/* webkit专用 */
+#box #subNav .search .friend_search input:focus::-moz-placeholder { color:#f8f8f8; } /* firefox 19+ */
+#box #subNav .search .friend_search input:focus:-moz-placeholder { color:#f8f8f8; } /* Mozilla Firefox 4 to 18 */
+#box #subNav .search .friend_search input:focus:-ms-input-placeholder { color:#f8f8f8; } /* ie */
 
 #box #subNav .search i.el-icon-search{
 	color: #999;

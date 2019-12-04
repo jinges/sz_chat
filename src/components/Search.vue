@@ -1,9 +1,9 @@
 <template>
     <div class="search">
-        <el-input size="small" style="width:188px;margin: 10px;" placeholder="请输入搜索内容" suffix-icon="el-icon-search" v-model="searchText">
+        <el-input size="small" style="width:188px;margin: 10px;" placeholder="请输入搜索内容" suffix-icon="el-icon-search" v-model="searchText" class="friend_search">
         </el-input>
 
-        <el-dropdown trigger="click" @command="clickMenu">
+        <el-dropdown trigger="click" @command="clickMenu" class="friend_search_plus">
             <span class="plus"></span>
             <el-dropdown-menu slot="dropdown"  class="plus_menu">
                 <el-dropdown-item command="addFriend">
@@ -126,7 +126,9 @@
 <style scoped lang="scss">
     .search {
         /*background: rgba(0, 0, 0, 0.6);*/
-
+        .friend_search_plus{
+            vertical-align: middle;
+        }
         div input{
             background-color:red;
         }
@@ -145,11 +147,6 @@
             &:hover {
                 border-color: rgb(64, 158, 255);
                 background: rgb(64, 158, 255);
-
-                &:before,
-                &:after {
-                    /*background: #fff;*/
-                }
             }
 
             &:before {
