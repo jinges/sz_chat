@@ -220,7 +220,10 @@
 		methods: {
 			// 获取添加好友列表
 			getAddFriendInfo: function(pageIndex) {
-				this.statusGroupAddfriend();
+				if(pageIndex == 1) {
+					this.statusGroupAddfriend();
+					this.$parent.$refs.addFriendsProgress.statusGroupAddfriend();
+				}
 				this.$axios.post('/queryAddfriendByPage', {
 					imei: util.getImei(),
 					my_wxid: util.getMyWxId(),
