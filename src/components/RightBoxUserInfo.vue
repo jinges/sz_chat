@@ -174,12 +174,19 @@
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
             <div class="user_info_wrap_text">
-              <el-cascader
+              <!-- <el-cascader
                 size="large"
                 :options="options"
                 v-model="licensePlateArea"
                 @change="handleChange">
-              </el-cascader>
+              </el-cascader> -->
+              <input
+                  type="text"
+                  class="editor"
+                  v-model="licensePlateArea"
+                  required="required"
+                  maxlength="50"
+                />
             </div>
           </div>
           <div class="user_info_wrap_li">
@@ -437,10 +444,10 @@ export default {
     changeUserStatus(val) {
       this.userStatus = val + 1;
     },
-    handleChange(value) {
+    // handleChange(value) {
       // 
-      this.licensePlateArea = value[1];
-    },
+      // this.licensePlateArea = value[1];
+    //},
     getLoadData(obj) {
       this.imei = util.getImei();
       this.targetWxid = obj.targetWxid;
@@ -470,7 +477,8 @@ export default {
       this.name = this.userInfoData.name;
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
-      this.licensePlateArea = this.userInfoData.licensePlateArea ? CodeToText[this.userInfoData.licensePlateArea] : '';
+      //this.licensePlateArea = this.userInfoData.licensePlateArea ? CodeToText[this.userInfoData.licensePlateArea] : '';
+      this.licensePlateArea = this.userInfoData.licensePlateArea;
       this.isLoan = parseInt(this.userInfoData.isLoan);
       this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
       this.purchaseBudget = this.userInfoData.purchaseBudget;
