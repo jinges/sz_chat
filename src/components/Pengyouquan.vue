@@ -8,7 +8,7 @@
       ></font-awesome-icon>
       <div class="title">{{title}}</div>
       <!-- <font-awesome-icon icon="edit" id="publish" @click="showPublicBlog=true"></font-awesome-icon> -->
-      <font-awesome-icon icon="edit" id="publish" @click="batchPointPraise"></font-awesome-icon>
+      <font-awesome-icon icon="thumbs-up" id="publish" @click="batchPointPraise"></font-awesome-icon>
     </div>
     <div class="content">
       <vue-scroll>
@@ -166,8 +166,12 @@ export default {
 
     #publish {
       font-size: 24px;
-      color: #e6a23c !important;
+      color: #e6a23c;
+      &:hover{
+        color: #f0c17c;
+      }
     }
+
   }
 
   .content {
