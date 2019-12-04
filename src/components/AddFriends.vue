@@ -93,7 +93,8 @@
 							  action="/importAddfriendExcel"
 							  :auto-upload="false"
 							  :data="{imei: imei}"
-							  :headers="batchAddHeaders">
+							  :headers="batchAddHeaders"
+							  :on-success="handleImportAddfriendExcelSuccess">
 							  <el-input type="hidden" name="imei" value="1"></el-input>
 							  <el-input slot="trigger" placeholder="请选择名单文件" readonly="readonly" suffix-icon="el-icon-folder"></el-input>
 							  <!-- <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -165,7 +166,7 @@
 	export default {
 		data() {
 			return {
-				imei: util.getImei(),
+				imei: '',
 				showType: '',
 				isShowAddFriendDialog: false,
 				isShowExportAddFriendDialog: false,
@@ -262,6 +263,7 @@
 			showAddFriendDialog: function() {
 				this.isShowAddFriendDialog = true;
 				this.addType = 'batchAdd';
+				this.imei = util.getImei();
 				this.appointAddFormData = {
 					imei: util.getImei(),
 					myWxid: util.getMyWxId(),
@@ -303,8 +305,17 @@
 			// 导入Excel批量添加
 			onSubmitBatchAdd: function() {
 				this.$refs.upload.submit();
-				this.closeAddFriendDialog();
-				this.getAddFriendInfo(1);
+				// this.closeAddFriendDialog();
+				// this.getAddFriendInfo(1);
+			},
+			handleImportAddfriendExcelSuccess: function(response, file, fileList) {
+				if(response.errmsg != null) {
+					this.$message.error(response.errmsg);
+				} else {
+					this.$message.success("导入成功");
+					this.closeAddFriendDialog();
+					this.getAddFriendInfo(1);
+				}
 			},
 			// 重试
 			onSubmitRetry: function() {
