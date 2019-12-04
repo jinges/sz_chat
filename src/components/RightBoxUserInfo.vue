@@ -340,7 +340,7 @@
         <div class="user_info_wrap">
           <p class="tag_tip" v-show="editState">已添加</p>
           <span class="user_info_wrap_tag" v-for="(item,index) in tagData" :key="index">
-            {{item.labelName}}
+            {{item}}
             <em
               class="del el-icon-close"
               @click="removeTag(index)"
@@ -354,7 +354,7 @@
               @click="checkTag(index)"
               v-for="(item,index) in allTags"
               :key="index"
-            >{{item.labelName}}</span>
+            >{{item}}</span>
           </div>
         </div>
       </div>
@@ -429,16 +429,9 @@ export default {
   components: {},
   methods: {
     setLevel(tag){
-      if(this.tagData.length>0) {
-        let first = this.tagData.shift();
-        if(first.level) {
-          first.labelName = tag;
-          this.tagData.unshift(first);
-        } else {
-          this.tagData.unshift({labelName: tag, level: true});
-        }
-      } else {
-          this.tagData.unshift({labelName: tag, level: true});
+      let index = this.tagData.indexOf(tag);
+      if(index > -1) {
+        this.tagData.splice(index,1, tag);
       }
     },
     changeUserStatus(val) {
@@ -449,15 +442,13 @@ export default {
       // this.licensePlateArea = value[1];
     //},
     getLoadData(obj) {
+      debugger;
       this.imei = util.getImei();
       this.targetWxid = obj.targetWxid;
       this.myWxid = util.getMyWxId();
       this.allTags = [];
       this.getdata();
-      this.getTags({
-        tenantId: 1,
-        myWxid: util.getMyWxId()
-      });
+      this.tagData = obj.labelNames;
     },
     editor() {
       if (!this.editState) {
@@ -494,11 +485,11 @@ export default {
     getTags(params) {
       let $this = this;
       this.$axios.post("/queryMyLabel", params).then(data => {
-        if (params.myWxid) {
-          $this.tagData = data;
-        } else {
-          $this.allTags = data;
-        }
+          data.map(item=>{
+            if(!this.tagData.includes(item.labelName)) {
+              $this.allTags.push(item.labelName);
+            }
+          })
       });
     },
     saveTag() {
