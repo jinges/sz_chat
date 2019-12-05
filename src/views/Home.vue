@@ -260,7 +260,7 @@ export default {
       this.currentContent = "Chat";
       this.targetInfo = target;
       this.showMore = false;
-      
+      debugger;
       if (!target.isGroup) {
         this.nowIndex = 3;
         this.showMore = true;

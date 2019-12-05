@@ -1047,7 +1047,7 @@ export default {
   watch: {
     '$store.state.speedMsg'(val){
       console.log(val);
-      this.sendText += val;
+      this.sendText = val;
     },
     targetName(newVal) {
       this.groupName = newVal;

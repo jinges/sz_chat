@@ -504,7 +504,9 @@ export default {
           tag: tags,
           imei: this.imei
         })
-        .then(data => {});
+        .then(data => {
+          this.$store.commit('refershFriend');
+        });
     },
     saveUserInf() {
       let targetWxid = this.myAddressBook.targetWxid;

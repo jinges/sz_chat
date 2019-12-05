@@ -170,6 +170,9 @@ export default {
     sendGroupMsg(i, params,RightContentType){
         var $this = this;
         let freads = this.friendList;
+        if(!freads.length) {
+          return false;
+        }
         let targetWxid = freads[i].targetWxid;
         let len = freads.length;
         params.targetWxid = targetWxid;

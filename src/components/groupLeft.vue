@@ -8,7 +8,7 @@
     </div>
      <div class="tag">
         <ul>
-            <li :class="currIndex.indexOf(index)!=-1 ? 'active' : ''" v-for="(item,index) in tagArr" :key="index"  @click="tagSwitch(index,item.labelName)">{{item.labelName}}</li>
+            <li :class="currIndex.indexOf(index)!=-1 ? 'active' : ''" v-for="(item,index) in tagArr" :key="index"  @click="tagSwitch(index,item)">{{item}}</li>
             <div class="clear"></div>
         </ul>
     </div> 
