@@ -101,6 +101,7 @@
 					
 					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				} else if(index == 2) {
+					this.$refs.pengYouQuan.emptyList();
 					this.$refs.pengYouQuan.loadData();
 				} else if (index == 3) {
 					// this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);

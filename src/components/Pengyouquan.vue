@@ -121,6 +121,9 @@ export default {
           .then(data => {})
           .catch(() => {});
       }
+    },
+    emptyList(){
+      this.list = [];//清空朋友圈
     }
   },
   created() {
