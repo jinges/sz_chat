@@ -32,11 +32,11 @@
         </el-dialog>
         <el-dialog width="1000px" left title="群发消息" :visible="showgroupMessage" :before-close="closegroupMessage"
             class="groupMessage">
-            <group-Message groupType="groupMessage" @succ="groupMessageSucc"></group-Message>
+            <group-Message :time="time" groupType="groupMessage" @succ="groupMessageSucc"></group-Message>
         </el-dialog>
          <el-dialog width="1000px" left title="发送朋友圈信息" :visible="showgroupFriend" :before-close="closegroupFriend"
             class="groupMessage">
-            <group-Message groupType="groupFriend" @succ="groupFriendSucc"></group-Message>
+            <group-Message :time="time" groupType="groupFriend" @succ="groupFriendSucc"></group-Message>
         </el-dialog>
 
     </div>
@@ -56,7 +56,8 @@
                 showAddFriend: false,
                 showCreateGroup: false,
                 showgroupMessage:false,
-                showgroupFriend:false
+                showgroupFriend:false,
+                time: new Date().getTime()
             }
         },
         methods: {
@@ -80,6 +81,7 @@
                 }else if (c == 'groupFriend') {
                     this.showgroupFriend = true;
                 }
+                this.time = new Date().getTime();
             },
             closeAddFriend() {
                 this.showAddFriend = false;

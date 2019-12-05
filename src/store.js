@@ -235,6 +235,10 @@ export default new Vuex.Store({
 				newmsg: state.currentSession != newmsg.targetWxid
 			});
 			state.sessions.unshift(newSession);
+		},
+		readState:(state, index) => {
+			debugger
+			state.sessions[index]['newmsg'] = false;
 		}
 	},
 	actions: {

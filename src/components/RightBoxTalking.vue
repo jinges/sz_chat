@@ -110,7 +110,7 @@ export default {
         .catch(() => {});
     },
     getkeyword(msg) {
-      if(!this.orderId.length) {
+      if(!this.orderId) {
         return false;
       }
       this.$axios

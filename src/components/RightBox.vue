@@ -85,10 +85,12 @@
 			RightBoxTalking
 		},
 		mounted(){ 
+			debugger;
         this.$refs.RightBoxTalking.cleanSrarch();
-        this.$refs.RightBoxTalking.searchKeyword(
-          this.targetId
-        );
+					this.$refs.RightBoxTalking.searchKeyword(
+						this.targetId
+					);
+        
 		},
 		methods: {
 			tabClick(e, index){
@@ -119,9 +121,6 @@
 					this.selectIndex = 3
 					this.activeItem = 3;
 					this.$refs.RightBoxTalking.cleanSrarch();
-					this.$refs.RightBoxTalking.searchKeyword(
-						targetId
-					);
 		    }
 		}
 	}

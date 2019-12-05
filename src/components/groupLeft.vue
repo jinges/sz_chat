@@ -118,8 +118,8 @@ import util from '@/util/util.js'
                 this.$emit('returnFriendList',this.friendList)
             }
         },
-        created(){
-           this.gettabs() 
+        mounted(){
+           
         }
     }
 </script>
@@ -156,6 +156,7 @@ import util from '@/util/util.js'
             padding: 5px 0;
             border-radius: 3px;
             margin-top: 5px;
+            height: 20px;
         }
         li.active{
             color:white;

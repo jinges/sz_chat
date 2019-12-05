@@ -57,6 +57,10 @@ export default {
     };
   },
   props: {
+    time: {
+      type: Number,
+      default: 0
+    },
     groupType: {
       type: String,
       default: ""
@@ -246,6 +250,9 @@ export default {
     }
   },
   watch: {
+    time(){
+      this.$refs.groupLeft.gettabs() 
+    },
     RightContentSelectData: function(item) {
       if (item || this.SendText) {
         this.sendToFlag = false;

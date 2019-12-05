@@ -270,6 +270,7 @@ export default {
       }
     },
     listenMsg(msg) {
+      this.$refs.RightBox.$refs.RightBoxTalking.getTalkKeyword(msg);
       this.$refs.RightBox.$refs.RightBoxTalking.getkeyword(msg);
     },
     filterMsg(obj) {

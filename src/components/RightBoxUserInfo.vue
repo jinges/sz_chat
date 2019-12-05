@@ -429,9 +429,12 @@ export default {
   components: {},
   methods: {
     setLevel(tag){
+      debugger;
       let index = this.tagData.indexOf(tag);
       if(index > -1) {
         this.tagData.splice(index,1, tag);
+      } else {
+        this.tagData.push(tag);
       }
     },
     changeUserStatus(val) {

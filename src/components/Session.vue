@@ -28,6 +28,7 @@
                     isGroup:this.isGroup,
                     selIndex: this.index
                 });
+                this.$store.commit('readState', this.index);
             }
         },
         computed: {
