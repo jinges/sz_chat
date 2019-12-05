@@ -1,11 +1,11 @@
 <template>
   <div class="pengyouquan">
     <div class="header">
-      <font-awesome-icon
+     <!-- <font-awesome-icon
         icon="arrow-alt-circle-left"
         v-if="$store.state.currentPengyouquan"
         @click="back"
-      ></font-awesome-icon>
+      ></font-awesome-icon>-->
       <div class="title">{{title}}</div>
       <!-- <font-awesome-icon icon="edit" id="publish" @click="showPublicBlog=true"></font-awesome-icon> -->
       <font-awesome-icon icon="thumbs-up" id="publish" @click="batchPointPraise"></font-awesome-icon>
