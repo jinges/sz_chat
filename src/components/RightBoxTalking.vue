@@ -21,7 +21,7 @@
 
     <!-- 分割线 -->
     <div class="line">
-      <span>话术库</span>
+      <span>厂商话术库</span>
     </div>
 
     <!-- 厂商话术库 -->
