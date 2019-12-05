@@ -24,9 +24,9 @@
       <span>话术库</span>
     </div>
 
-    <!-- 话术库 -->
+    <!-- 厂商话术库 -->
     <div class="search">
-      <el-input placeholder="请输入话术库关键词" v-model="talkSearchTxt" class="input-with-select">
+      <el-input placeholder="请输入厂商话术库关键词" v-model="talkSearchTxt" class="input-with-select">
         <el-button slot="append" icon="el-icon-search" @click="searchTalk"></el-button>
       </el-input>
     </div>
@@ -180,7 +180,7 @@ export default {
       if (!this.talkSearchTxt) {
         this.$message({
           showClose: true,
-          message: "请输入你要话术库的关键词",
+          message: "请输入你厂商话术库的关键词",
           type: "error"
         });
         return false;
