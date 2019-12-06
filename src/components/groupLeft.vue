@@ -53,6 +53,8 @@ import util from '@/util/util.js'
             }
         },
         methods:{
+            cleanTag(){
+            },
             unique(ary,str) {
                 if (ary.indexOf(str)==-1) {
                     ary.push(str);
@@ -86,6 +88,8 @@ import util from '@/util/util.js'
 
                         }
                     }).catch(() => {});
+                    
+                this.currIndex = [];
             },
             getfriendList(labelName){
                     this.loading = true;

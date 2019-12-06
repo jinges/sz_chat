@@ -26,8 +26,8 @@
 
     <!-- 厂商话术库 -->
     <div class="search">
-      <el-input placeholder="请输入厂商话术库关键词" v-model="talkSearchTxt" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search" @click="searchTalk"></el-button>
+      <el-input placeholder="请输入厂商话术库关键词" v-model="talkSearchTxt" @input="searchTalk" class="input-with-select">
+        <!-- <el-button slot="append" icon="el-icon-search" @click="searchTalk"></el-button> -->
       </el-input>
     </div>
     <ul class="searchList searchSeparate">
@@ -177,6 +177,7 @@ export default {
     },
     searchTalk() {
       //console.log('进入searchTalk：'+this.searchTxt);
+      debugger;
       if (!this.talkSearchTxt) {
         this.$message({
           showClose: true,

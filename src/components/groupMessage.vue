@@ -114,6 +114,7 @@ export default {
           momentType = 3;
         }
       }
+      debugger;
       for (let i = 0; i < this.LeftSelectTagData.length; i++) {
         if (i == this.LeftSelectTagData.length - 1) {
           tagStr = tagStr + this.LeftSelectTagData[i].labelID;
