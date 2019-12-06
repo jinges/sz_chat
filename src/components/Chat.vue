@@ -21,7 +21,8 @@
               :targetId="member.targetId"
               :key="index"
             >
-              <img :src="member.face" />
+              <!-- <img :src="member.face" /> -->
+              <div class="face default_head" :style="'background-image: '+ (member.face ?'url('+member.face+')' : '')+';'"></div>
               <div>{{member.nickName}}</div>
             </div>
           </div>
@@ -1123,7 +1124,7 @@ export default {
 
     .groupInfo {
       position: absolute;
-      background: rgba(0, 0, 0, 0.4);
+      background: #fff;
       top: 46px;
       right: 0px;
       width: 260px;
@@ -1131,6 +1132,7 @@ export default {
       height: 509px;
       line-height: normal;
       overflow: hidden;
+      box-shadow: -7px 4px 12px -6px rgba(0,0,0,.3);
 
       > .title {
         font-size: 12px;
@@ -1161,6 +1163,11 @@ export default {
           img {
             width: 35px;
             height: 35px;
+          }
+          .face{
+            width: 35px;
+            height: 35px;
+            margin: 0 auto;
           }
 
           div {

@@ -1,6 +1,7 @@
 <template>
 	<div class="detail">
-		<img class="face" :src="headPic" />
+		<div class="face default_head" :style="'background-image: '+ (headPic ?'url('+headPic+')' : '')+';'"><span></span></div>
+		<!-- <img class="face" :src="headPic" /> -->
 		<font-awesome-icon v-if="gender=='FEMALE'" class="sex" icon="venus"></font-awesome-icon>
 		<font-awesome-icon v-else class="sex man" icon="mars"></font-awesome-icon>
 		<div class="name" v-if="remark">{{remark}} ({{nickName}})</div>
@@ -234,6 +235,7 @@
 			width: 72px;
 			height: 72px;
 			border-radius: 3px;
+			flex-shrink:0;
 		}
 
 		.sex {

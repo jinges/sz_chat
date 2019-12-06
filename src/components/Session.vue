@@ -1,6 +1,7 @@
 <template>
     <div :class="{session:true,newmsg:newmsg, active: index == selIndex}" @click="selectSession">
-        <img class="face" :src="face" />
+        <!-- <img class="face" :src="face" /> -->
+        <div class="face default_head" :style="'background-image: '+ (face ?'url('+face+')' : '')+';'"></div>
         <div class="content">
             <div class="name">{{name}}</div>
             <div class="time">{{prettyTime}}</div>
