@@ -12,7 +12,7 @@
 
 /* 默认头像 */
 .default_head{
-	background-image: url("../timg.jpg");
+	background-image: url("../../assets/timg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -225,7 +225,24 @@ ul.plus_menu .popper__arrow:after{
 	background-color: transparent;
 	border: 1px solid #eee;
 }
-
+/* 群组对话框群组名单 */
+.chat .header .groupInfo{
+	background: #fff;
+	box-shadow: -7px 8px 12px -6px rgba(0, 0, 0, 0.3);
+	border-bottom-left-radius: 12px;
+}
+.chat .header .groupInfo .memberList{
+	background: transparent;
+}
+.chat .header .groupInfo > .title{
+	background-color: #eee;
+}
+.chat .header .groupInfo .settings{
+	background:none;
+}
+.chat .header .groupInfo .memberList .plus, .chat .header .groupInfo .memberList .remove{
+	color: #999;
+}
 
 /*批量添加好友*/
 .addFriends{

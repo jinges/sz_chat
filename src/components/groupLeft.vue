@@ -19,10 +19,13 @@
     <div class="friendList" 
     v-loading="loading">
         <li v-for="(item,index) in friendList" :key="index">
-            <img class="headImg" :src="item.addressBook.headPic" alt="">
-            <span>
-                {{item.remark ? item.remark :item.addressBook.nickName}}
-            </span>
+            <div class="headImg default_head" :style="'background-image: '+ (item.addressBook.headPic ?'url('+item.addressBook.headPic+')' : '')+';'"></div>
+            <!-- <img class="headImg" :src="item.addressBook.headPic" alt=""> -->
+            <div class="user_name">
+                <span>
+                    {{item.remark ? item.remark :item.addressBook.nickName}}
+                </span>
+            </div>
         </li>
        
     </div>
@@ -168,15 +171,23 @@ import util from '@/util/util.js'
         height: 400px;
         overflow: auto;
         li{
+            position: relative;
             list-style-type:none;
             height: 50px;
             line-height: 50px;
             border-bottom: 1px solid rgb(233, 226, 226);  
             .headImg{
+                position: absolute;
+                left: 5px;
+                top: 5px;
                 width: 40px;
                 height: 40px;
-                padding: 5px 15px;
-                float: left;
+            }
+            .user_name{
+                margin-left: 55px;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
             }
         }
     }
