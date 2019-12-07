@@ -383,7 +383,7 @@ ul.plus_menu .popper__arrow:after{
 .user_info_wrap_text .editor input{
 	height: auto;
 	line-height: normal;
-	padding-left: 0;
+	padding-left: 1.5em;
 	padding-right: 0;
 }
 .user_info_wrap_text .editor .el-input__icon{

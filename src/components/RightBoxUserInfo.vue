@@ -84,7 +84,7 @@
             v-if="(userInfoData.userStatus == 1 || userInfoData.userStatus == 2) ?true:false"
           >
             <span class="user_info_wrap_sub">下次回访时间</span>
-            <span class="user_info_wrap_text">{{userInfoData.nextVisitTime}}</span>
+            <span class="user_info_wrap_text big_row">{{userInfoData.nextVisitTime}}</span>
           </div>
           <div class="user_info_wrap_li" v-if="userInfoData.userStatus == 2 ?true:false">
             <span class="user_info_wrap_sub">到店时间</span>
@@ -280,7 +280,7 @@
           </div>
           <div class="user_info_wrap_li" v-if="userStatus < 3">
             <span class="user_info_wrap_sub">下次回访时间</span>
-            <div class="user_info_wrap_text">
+            <div class="user_info_wrap_text big_row">
               <el-date-picker
                 v-model="nextVisitTime"
                 type="datetime"
