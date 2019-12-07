@@ -97,10 +97,10 @@
 				if (this.activeItem === index) return
 				this.activeItem = index || 0
 				this.selectIndex = index
+				debugger;
 				if(index == 0) {
 					this.$refs.RightBoxUserImg.getCustomerProfile(this.targetId)
 				} else if(index == 1) {
-					
 					this.$refs.RightBoxUserInfo.getLoadData(this.myAddressBook);
 				} else if(index == 2) {
 					this.$refs.pengYouQuan.emptyList();
@@ -117,6 +117,7 @@
 		},
 		watch: {
 		    targetId(targetId){
+					debugger;
 					//监听父组件对默认选项卡的选择
 					this.selectIndex = 3
 					this.activeItem = 3;

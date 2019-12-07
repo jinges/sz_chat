@@ -211,7 +211,7 @@ export default {
       }
     },
     selectFriend: function(isGroup, detail) {
-      
+      debugger;
       this.showMore = false;
       //
       if (isGroup) {
@@ -230,7 +230,7 @@ export default {
         this.targetId = detail.targetWxid;
     //  this.$store.commit("initFriends");
         this.$store.commit("updatePengyouquanVisible", true);
-        this.$store.commit("setCurrentPengyouquan", detail.addrBookId);
+        this.$store.commit("setCurrentSession", detail.addrBookId);
       }
       this.nowIndex = 1;
     },
