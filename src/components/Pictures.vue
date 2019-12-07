@@ -71,7 +71,6 @@
 			},
 			//封面图处理
 			imgStyle(item,type){
-				console.log(item);
 				var imgUrl = item.url
 				if(type==4){
 					imgUrl = item.coverUrl;//视频取coverUrl
