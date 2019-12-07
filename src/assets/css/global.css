@@ -380,6 +380,15 @@ ul.plus_menu .popper__arrow:after{
 	color: #fff;
 
 }
+.user_info_wrap_text .editor input{
+	height: auto;
+	line-height: normal;
+	padding-left: 0;
+	padding-right: 0;
+}
+.user_info_wrap_text .editor .el-input__icon{
+	line-height: normal;
+}
 
 /* 新建群组 */
 #createGroup .el-transfer-panel__item,
@@ -391,13 +400,12 @@ ul.plus_menu .popper__arrow:after{
 	top: 22px;
 }
 
-/* 沟通话术 */
+/* 沟通话术 
 .rightboxtalking{
 	height: 100%;
 	background-color: rgba(0, 0, 0, .5);
 }
 .rightboxtalking .search{
-	/* margin: 0 1em; */
 	padding: 8px 1em;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -458,6 +466,7 @@ ul.plus_menu .popper__arrow:after{
 	float: left;
 	margin-right: .3em;
 }
+*/
 
 
 
