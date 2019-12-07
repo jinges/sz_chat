@@ -44,7 +44,6 @@
 		methods: {
 			// 选中图片
 			choose: function(index,item) {
-				console.log('tyle',this.type,this.chooseIndex);
 				this.chooseIndex = index;
 				//$(".transition-box").removeClass('on');
 				//$(item).addClass('on');
