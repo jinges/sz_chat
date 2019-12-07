@@ -299,7 +299,7 @@
                 placeholder="选择日期时间"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 format="yyyy-MM-dd HH:mm:ss"
-                class="user_info_wrap_picker"
+                class="user_info_wrap_picker editor"
                 size="small"
               ></el-date-picker>
             </div>
