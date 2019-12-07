@@ -1,6 +1,7 @@
 <template>
     <div class="friend" @click="selectFriend" :style="{width:blockWidth}">
-        <img class="face" :src="face" />
+        <div class="face default_head" :style="'background-image: '+ (face ?'url('+face+')' : '')+';'"></div>
+        <!-- <img class="face" :src="face" /> -->
         <div class="name">{{name}}</div>
     </div>
 </template>
