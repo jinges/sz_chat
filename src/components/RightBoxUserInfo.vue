@@ -46,7 +46,7 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
-            <span class="user_info_wrap_text">{{userInfoData.licensePlateArea}}</span>
+            <span class="user_info_wrap_text">{{formatLocal(userInfoData.licensePlateArea)}}</span>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
@@ -174,19 +174,19 @@
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
             <div class="user_info_wrap_text">
-              <!-- <el-cascader
+              <el-cascader
                 size="large"
                 :options="options"
                 v-model="licensePlateArea"
                 @change="handleChange">
-              </el-cascader> -->
-              <input
+              </el-cascader>
+              <!-- <input
                   type="text"
                   class="editor"
                   v-model="licensePlateArea"
                   required="required"
                   maxlength="50"
-                />
+                /> -->
             </div>
           </div>
           <div class="user_info_wrap_li">
@@ -231,14 +231,14 @@
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">用户状态</span>
             <div class="user_info_wrap_text">
-              <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index">
+              <label v-for="(item, index) of ['跟进中','到店','战败']" :key="index"  :for="item">
                 <input
                   type="radio"
                   name="userStatus"
                   value="1"
+                  :id="item"
                   class="user_info_wrap_radio"
                   v-model="userStatus"
-                  :checked="userStatus == (index + 1)"
                   required="required"
                   @change="changeUserStatus(index)"
                 />
@@ -440,10 +440,10 @@ export default {
     changeUserStatus(val) {
       this.userStatus = val + 1;
     },
-    // handleChange(value) {
-      // 
-      // this.licensePlateArea = value[1];
-    //},
+    handleChange(value) {
+      
+      this.licensePlateArea = value[1];
+    },
     getLoadData(obj) {
       debugger;
       this.imei = util.getImei();
@@ -471,16 +471,16 @@ export default {
       this.name = this.userInfoData.name;
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
-      //this.licensePlateArea = this.userInfoData.licensePlateArea ? CodeToText[this.userInfoData.licensePlateArea] : '';
       this.licensePlateArea = this.userInfoData.licensePlateArea;
+      // this.licensePlateArea = this.userInfoData.licensePlateArea;
       this.isLoan = parseInt(this.userInfoData.isLoan);
       this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
       this.purchaseBudget = this.userInfoData.purchaseBudget;
       this.userStatus = parseInt(this.userInfoData.userStatus);
       this.grading = this.userInfoData.grading;
       this.remark = this.userInfoData.remark;
-      this.nextVisitTime = this.userInfoData.nextVisitTime;
-      this.arrivalTime = this.userInfoData.arrivalTime;
+      this.nextVisitTime = this.userInfoData.nextVisitTime || new Date();
+      this.arrivalTime = this.userInfoData.arrivalTime || new Date();
       this.defeatCause = parseInt(this.userInfoData.defeatCause);
       this.defeatCauseOther = this.userInfoData.defeatCauseOther;
       this.phone = this.userInfoData.phone;
@@ -512,6 +512,7 @@ export default {
         });
     },
     saveUserInf() {
+      debugger;
       let targetWxid = this.myAddressBook.targetWxid;
       if (
         this.name == null ||
@@ -547,11 +548,11 @@ export default {
             grading: this.grading,
             remark: this.remark,
             //下次回访时间
-            // nextVisitTime: this.nextVisitTime,
-            nextVisitTime: "2019-12-02 12:00",
+            nextVisitTime: this.nextVisitTime,
+            // nextVisitTime: "2019-12-02 12:00",
             //到店时间
-            // arrivalTime: this.arrivalTime,
-            arrivalTime: "2019-12-02 12:00",
+            arrivalTime: this.arrivalTime,
+            // arrivalTime: "2019-12-02 12:00",
             defeatCause: parseInt(this.defeatCause),
             defeatCauseOther: this.defeatCauseOther
           })
@@ -559,6 +560,9 @@ export default {
             this.getdata();
           });
       }
+    },
+    formatLocal(code){
+      return code ? CodeToText[code] : '';
     },
     removeTag(index) {
       var tag = this.tagData.splice(index, 1);
