@@ -382,15 +382,84 @@ ul.plus_menu .popper__arrow:after{
 }
 
 /* 新建群组 */
-#createGroup .el-transfer-panel__item{
+#createGroup .el-transfer-panel__item,
+#groupMember .el-transfer-panel__item{
 	height: 58px;
 } 
-#createGroup .el-transfer-panel__item .el-checkbox__input{
+#createGroup .el-transfer-panel__item .el-checkbox__input,
+#groupMember .el-transfer-panel__item .el-checkbox__input{
 	top: 22px;
 }
-.is-disabled{
 
+/* 沟通话术 */
+.rightboxtalking{
+	height: 100%;
+	background-color: rgba(0, 0, 0, .5);
 }
+.rightboxtalking .search{
+	/* margin: 0 1em; */
+	padding: 8px 1em;
+	background-color: rgba(0, 0, 0, .5);
+}
+.rightboxtalking .search .el-input input{
+	border: none;
+    background: rgba(255, 255, 255, 0.14);
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+    padding: 0.04em 0.6em;
+    min-width: 6em;
+    line-height: 1.4em;
+    color: #fff;
+}
+.rightboxtalking .search .el-input-group__append{
+	border:none;
+	background-color: transparent;
+}
+.rightboxtalking .search button.el-button{
+	background-color: #000;
+	background-color: rgba(255, 255, 255, 0.14);
+	border:none;
+	border-left: 1px solid #222;
+	border-radius: 0 3px 3px 0;
+	line-height: normal;
+}
+.rightboxtalking .line{
+	background: #000;
+	background-color: rgba(0, 0, 0, .5);
+	line-height: 2;
+}
+.rightboxtalking .searchList.history,
+.rightboxtalking .searchList.searchSeparate{
+	margin-bottom: 0;
+	min-height: 4em;
+	background-color:transparent;
+}
+.rightboxtalking .searchList li{
+	background-color: rgba(0, 0, 0, 0.2);
+	border: none;
+	color: #ccc;
+}
+.rightboxtalking .searchList.history li{
+	background-color: rgba(0, 0, 0, 0.2);
+	line-height: 18px;
+}
+.rightboxtalking .searchList.searchSeparate li{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+.rightboxtalking .searchList.history li::before{
+	content: '';
+	background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMTAyNCAxMDI0JyB2ZXJzaW9uPScxLjEnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgPjxwYXRoIGQ9J001MTIgOTI4QTQxNiA0MTYgMCAxIDEgOTI4IDUxMiA0MTYgNDE2IDAgMCAxIDUxMiA5Mjh6IG0wLTc2OEEzNTIgMzUyIDAgMSAwIDg2NCA1MTIgMzUyIDM1MiAwIDAgMCA1MTIgMTYweiBtMTkyIDQ0OEg1MTJhMzIgMzIgMCAwIDEtMzItMzJWMzIwYTMyIDMyIDAgMCAxIDY0IDB2MjI0SDcwNGEzMiAzMiAwIDAgMSAwIDY0eicgZmlsbD0nI2NjY2NjYyc+PC9wYXRoPjwvc3ZnPg==");
+	width: 18px;
+	height: 18px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+	vertical-align: baseline;
+	float: left;
+	margin-right: .3em;
+}
+
+
 
 
 
