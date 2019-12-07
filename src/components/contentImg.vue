@@ -6,9 +6,17 @@
                 </el-input>
             </div>
             <ul class="content-img">
-                <li :class="imgFlag == index ? 'select' : ''" v-for="(item,index) in dataArr " :key='index' @click="imgSwitch(index)"> 
-                    <img :src="item.url" alt=""> 
-                    <div>{{item.title}}</div>
+                <li :class="imgFlag == index ? 'select' : ''" v-for="(item,index) in dataArr " :key='index' @click="imgSwitch(index)" :title="item.title" >
+                    <!-- <img :src="item.url" alt=""> 
+                    <div>{{item.title}}</div> -->
+                    <div 
+                    class="img_box" 
+                    :class="type == 4 ? 'default_video' : 'default_pic'" 
+                    :style="'background-image: '+ (item.coverUrl ?'url('+item.coverUrl+')' : '')+';'"
+                    >
+                        <i class="el-icon-success active_icon"></i>
+                    </div>
+                    <div class="img_title">{{item.title}}</div>
                 </li>
                 <div class='clear'></div>
                 <el-pagination
@@ -98,32 +106,65 @@ export default{
         padding: 0 20px;
     }
    .content-img{
-        margin-top: 10px;
-        margin-bottom: 0px;
-    }
-    .content-img li{
-        cursor: pointer;
-        list-style-type:none;
-        float: left;
-        width:20%;
-        margin: 0 auto;
-        text-align: center;
-        min-height: 123px;
-    }
-    .content-img li img{
-        width: 120px;
-        height: 95px;
-    }
-    .content-img li div{
-        overflow: hidden;/*超出部分隐藏*/
-        white-space: nowrap;/*不换行*/
-        text-overflow:ellipsis;/*超出部分文字以...显示*/
-    }
-    .content-img li.select img{
-        border: 2px solid #409EFF;
-    }
-     .clear{
-        clear: both;
+        margin: 10px 0 0 20px;
+        padding: 16px 0;
+        font-size: 0;
+
+         li{
+            cursor: pointer;
+            list-style-type:none;
+            display: inline-block;
+            width:18%;
+            margin: 0 8px 10px 0;
+            text-align: center;
+            min-height: 123px;
+            border: 1px solid transparent;
+
+            &:hover{
+                border: 1px solid #409EFF;
+            }
+            &.select{
+                border: 1px solid #409EFF;
+            }
+            &.select .active_icon{
+			    display: block;
+            }
+
+            .img_box {
+                position: relative;
+                padding-top: 100%;
+                background-color: #eee;
+                margin: 1px;
+            }
+            .img_title{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: #333;
+                line-height: 2;
+                padding: 0 6px;
+                font-size: 14px;
+            }
+
+            img{
+                width: 120px;
+                height: 95px;
+            }
+            
+
+            .active_icon{
+                display: none;
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                color: #3a8ee6;
+                font-size: 24px;
+                background: #fff;
+                border-radius: 50%;
+            }
+            
+        }
+        
     }
     
     .el-pagination{

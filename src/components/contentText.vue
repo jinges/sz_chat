@@ -6,8 +6,9 @@
             </el-input>
         </div>
         <ul class="content-text">
-            <li v-for="(item,index) in dataArr" :key="index" @click="contentSwitch(index)">{{item.title}}
+            <li v-for="(item,index) in dataArr" :key="index" @click="contentSwitch(index)" data-type="111">
                 <el-radio v-model="contentIndex" :label="index">&nbsp;</el-radio>
+                {{item.title}}
             </li>
             <el-pagination
             v-if="pageFlag"
@@ -94,7 +95,7 @@ export default{
         padding: 0 20px;
     }
     ul{
-        padding: 0px;
+        padding: 12px 0 0 0;
         margin: 0;
     }
     .content-text li{
@@ -102,11 +103,16 @@ export default{
         padding: 0 30px;
         height: 50px;
         line-height: 50px;
-        border-bottom: 1px solid rgb(233, 226, 226);  
+        border-bottom: 1px solid #f4f4f4;  
         cursor: pointer;
+
+        &:hover{
+            background-color: #F5F7FA;
+        }
         .el-radio{
-            padding-top: 20px;
-            float: right;
+            padding-top: 19px;
+            float: left;
+            margin-right: 10px;
         }
     }
     .el-pagination{

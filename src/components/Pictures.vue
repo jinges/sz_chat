@@ -18,7 +18,7 @@
 					>
 						<i class="el-icon-success active_icon"></i>
 					</div>
-					<div class="gfid-title">{{item.title}}</div>
+					<div class="img_title">{{item.title}}</div>
 				</div>
 			</el-col>
 		</el-row>
@@ -89,7 +89,11 @@
 		color: #fff;
 		box-sizing: border-box;
 		margin-right: 10px;
-
+		border: 1px solid transparent;
+		
+		&:hover{
+			border: 1px solid #409EFF;
+		}
 		&.on {
 			border: 1px solid #409EFF;
 		}
@@ -136,8 +140,9 @@
 			position: relative;
 			padding-top: 100%;
 			background-color: #eee;
+			margin: 1px;
 		}
-		.gfid-title{
+		.img_title{
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;

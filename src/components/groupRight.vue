@@ -17,7 +17,7 @@
            <content-img ref="Video" v-show="tabValue == 3" :type='4' @returndata="returndata"></content-img>
         </el-tab-pane>
         <el-tab-pane label="H5海报">
-           <content-img  ref="Html" v-show="tabValue == 4" :type='5' @returndata="returndata"></content-img>
+           <content-text  ref="Html" v-show="tabValue == 4" :type='5' @returndata="returndata"></content-text>
         </el-tab-pane>
     </el-tabs>
 </div>
