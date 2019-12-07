@@ -106,11 +106,13 @@ export default {
       let momentType = "";
       
       let str = this.msg;
-      let emojis = str.match(/<img (.*?)>/g);
-      emojis.map(item=>{
-          str = str.replace(item, item.match(/title="(.*?)"/)[1]);
-      })
-      this.msg = str;
+      if(str.indexOf('<img') > -1){
+        let emojis = str.match(/<img (.*?)>/g);
+        emojis.map(item=>{
+            str = str.replace(item, item.match(/title="(.*?)"/)[1]);
+        })
+        this.msg = str;
+      }
       if(!this.RightContentType){
           momentType = 1;
       }else{
