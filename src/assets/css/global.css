@@ -10,11 +10,23 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
 
-/* 默认头像 */
+/* 默认图片 */
 .default_head{
 	background-image: url("../../assets/timg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+.default_pic{
+	background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2ZXJzaW9uPScxLjEnIGlkPSflm77lsYJfMScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB4bWxuczp4bGluaz0naHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluaycgdmlld0JveD0nMCAwIDEwMjQgMTAyNCc+PGc+PGc+PHBhdGggZmlsbD0nI0NEQ0RDRCcgZD0nTTYwNS42Nyw0ODUuNzVjMTQuNjIsMC4yNywyOC4yNC03LjM4LDM1LjYzLTIwYzcuMzktMTIuNjIsNy4zOS0yOC4yNCwwLTQwLjg2IGMtNy4zOS0xMi42Mi0yMS4wMS0yMC4yNi0zNS42My0yMGMtMjIuMDQsMC40LTM5LjY5LDE4LjM4LTM5LjY5LDQwLjQzQzU2NS45OCw0NjcuMzcsNTgzLjY0LDQ4NS4zNSw2MDUuNjcsNDg1Ljc1TDYwNS42Nyw0ODUuNzV6IE02NzYuMzksMzUxLjA0SDM0Ni4zYy0xMy4xNCwwLTIzLjU5LDEwLjY5LTIzLjU5LDIzLjg0djI3NS42NGMwLDEzLjE0LDEwLjQ1LDIzLjg0LDIzLjU5LDIzLjg0aDMzMC4wOSBjMTMuMTQsMCwyMy41OS0xMC43LDIzLjU5LTIzLjg0VjM3NC44OEM2OTkuOTgsMzYxLjczLDY4OS41MywzNTEuMDQsNjc2LjM5LDM1MS4wNEw2NzYuMzksMzUxLjA0eiBNNTg5LjYsNTE3LjUxIGMtMi42Ny0zLjIyLTYuNi01LjEzLTEwLjc4LTUuMjNjLTQuMjksMC03LjMxLDIuMDEtMTAuNzgsNC43OWwtMTUuNzUsMTMuMzJjLTMuMjgsMi4zNi01LjksMy45Ni05LjY3LDMuOTYgYy0zLjQxLDAuMDItNi43MS0xLjIxLTkuMjctMy40NWMtMS4yNC0xLjEzLTIuNDQtMi4yOC0zLjYzLTMuNDVsLTQ1LjMtNDljLTMuNTUtNC4wNS04LjY4LTYuMzYtMTQuMDYtNi4zMyBjLTUuNjQsMC0xMC44NywyLjc5LTE0LjE1LDYuNThMMzQ5LjY1LDYwNy4xNlYzODcuODVjMC44My01LjczLDUuMy05Ljg2LDExLjAzLTkuODZoMzAxLjIzYzUuODEsMCwxMC41Miw0LjMsMTAuODcsMTAuMSBsMC4yNSwyMTkuMjVsLTgzLjQ2LTg5LjgzSDU4OS42eiBNNTg5LjYsNTE3LjUxJy8+PC9nPjwvZz48L3N2Zz4=");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+.default_video{
+	background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB2ZXJzaW9uPScxLjEnIGlkPSflm77lsYJfMScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB4bWxuczp4bGluaz0naHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluaycgdmlld0JveD0nMCAwIDEwMjQgMTAyNCc+PGc+PGc+PHBhdGggZmlsbD0nI0NEQ0RDRCcgZD0nTTQ4Ny44MywzOTcuNzNsLTU1Ljg2LTY1LjcyaC02My4yNWw1NS44Niw2NS43Mkg0ODcuODN6IE02NTIuMTMsMzk3LjczbC01NS44Ni02NS43MmgtNjMuMjVsNTUuODYsNjUuNzIgSDY1Mi4xM3ogTTU2OS45OCwzOTcuNzNsLTU1Ljg2LTY1LjcyaC02My4yNWw1NS44Niw2NS43Mkg1NjkuOTh6IE02NzUuOTUsMzMyLjAxaC02MC43OWw1NS44Niw2NS43MmgyOS41N3YtNDEuMDcgQzcwMC41OSwzNDIuNjksNjg5LjkxLDMzMi4wMSw2NzUuOTUsMzMyLjAxTDY3NS45NSwzMzIuMDF6IE0zNDkuODMsMzMyLjAxaC0yLjQ2Yy0xMy45NiwwLTI0LjY0LDEwLjY4LTI0LjY0LDI0LjY0djQxLjA3aDgyLjk3IEwzNDkuODMsMzMyLjAxeiBNMzIyLjcyLDY2OC44MWMwLDEzLjk2LDEwLjY4LDI0LjY0LDI0LjY0LDI0LjY0aDMyOC41OWMxMy45NiwwLDI0LjY0LTEwLjY4LDI0LjY0LTI0LjY0VjQxNC4xNkgzMjIuNzJWNjY4LjgxeiBNNDU0LjE1LDQ4OC4wOWMwLTEzLjk2LDExLjUtMjAuNTQsMjQuNjQtMjAuNTRjNC4xMSwwLDkuMDQsMC44MiwxMy4xNCwzLjI4bDkzLjY1LDU0LjIyYzE2LjQzLDkuMDQsMTYuNDMsMzIuMDQsMCw0MS4wNyBsLTkzLjY1LDU0LjIyYy00LjExLDIuNDYtOC4yMSwzLjI5LTEzLjE0LDMuMjljLTEzLjE0LDAtMjQuNjQtNi41Ny0yNC42NC0yMC41NFY0ODguMDl6IE00NTQuMTUsNDg4LjA5Jy8+PC9nPjwvZz48L3N2Zz4=");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 
 /*菜单栏图标颜色-绿*/
@@ -188,7 +200,6 @@ ul.plus_menu .popper__arrow:after{
 .chat .el-loading-mask{
 	background-color: rgba(0, 0, 0, 0.1)!important;
 }
-
 .chat .el-loading-spinner .el-loading-text{
 	color: #999;
 }
@@ -198,7 +209,6 @@ ul.plus_menu .popper__arrow:after{
 #content .chat .footer{
 	background: #fff;
 }
-
 #content .chat .footer textarea.editor{
 	border: 1px solid #eee;
 	background-color: #f5f5f5;
@@ -225,6 +235,12 @@ ul.plus_menu .popper__arrow:after{
 	background-color: transparent;
 	border: 1px solid #eee;
 }
+.chat .message .content .link > svg{
+	margin-right: 10px;
+	padding: 8px;
+    background-color: #fff;
+}
+
 /* 群组对话框群组名单 */
 .chat .header .groupInfo{
 	background: #fff;

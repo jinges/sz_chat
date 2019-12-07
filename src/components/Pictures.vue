@@ -10,8 +10,13 @@
 
 		<el-row :gutter="10">
 			<el-col :span="4" style="width: 20%;" v-for="(item, index) in data" :key="index">
-				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index">
-					<img :src="item.url" />
+				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index" :title="item.title">
+					<div 
+					class="img_box" 
+					:class="type == 4 ? 'default_video' : 'default_pic'" 
+					:style="'background-image: '+ (item.coverUrl ?'url('+item.coverUrl+')' : '')+';'"
+					></div>
+					<div class="gfid-title">{{item.title}}</div>
 				</div>
 			</el-col>
 		</el-row>
@@ -36,6 +41,11 @@
 				chooseIndex: 0,
 				data: [],
 				totalRecord: 0
+			}
+		},
+		computed: {
+			imgStyle() {
+				return type.type == 4 ? 'default_video' : 'default_pic'
 			}
 		},
 		methods: {
@@ -72,16 +82,14 @@
 	}
 </script>
 
-<style>
+<style lang='scss' scoped>
 	.transition-box {
 		margin-bottom: 10px;
 		width: 120px;
-		height: 120px;
 		text-align: center;
 		color: #fff;
 		box-sizing: border-box;
 		margin-right: 10px;
-		border: 1px solid #E9E9E9;
 	}
 	
 	.transition-box.on {
@@ -120,6 +128,20 @@
 	.grid-content {
 		border-radius: 4px;
 		min-height: 36px;
+
+		.img_box {
+			padding-top: 100%;
+			border: 1px solid #E9E9E9;
+    		border-radius: 4px;
+		}
+		.gfid-title{
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			color: #333;
+			line-height: 2;
+			padding: 0 6px;
+		}
 	}
 
 	.row-bg {

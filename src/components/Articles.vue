@@ -10,12 +10,13 @@
 
 		<el-table @row-click="clickRow" ref="articlesTable" :data="tableData" style="width: 100%; border-top: 1px solid #EBEEF5;" @selection-change="handleSelectionChange"
 		 :show-header="false" stripe>
-			<el-table-column prop="title" label="标题"></el-table-column>
-			<el-table-column prop="id" label="选择" align="right">
+			
+			<el-table-column prop="id" label="选择" align="right"  width="48">
 				<template scope="scope">
 					<el-radio v-model="articlesId" :label="scope.row.id"></el-radio>
 				</template>
 			</el-table-column>
+			<el-table-column prop="title" label="标题"></el-table-column>
 		</el-table>
 		<el-pagination background layout="prev, pager, next" :page-size="10" :total="totalRecord" @current-change="currentChange"></el-pagination>
 	</div>

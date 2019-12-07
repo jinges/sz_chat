@@ -104,7 +104,7 @@
                   <Pictures :type="4" @msg="setMaterialId" />
                 </el-tab-pane>
                 <el-tab-pane label="H5海报" name="poster">
-                  <Pictures :type="5" @msg="setMaterialId" />
+                  <Articles :type="5" @msg="setMaterialId" />
                 </el-tab-pane>
               </el-tabs>
             </span>
@@ -1124,7 +1124,7 @@ export default {
 
     .groupInfo {
       position: absolute;
-      background: #fff;
+      background: rgba(0, 0, 0, 0.4);
       top: 46px;
       right: 0px;
       width: 260px;
@@ -1132,7 +1132,6 @@ export default {
       height: 509px;
       line-height: normal;
       overflow: hidden;
-      box-shadow: -7px 4px 12px -6px rgba(0,0,0,.3);
 
       > .title {
         font-size: 12px;
