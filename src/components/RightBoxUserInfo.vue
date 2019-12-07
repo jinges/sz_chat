@@ -236,10 +236,11 @@
                 <input
                   type="radio"
                   name="userStatus"
-                  value="1"
+                  :value="index + 1"
                   :id="item"
                   class="user_info_wrap_radio"
                   v-model="userStatus"
+                  :checked="userStatus == (index + 1)"
                   required="required"
                   @change="changeUserStatus(index)"
                 />
@@ -288,7 +289,8 @@
                 format="yyyy-MM-dd HH:mm:ss"
                 class="user_info_wrap_picker editor"
                 size="small"
-              ></el-date-picker>
+                default-time="12:00:00">
+              </el-date-picker>
             </div>
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 2">
@@ -480,8 +482,8 @@ export default {
       this.userStatus = parseInt(this.userInfoData.userStatus);
       this.grading = this.userInfoData.grading;
       this.remark = this.userInfoData.remark;
-      this.nextVisitTime = this.userInfoData.nextVisitTime || new Date();
-      this.arrivalTime = this.userInfoData.arrivalTime || new Date();
+      this.nextVisitTime = new Date(this.userInfoData.nextVisitTime);
+      this.arrivalTime = new Date(this.userInfoData.arrivalTime);
       this.defeatCause = parseInt(this.userInfoData.defeatCause);
       this.defeatCauseOther = this.userInfoData.defeatCauseOther;
       this.phone = this.userInfoData.phone;
@@ -530,7 +532,7 @@ export default {
         });
         this.editState = true;
       } else {
-        
+        debugger;
         this.$axios
           .post("/saveCustomer", {
             myWxid: this.myWxid,
@@ -549,10 +551,14 @@ export default {
             grading: this.grading,
             remark: this.remark,
             //下次回访时间
-            nextVisitTime: this.nextVisitTime,
+            nextVisitTime: this.userStatus < 3? 
+                  (typeof this.nextVisitTime == 'object'? 
+                  this.userInfoData.nextVisitTime :this.nextVisitTime): '',
             // nextVisitTime: "2019-12-02 12:00",
             //到店时间
-            arrivalTime: this.arrivalTime,
+            arrivalTime: this.userStatus == 2? 
+              (typeof this.arrivalTime == 'object' ?
+              this.userInfoData.nextVisitTime: this.arrivalTime): '',
             // arrivalTime: "2019-12-02 12:00",
             defeatCause: parseInt(this.defeatCause),
             defeatCauseOther: this.defeatCauseOther
