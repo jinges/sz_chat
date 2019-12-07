@@ -9,11 +9,7 @@
                 <li :class="imgFlag == index ? 'select' : ''" v-for="(item,index) in dataArr " :key='index' @click="imgSwitch(index)" :title="item.title" >
                     <!-- <img :src="item.url" alt=""> 
                     <div>{{item.title}}</div> -->
-                    <div 
-                    class="img_box" 
-                    :class="type == 4 ? 'default_video' : 'default_pic'" 
-                    :style="'background-image: '+ (item.coverUrl ?'url('+item.coverUrl+')' : '')+';'"
-                    >
+                    <div class="img_box" :class="type == 4 ? 'default_video' : 'default_pic'" :style="imgStyle(item,type)">
                         <i class="el-icon-success active_icon"></i>
                     </div>
                     <div class="img_title">{{item.title}}</div>
@@ -51,6 +47,9 @@ export default{
               
             ]
         }
+    },
+    computed:{
+        
     },
     mounted(){
         this.getcontent()
@@ -91,6 +90,17 @@ export default{
         search(){
             this.getcontent()
         },
+        //封面图处理
+        imgStyle(item,type){
+            console.log(item);
+            var imgUrl = item.url
+            if(type==4){
+                imgUrl = item.coverUrl;//视频取coverUrl
+            }
+            return {
+                'background-image':imgUrl ?'url('+imgUrl+')' : ''
+            }
+        }
     },
      watch:{
         imgFlag:function(item){

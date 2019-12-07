@@ -11,11 +11,7 @@
 		<el-row :gutter="10">
 			<el-col :span="4" style="width: 20%;" v-for="(item, index) in data" :key="type.toString()+index">
 				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index" :title="item.title" :class=" chooseIndex == index ? 'on' : '' ">
-					<div 
-					class="img_box" 
-					:class="type == 4 ? 'default_video' : 'default_pic'" 
-					:style="'background-image: '+ (item.coverUrl ?'url('+item.coverUrl+')' : '')+';'"
-					>
+					<div class="img_box" :class="type == 4 ? 'default_video' : 'default_pic'" :style="imgStyle(item,type)">
 						<i class="el-icon-success active_icon"></i>
 					</div>
 					<div class="img_title">{{item.title}}</div>
@@ -72,7 +68,19 @@
 			},
 			search: function() {
 				this.getPictrues(1, 10);
+			},
+			//封面图处理
+			imgStyle(item,type){
+				console.log(item);
+				var imgUrl = item.url
+				if(type==4){
+					imgUrl = item.coverUrl;//视频取coverUrl
+				}
+				return {
+					'background-image':imgUrl ?'url('+imgUrl+')' : ''
+				}
 			}
+			
 		},
 		mounted() {
 			$(".transition-box" + "[type='" + this.type + "']#" + this.chooseIndex).addClass('on');
@@ -90,7 +98,7 @@
 		box-sizing: border-box;
 		margin-right: 10px;
 		border: 1px solid transparent;
-		
+
 		&:hover{
 			border: 1px solid #409EFF;
 		}
