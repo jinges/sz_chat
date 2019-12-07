@@ -66,7 +66,10 @@ export default {
       default: ""
     }
   },
-  mounted() {},
+  mounted() {
+    
+      this.$refs.groupLeft.gettabs() 
+  },
   components: {
     groupLeft,
     groupRight,
@@ -101,6 +104,13 @@ export default {
       }
       let tagStr = "";
       let momentType = "";
+      
+      let str = this.msg;
+      let emojis = str.match(/<img (.*?)>/g);
+      emojis.map(item=>{
+          str = str.replace(item, item.match(/title="(.*?)"/)[1]);
+      })
+      this.msg = str;
       if(!this.RightContentType){
           momentType = 1;
       }else{
