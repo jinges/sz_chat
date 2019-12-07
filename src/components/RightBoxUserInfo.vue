@@ -429,9 +429,9 @@ export default {
   components: {},
   methods: {
     setLevel(tag){
-      debugger;
-      let index = this.tagData.indexOf(tag);
-      if(index > -1) {
+      let sigleTag = this.tagData.filter(item => item.length < 2);
+      if(sigleTag.length > 0 && /[HABCD]/.test(sigleTag[0])) {
+        let index = this.tagData.indexOf(sigleTag[0]);
         this.tagData.splice(index,1, tag);
       } else {
         this.tagData.push(tag);
