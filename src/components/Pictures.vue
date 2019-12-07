@@ -9,13 +9,15 @@
 		</el-row>
 
 		<el-row :gutter="10">
-			<el-col :span="4" style="width: 20%;" v-for="(item, index) in data" :key="index">
-				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index" :title="item.title">
+			<el-col :span="4" style="width: 20%;" v-for="(item, index) in data" :key="type.toString()+index">
+				<div class="grid-content transition-box" :type="type" @click="choose(index)" :id="index" :title="item.title" :class=" chooseIndex == index ? 'on' : '' ">
 					<div 
 					class="img_box" 
 					:class="type == 4 ? 'default_video' : 'default_pic'" 
 					:style="'background-image: '+ (item.coverUrl ?'url('+item.coverUrl+')' : '')+';'"
-					></div>
+					>
+						<i class="el-icon-success active_icon"></i>
+					</div>
 					<div class="gfid-title">{{item.title}}</div>
 				</div>
 			</el-col>
@@ -43,17 +45,14 @@
 				totalRecord: 0
 			}
 		},
-		computed: {
-			imgStyle() {
-				return type.type == 4 ? 'default_video' : 'default_pic'
-			}
-		},
 		methods: {
 			// 选中图片
-			choose: function(index) {
+			choose: function(index,item) {
+				console.log('tyle',this.type,this.chooseIndex);
 				this.chooseIndex = index;
-				$(".transition-box").removeClass('on');
-				$(".transition-box" + "[type='" + this.type + "']#" + this.chooseIndex).addClass('on');
+				//$(".transition-box").removeClass('on');
+				//$(item).addClass('on');
+				//$(".transition-box" + "[type='" + this.type + "']#" + this.chooseIndex).addClass('on');
 				this.$emit('msg', this.data[index]);
 			},
 			// 获取图片信息
@@ -90,17 +89,28 @@
 		color: #fff;
 		box-sizing: border-box;
 		margin-right: 10px;
-	}
-	
-	.transition-box.on {
-		border: 1px solid #409EFF;
-	}
 
+		&.on {
+			border: 1px solid #409EFF;
+		}
+		.active_icon{
+			display: none;
+			position: absolute;
+			top: 4px;
+			right: 4px;
+			color: #3a8ee6;
+			font-size: 24px;
+			background: #fff;
+			border-radius: 50%;
+		}
+		&.on .active_icon{
+			display: block;
+		}
+	}
 	.transition-box img {
 		width: 100%;
 		height: 100%;
 	}
-
 	.el-row {
 		margin-bottom: 20px;
 
@@ -108,31 +118,24 @@
 			margin-bottom: 0;
 		}
 	}
-
 	.el-col {
 		border-radius: 4px;
 	}
-
 	.bg-purple-dark {
 		background: #99a9bf;
 	}
-
 	.bg-purple {
 		background: #d3dce6;
 	}
-
 	.bg-purple-light {
 		background: #e5e9f2;
 	}
-
 	.grid-content {
-		border-radius: 4px;
-		min-height: 36px;
-
+		min-height: 36px;	
 		.img_box {
+			position: relative;
 			padding-top: 100%;
-			border: 1px solid #E9E9E9;
-    		border-radius: 4px;
+			background-color: #eee;
 		}
 		.gfid-title{
 			overflow: hidden;
@@ -143,7 +146,6 @@
 			padding: 0 6px;
 		}
 	}
-
 	.row-bg {
 		padding: 10px 0;
 		background-color: #f9fafc;
