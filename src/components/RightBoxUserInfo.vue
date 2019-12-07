@@ -100,7 +100,7 @@
           </div>
           <div class="user_info_wrap_li" v-if="userInfoData.userStatus == 3 ?true:false">
             <span class="user_info_wrap_sub">战败原因其他</span>
-            <span class="user_info_wrap_text">{{userInfoData.defeatCauseOther}}</span>
+            <span class="user_info_wrap_text big_row">{{userInfoData.defeatCauseOther}}</span>
           </div>
         </div>
         <div class="user_info_wrap" v-show="editState">
@@ -178,6 +178,7 @@
                 size="large"
                 :options="options"
                 v-model="licensePlateArea"
+                class="editor"
                 @change="handleChange">
               </el-cascader>
               <!-- <input
@@ -322,7 +323,7 @@
           </div>
           <div class="user_info_wrap_li" v-if="userStatus == 3">
             <span class="user_info_wrap_sub">战败原因其他</span>
-            <div class="user_info_wrap_text">
+            <div class="user_info_wrap_text big_row">
             <textarea
               type="text"
               class="editor"
@@ -633,6 +634,10 @@ export default {
           min-height: 1.4em;
           color: #fff;
           vertical-align: middle;
+
+          &.big_row{
+            min-height: 3em;
+          }
 
           .editor {
             border: 1px solid rgba(255, 255, 255, 0.2);
