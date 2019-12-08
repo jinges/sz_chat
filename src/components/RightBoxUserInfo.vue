@@ -46,7 +46,7 @@
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">上牌地区</span>
-            <span class="user_info_wrap_text">{{formatLocal(userInfoData.licensePlateArea)}}</span>
+            <span class="user_info_wrap_text">{{formatLocalSplit(userInfoData.licensePlateArea)}}</span>
           </div>
           <div class="user_info_wrap_li">
             <span class="user_info_wrap_sub">是否贷款</span>
@@ -390,6 +390,7 @@ export default {
         gender:'',
         intentModel:'',
         licensePlateArea:'',
+		areaName:'',
         isLoan:'',
         isTestDrive: 0,
         purchaseBudget:'',
@@ -412,6 +413,7 @@ export default {
       gender: "",
       intentModel: "",
       licensePlateArea: "",
+	  areaName: "",
       isLoan: "0",
       isTestDrive: 0,
       purchaseBudget: "",
@@ -444,8 +446,9 @@ export default {
       this.userStatus = val + 1;
     },
     handleChange(value) {
-      
-      this.licensePlateArea = value[1];
+      console.log("--------->handleChange:text==>vaule0Text = "+this.formatLocal(value[0]) + ", vaule1Text = "+this.formatLocal(value[1]));
+      this.licensePlateArea = value[0]+","+value[1];
+      this.areaName = this.formatLocal(value[0])+this.formatLocal(value[1]);
     },
     getLoadData(obj) {
       debugger;
@@ -475,6 +478,7 @@ export default {
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
       this.licensePlateArea = this.userInfoData.licensePlateArea;
+	  this.areaName = this.userInfoData.areaName;
       // this.licensePlateArea = this.userInfoData.licensePlateArea;
       this.isLoan = parseInt(this.userInfoData.isLoan);
       this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
@@ -522,6 +526,7 @@ export default {
         this.gender == null ||
         this.intentModel == null ||
         this.licensePlateArea == null ||
+		this.areaName == null ||
         this.isLoan == null ||
         this.userStatus == null ||
         this.grading == null
@@ -532,7 +537,6 @@ export default {
         });
         this.editState = true;
       } else {
-        debugger;
         this.$axios
           .post("/saveCustomer", {
             myWxid: this.myWxid,
@@ -544,6 +548,7 @@ export default {
             gender: parseInt(this.gender),
             intentModel: this.intentModel,
             licensePlateArea: this.licensePlateArea,
+			areaName: this.areaName,
             isLoan: parseInt(this.isLoan),
             isTestDrive: parseInt(this.isTestDrive),
             purchaseBudget: this.purchaseBudget,
@@ -570,6 +575,16 @@ export default {
     },
     formatLocal(code){
       return code ? CodeToText[code] : '';
+    },
+    formatLocalSplit(code){
+	   console.log("code="+code);
+       if(!code) {
+           return '';
+       }else if(code.indexOf(',') != -1){
+           return this.formatLocal(code.split(',')[0])+this.formatLocal(code.split(',')[1]);
+       } else {
+           return this.formatLocal(code)
+       }
     },
     removeTag(index) {
       var tag = this.tagData.splice(index, 1);
