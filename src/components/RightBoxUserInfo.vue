@@ -458,6 +458,7 @@ export default {
       this.allTags = [];
       this.getdata();
       this.tagData = obj.labelNames;
+      this.editState = false;
     },
     editor() {
       if (!this.editState) {
