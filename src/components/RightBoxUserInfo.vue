@@ -478,7 +478,8 @@ export default {
       this.name = this.userInfoData.name;
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
-      this.licensePlateArea = this.userInfoData.licensePlateArea;
+      //this.licensePlateArea = this.userInfoData.licensePlateArea;
+	  this.licensePlateArea = this.getCityCode(this.userInfoData.licensePlateArea);
 	    this.areaName = this.userInfoData.areaName;
       // this.licensePlateArea = this.userInfoData.licensePlateArea;
       this.isLoan = parseInt(this.userInfoData.isLoan);
@@ -527,6 +528,7 @@ export default {
       let targetWxid = this.myAddressBook.targetWxid;
       if (
         this.name == null ||
+		this.phone == null ||
         this.gender == null ||
         this.intentModel == null ||
         this.licensePlateArea == null ||
@@ -590,6 +592,16 @@ export default {
            return this.formatLocal(code)
        }
     },
+    getCityCode(code) {
+       console.log("code="+code);
+       if(!code) {
+           return '';
+       }else if(code.indexOf(',') != -1){
+           return code.split(',')[1];
+       } else {
+           return code
+       }
+    },	
     removeTag(index) {
       var tag = this.tagData.splice(index, 1);
       this.allTags = [...this.allTags, ...tag];
