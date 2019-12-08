@@ -95,7 +95,7 @@ export default {
       this.arrList = [];
       this.history = [];
       this.talkArrList = [];
-      this.talkArrList = [];
+      this.talkHistory = [];
 
     },
     searchKeyword(wxid) {

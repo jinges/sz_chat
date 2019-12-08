@@ -478,7 +478,7 @@ export default {
       this.gender = parseInt(this.userInfoData.gender);
       this.intentModel = this.userInfoData.intentModel;
       this.licensePlateArea = this.userInfoData.licensePlateArea;
-	  this.areaName = this.userInfoData.areaName;
+	    this.areaName = this.userInfoData.areaName;
       // this.licensePlateArea = this.userInfoData.licensePlateArea;
       this.isLoan = parseInt(this.userInfoData.isLoan);
       this.isTestDrive = parseInt(this.userInfoData.isTestDrive);
@@ -515,7 +515,10 @@ export default {
           imei: this.imei
         })
         .then(data => {
-          this.$store.commit('refershFriend');
+          var wx = this.$store.getters.filterFriendsById(this.targetWxid);
+          wx.detail.labelNames = tags;
+          this.$store.commit("modifyFriend", wx);
+          // this.$store.commit('refershFriend');
         });
     },
     saveUserInf() {
@@ -526,7 +529,7 @@ export default {
         this.gender == null ||
         this.intentModel == null ||
         this.licensePlateArea == null ||
-		this.areaName == null ||
+		    this.areaName == null ||
         this.isLoan == null ||
         this.userStatus == null ||
         this.grading == null
@@ -548,7 +551,7 @@ export default {
             gender: parseInt(this.gender),
             intentModel: this.intentModel,
             licensePlateArea: this.licensePlateArea,
-			areaName: this.areaName,
+			      areaName: this.areaName,
             isLoan: parseInt(this.isLoan),
             isTestDrive: parseInt(this.isTestDrive),
             purchaseBudget: this.purchaseBudget,
