@@ -104,6 +104,7 @@ export default{
         height: 50px;
         line-height: 50px;
         border-bottom: 1px solid #f4f4f4;  
+        user-select: none;
         cursor: pointer;
 
         &:hover{

@@ -8,7 +8,7 @@
     ></group-left>
     <group-right @retunContent="retunRightContent" @returnSendText="returnSendText"></group-right>
     <div  class="footerTxt">
-      <div class="title" style="margin-top:10px">
+      <div class="title" aria-disabled="true" style="margin-top:10px">
         自定义文案
       </div>
       <div class="footer">
@@ -181,8 +181,8 @@ export default {
         } */
         let params = this.msgContent(fileType, filePath);
         this.sendGroupMsg(0, params,this.RightContentType)
-        
       }
+      this.$refs.chatbox.cleanMsg();
     },
     sendGroupMsg(i, params,RightContentType){
         var $this = this;
@@ -292,6 +292,8 @@ export default {
     border-top:none;  
     width:70%;
     float: right;
+        user-select: none;
+
     .title{
         background: #dcdfe6;
         font-size: 14px;

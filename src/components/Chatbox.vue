@@ -51,6 +51,9 @@ export default {
     closeEmotions() {
       this.showEmotion = false;
     },
+    cleanMsg(){
+      document.querySelector(".myarea").innerHTML = '';
+    },
     //表情
     selectEmotion(emotion) {
       if (!this.rangCoordinate) {
@@ -60,6 +63,7 @@ export default {
         this.getMyAreaRang();
       }
       let sel = window.getSelection();
+      console.log(2);
       let IMG = document.createElement("img");
       IMG.src = emotion.img;
       IMG.setAttribute("width", 16);
@@ -83,6 +87,7 @@ export default {
     },
     getMyAreaRang() {
       let sel = window.getSelection();
+      console.log(1);
       if (sel.rangeCount && sel.getRangeAt) {
         // 设置最后光标对象
         this.rangCoordinate = sel.getRangeAt(0);
