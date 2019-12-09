@@ -29,9 +29,6 @@
                 this.selIndex = target.selIndex;
             },
             onWsMsg: function(json) {
-                if (json.messageType != 'NOTIFY_TO_SERVER')
-                    return;
-
                 var messageContent = JSON.parse(json.messageContent);
                 if (json.commandName == 'CLIENTNOTIFY_TEXT'||json.commandName=='CLIENTNOTIFY_GROUP_TEXT') { //收到文本消息
                     this.$store.commit('topSession', {
