@@ -12,7 +12,7 @@
         自定义文案
       </div>
       <div class="footer">
-          <chat-box  ref="chatbox" :options="options" @msg="getMsg"></chat-box>
+          <chat-box  ref="chatbox" :options="options"></chat-box>
       </div>
     </div>
     <div class="clear"></div>
@@ -76,9 +76,6 @@ export default {
     chatBox
   },
   methods: {
-    getMsg(msg){
-      this.msg = msg
-    },
     retunRightContent(type, item) {
       this.RightContentType = type;
       this.RightContentSelectData = item;
@@ -93,7 +90,9 @@ export default {
       this.SendText = SendText;
     },
     sendTo() {
-      this.$refs.chatbox.send()
+      // this.$refs.chatbox.send()
+      let $this = this;
+      this.msg = this.$refs.chatbox.getText();
       if(!this.msg && !this.RightContentType){
         this.$message({
           showClose: true,
@@ -126,7 +125,6 @@ export default {
           momentType = 3;
         }
       }
-      debugger;
       for (let i = 0; i < this.LeftSelectTagData.length; i++) {
         if (i == this.LeftSelectTagData.length - 1) {
           tagStr = tagStr + this.LeftSelectTagData[i].labelID;
@@ -143,8 +141,8 @@ export default {
               this.RightContentType && this.RightContentType != 3  ? this.RightContentSelectData.url : "",
             imei: util.getImei(),
             label: tagStr,
-            momentTitle:
-              this.RightContentType && this.RightContentType == 3 ? this.RightContentSelectData.title : this.msg,
+            momentTitle: this.msg + this.RightContentSelectData.title,
+              // this.RightContentType && this.RightContentType == 3 ? this.RightContentSelectData.title : this.msg,
             momentType: momentType,
             myWxid: util.getMyWxId(),
             publicMode: 2
@@ -180,11 +178,14 @@ export default {
           filePath = "";
         } */
         let params = this.msgContent(fileType, filePath);
-        this.sendGroupMsg(0, params,this.RightContentType)
+        debugger;
+        params.map(item => {
+          $this.sendGroupMsg(0, item)
+        })
       }
       this.$refs.chatbox.cleanMsg();
     },
-    sendGroupMsg(i, params,RightContentType){
+    sendGroupMsg(i, params){
         var $this = this;
         let freads = this.friendList;
         if(!freads.length) {
@@ -193,18 +194,10 @@ export default {
         let targetWxid = freads[i].targetWxid;
         let len = freads.length;
         params.targetWxid = targetWxid;
-        let url = '';
-         if (RightContentType == 2  || RightContentType == 4 
-          ) {
-            url= '/sendFile'
-          }else if( RightContentType == 1  || RightContentType == 5 ){
-              url= '/sendLink'
-          }else{
-               url= '/sendText'
-          }
+
         var a = ++i;
         this.$axios
-            .post(url, params)
+            .post(params.url, params)
             .then(data => {})
             .finally(()=>{
                         console.log(a,len);
@@ -219,7 +212,7 @@ export default {
                 if(a < len) {
                     let t = Math.ceil(Math.random() * 1+1.5);
                     setTimeout(() => {
-                        $this.sendGroupMsg(a, params,RightContentType);
+                        $this.sendGroupMsg(a, params);
                     }, t * 1000);
                 }
             })
@@ -229,8 +222,17 @@ export default {
         let body = {
             imei: util.getImei(),
             createTime: new Date().getTime(),
-            myWxid: util.getMyWxId()
+            myWxid: util.getMyWxId(),
+            url: '/sendText'
         };
+        let groupMsg = [];
+        if(this.msg.length) {
+          let customText = Object.assign({}, body, {
+            sendContent: this.msg
+          });
+          groupMsg.push(customText);
+        }
+
         if(this.RightContentType){
           if (
           this.RightContentType == 2  ||
@@ -241,6 +243,7 @@ export default {
                   "fileName": this.RightContentSelectData.title,
                   "filePath": this.RightContentSelectData.url,
                   "fileType": this.RightContentType == 2 ? "IMAGE" : 'VIDEO',
+                  'url': '/sendFile'
               })
           } else if( this.RightContentType == 1  || this.RightContentType == 5 ) {
               body = Object.assign({}, body, {
@@ -248,18 +251,16 @@ export default {
                   "icon": "https://s.autoimg.cn/fe/topbar/logo_topbar.png",
                   "link": this.RightContentSelectData.url,
                   "title": this.RightContentSelectData.title,
+                  "url": '/sendLink'
               })
           }else{
             body = Object.assign({}, body, {
                 "sendContent": this.RightContentSelectData.title,
               })
           }
-        }else{
-           body = Object.assign({}, body, {
-                sendContent: this.msg
-            })
+          groupMsg.push(body);
         }
-        return body;
+        return groupMsg.reverse();
     }
   },
   watch: {

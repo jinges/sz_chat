@@ -98,11 +98,15 @@ export default {
       //设置最后光标对象；
       this.debounce(this.getMyAreaRang, 1000)();
     },
-    send(){
+    // send(){
+    //   let msg  = document.querySelector('.myarea').innerHTML;
+    //   if(msg.trim().length) {
+    //     this.$emit('msg', msg);
+    //   }
+    // },
+    getText(){
       let msg  = document.querySelector('.myarea').innerHTML;
-      if(msg.trim().length) {
-        this.$emit('msg', msg);
-      }
+      return msg.trim();
     },
     debounce(fn, delay) {
       let $this = this;
