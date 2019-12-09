@@ -86,6 +86,7 @@ export default {
         return;
       }
       this.$emit("switchUser", index);
+      this.activeIndex = 0;
     },
     nav: function(action, index) {
       if (index != -1) {
