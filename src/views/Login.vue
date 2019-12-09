@@ -123,7 +123,10 @@
                                         // });
                                         this.showWxItem = !this.showWxItem;
                                     })
-                                    .catch(e => {});
+                                    .catch(e => {
+                                            this.btnText = "立即登录";
+                                            this.btnLoading = false;
+                                    });
                             })
                             .catch(e => {});
                     } else {
