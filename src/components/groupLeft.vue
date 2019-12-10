@@ -19,11 +19,11 @@
     <div class="friendList" 
     v-loading="loading">
         <li v-for="(item,index) in friendList" :key="index">
-            <div class="headImg default_head" :style="'background-image: '+ (item.addressBook.headPic ?'url('+item.addressBook.headPic+')' : '')+';'"></div>
+            <div class="headImg default_head" :style="'background-image: '+ (item.face ?'url('+item.face+')' : '')+';'"></div>
             <!-- <img class="headImg" :src="item.addressBook.headPic" alt=""> -->
             <div class="user_name">
                 <span>
-                    {{item.remark ? item.remark :item.addressBook.nickName}}
+                    {{item.name}}
                 </span>
             </div>
         </li>
@@ -69,7 +69,8 @@ import util from '@/util/util.js'
             tagSwitch(index,name){
                 // this.currIndex.push(index)
                 this.currIndex = this.unique(this.currIndex,index)
-                this.getfriendList(this.unique(this.nameArr,name))
+                // this.getfriendList(this.unique(this.nameArr,name))
+                this.getfriendList(name,index)
                 // this.selectTag.push(this.tagArr[index]);
             },
             gettabs(){
@@ -84,7 +85,9 @@ import util from '@/util/util.js'
                             this.tagArr = data
                             this.selectTag = [];
                             // this.nameArr.push(data[0].labelName)
-                            this.getfriendList([])
+                            // this.getfriendList([])
+                            this.friendList = this.$store.getters.groupFriends();
+                            this.loading = false;
                         }else{
                             this.loading = false;                       
                             this.tagArr = []
@@ -94,19 +97,44 @@ import util from '@/util/util.js'
                     
                 this.currIndex = [];
             },
-            getfriendList(labelName){
-                    this.loading = true;
-                   this.$axios.post('/queryMyAddressBookByLabels', {
-                        myWxid: util.getMyWxId(),tenantId:1,labels:labelName
-                    })
-                    .then(data => {
-                        this.friendList = data;
-                        this.friendListLength = data.length;
-                        this.loading = false;
-                    })
-                    .catch(() => {
-                        this.loading = false;
-                    });
+            getfriendList(labelName,index){
+                if( this.tagArr[index].children && this.tagArr[index].children.length > 0){
+                    this.tagArr[index].children = [];
+                }else{
+                      let arr = [];
+                    let friendsList = this.$store.getters.groupFriends(); 
+                        for(let k=0;k<friendsList.length;k++){
+                            if(friendsList[k].detail.labelNames.indexOf(labelName) != -1){
+                                arr.push(friendsList[k])    
+                            }
+                        } 
+                    this.tagArr[index].children = arr; 
+                }    
+                this.showList()
+                // this.friendList = arr;
+                this.loading = false;
+                //     this.loading = true;
+                //    this.$axios.post('/queryMyAddressBookByLabels', {
+                //         myWxid: util.getMyWxId(),tenantId:1,labels:labelName
+                //     })
+                //     .then(data => {
+                //         this.friendList = data;
+                //         this.friendListLength = data.length;
+                //         this.loading = false;
+                //     })
+                //     .catch(() => {
+                //         this.loading = false;
+                //     });
+            },
+            showList(){
+                let list = [];
+                for(let k=0;k<this.tagArr.length;k++){
+                    let item = this.tagArr[k].children ? this.tagArr[k].children : []
+
+                    list = [...list,...item];
+                }
+                if(list)
+                this.friendList = list;
             }
         },
         watch:{
