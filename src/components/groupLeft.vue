@@ -70,11 +70,9 @@ import util from '@/util/util.js'
                 // this.currIndex.push(index)
                 this.currIndex = this.unique(this.currIndex,index)
                 // this.getfriendList(this.unique(this.nameArr,name))
-                if(this.currIndex.length == 0){
-                    this.friendList = this.$store.getters.groupFriends();
-                }else{
+                
                     this.getfriendList(name,index)
-                }
+                
                 // this.selectTag.push(this.tagArr[index]);
             },
             gettabs(){
@@ -114,7 +112,11 @@ import util from '@/util/util.js'
                         } 
                     this.tagArr[index].children = arr; 
                 }    
-                this.showList()
+                if(this.currIndex.length == 0){
+                    this.friendList = this.$store.getters.groupFriends();
+                }else{
+                    this.showList()
+                }
                 // this.friendList = arr;
                 this.loading = false;
                 //     this.loading = true;
@@ -132,6 +134,7 @@ import util from '@/util/util.js'
             },
             showList(){
                 let list = [];
+                console.log(this.tagArr)
                 for(let k=0;k<this.tagArr.length;k++){
                     let item = this.tagArr[k].children ? this.tagArr[k].children : []
 
