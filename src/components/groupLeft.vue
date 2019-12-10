@@ -133,7 +133,6 @@ import util from '@/util/util.js'
 
                     list = [...list,...item];
                 }
-                if(list)
                 this.friendList = list;
             }
         },
