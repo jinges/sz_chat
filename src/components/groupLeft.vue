@@ -70,7 +70,11 @@ import util from '@/util/util.js'
                 // this.currIndex.push(index)
                 this.currIndex = this.unique(this.currIndex,index)
                 // this.getfriendList(this.unique(this.nameArr,name))
-                this.getfriendList(name,index)
+                if(this.currIndex.length == 0){
+                    this.friendList = this.$store.getters.groupFriends();
+                }else{
+                    this.getfriendList(name,index)
+                }
                 // this.selectTag.push(this.tagArr[index]);
             },
             gettabs(){
