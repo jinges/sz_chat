@@ -140,7 +140,7 @@ import util from '@/util/util.js'
 
                     list = [...list,...item];
                 }
-                this.friendList = list;
+                this.friendList = Array.from(new Set(list));
             }
         },
         watch:{
