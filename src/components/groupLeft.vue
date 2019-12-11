@@ -142,7 +142,7 @@ import util from '@/util/util.js'
                 }
                 this.friendList = this.uniqueArray(list, 'wxid');
             },
-            function uniqueArray(array, key){
+            uniqueArray(array, key){
                 var result = [array[0]];
                 for(var i = 1; i < array.length; i++){
                     var item = array[i];

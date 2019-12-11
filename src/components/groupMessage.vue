@@ -191,7 +191,8 @@ export default {
         if(!freads.length) {
           return false;
         }
-        let targetWxid = freads[i].targetWxid;
+        debugger;
+        let targetWxid = freads[i].wxid;
         let len = freads.length;
         params.targetWxid = targetWxid;
 

@@ -197,6 +197,9 @@ export default new Vuex.Store({
 		topSession: (state, newmsg) => {
 			var sessionIndex = -1;
 			debugger;
+			if(!newmsg.targetWxid) {
+				return false;
+			}
 			for (var i = 0; i < state.sessions.length; i++) {
 				if ((state.sessions[i].targetId == newmsg.groupId && state.sessions[i].isGroup) ||
 					(state.sessions[i].targetId == newmsg.targetWxid && !state.sessions[i].isGroup)) {
