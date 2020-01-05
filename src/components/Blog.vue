@@ -132,7 +132,10 @@ export default {
       );
     },
     textWithEmo() {
-      return wxEmo.parse(this.momentTitle);
+      //表情文字不吻合，进行特殊转换
+      var momentTitle = this.momentTitle.replace(/\[囧\]/g, "[冷汗]").replace(/\[愉快\]/g, "[可爱]").replace(/\[悠闲\]/g, "[大兵]").replace(/\[疯了\]/g, "[折磨]").replace(/\[嘴唇\]/g, "[示爱]").replace(/\[No\]/g, "[NO]").replace(/\[乱舞\]/g, "[街舞]").replace(/\[投降\]/g, "[挥手]");
+
+      return wxEmo.parse(momentTitle);
     }
   },
   data() {

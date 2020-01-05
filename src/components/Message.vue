@@ -50,7 +50,16 @@
     } from 'wechat-square-bracket-emotions'
     import Vue from 'vue'
 
-    var wxEmo = new WxEmotions();
+    //自定义表情转换
+    var wxEmo = new WxEmotions({
+        emotionsMap: {
+                0: '撇嘴',
+                17: '囧'
+        }
+    });
+    
+    console.log("wxEmo",wxEmo);
+
     export default {
         props: ['face', 'type', 'media', 'content', 'time', 'sending'],
         methods: {
@@ -73,7 +82,11 @@
         computed: {
             //表情转图片
             textWithEmotion: function() {
-                return wxEmo.parse(this.content)
+ 
+                //表情文字不吻合，进行特殊转换
+                var content = this.content.replace(/\[囧\]/g, "[冷汗]").replace(/\[愉快\]/g, "[可爱]").replace(/\[悠闲\]/g, "[大兵]").replace(/\[疯了\]/g, "[折磨]").replace(/\[嘴唇\]/g, "[示爱]").replace(/\[No\]/g, "[NO]").replace(/\[乱舞\]/g, "[街舞]").replace(/\[投降\]/g, "[挥手]");
+    
+                return wxEmo.parse(content)
             }
         }
     }
